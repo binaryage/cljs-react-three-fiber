@@ -1,0 +1,25 @@
+{:deps
+ {org.clojure/clojure         {:mvn/version "RELEASE"}
+  org.clojure/clojurescript   {:mvn/version "RELEASE"}
+
+  cljs-bean                   {:mvn/version "1.5.0"}
+  appliedscience/js-interop   {:git/url "https://github.com/appliedsciencestudio/js-interop.git"
+                               :sha     "e6b5f0b84b736481269a62beb4ce70f99a30f9a0"}
+
+  uix.core                    {:git/url   "https://github.com/roman01la/uix.git"
+                               :deps/root "core"
+                               :sha       "d640324d5bbcc7869e72b75c52b037676628a3ac"}
+  uix.dom                     {:git/url   "https://github.com/roman01la/uix.git"
+                               :deps/root "dom"
+                               :sha       "d640324d5bbcc7869e72b75c52b037676628a3ac"}
+
+  binaryage/react-three-fiber {:local/root ".."}
+  binaryage/devtools          {:mvn/version "RELEASE"}
+
+  ; ----
+
+;  thheller/shadow-cljs        {:mvn/version "RELEASE"}
+  }
+
+ :paths
+ ["src/app"]}

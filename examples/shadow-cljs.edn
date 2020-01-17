@@ -1,0 +1,9 @@
+{:deps     true
+ :dev-http {8080 "public"}
+ ;:jvm-opts ["-agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=127.0.0.1:5006"]
+ :builds   {:app
+            {:target     :browser
+             :output-dir "public/.compiled"
+             :asset-path "/.compiled"
+             :devtools   {:loader-mode :script}                                                                               ; TODO: remove after https://github.com/thheller/shadow-cljs/issues/637
+             :modules    {:main {:init-fn react-three-fiber.examples.index/main!}}}}}

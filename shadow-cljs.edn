@@ -1,0 +1,6 @@
+;; shadow-cljs configuration
+{:deps   true
+ :builds {:lib
+          {:target     :browser
+           :output-dir "public/.compiled"
+           :asset-path "/.compiled"}}}
