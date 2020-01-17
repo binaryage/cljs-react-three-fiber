@@ -18,7 +18,7 @@
 
   ; ----
 
-;  thheller/shadow-cljs        {:mvn/version "RELEASE"}
+  thheller/shadow-cljs        {:mvn/version "RELEASE"}
   }
 
  :paths
