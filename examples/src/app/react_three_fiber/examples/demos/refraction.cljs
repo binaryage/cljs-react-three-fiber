@@ -6,6 +6,9 @@
                                                           linear-filter
                                                           create-webgl-render-target
                                                           create-object-3d]]
+            [react-three-fiber.examples.lib.helpers :refer [sin-pi cos-pi
+                                                            give-random-number
+                                                            set-camera-layer!]]
             [uix.core.alpha :as uix]
             [cljs-bean.core :refer [bean]]
             [applied-science.js-interop :as j]
@@ -39,15 +42,6 @@
                               :map       texture
                               :depthTest false}]]))
 
-(defn give-random-number []
-  (Math/random))
-
-(defn sin-pi [x]
-  (Math/sin (* x Math/PI)))
-
-(defn cos-pi [x]
-  (Math/cos (* x Math/PI)))
-
 (defn gen-random-diamond [viewport i]
   (let [w (.-width viewport)
         [r1 r2 r3 r4 r5 r6 r7 r8] (repeatedly give-random-number)]
@@ -59,9 +53,6 @@
          :rotation  #js [(sin-pi r6)
                          (sin-pi r7)
                          (cos-pi r8)]}))
-
-(defn set-camera-layer! [camera layer]
-  (j/call-in camera [.-layers .-set] layer))
 
 (defn update-diamonds [gl viewport camera scene clock dummy model-ref env-fbo backface-fbo backface-material refraction-material diamonds]
   (let [model @model-ref]
