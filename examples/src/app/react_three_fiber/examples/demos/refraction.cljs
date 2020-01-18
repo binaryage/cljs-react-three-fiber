@@ -157,7 +157,7 @@
                           :depthTest false}]]))
 
 (defn <app> []
-  [:> <:canvas> {:camera #js {:fov 50 :position #js [0 0 30]}}
-   [:> <:suspense> {:fallback nil}
+  [<:canvas> {:camera #js {:fov 50 :position #js [0 0 30]}}
+   [<:suspense> {:fallback nil}
     [<background>]
     [<diamonds>]]])

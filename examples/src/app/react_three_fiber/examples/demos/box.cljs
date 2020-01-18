@@ -19,6 +19,6 @@
      [:meshNormalMaterial {:attach "material"}]]))
 
 (defn <app> []
-  [:> <:canvas> {:camera #js {:fov 75 :position #js [0 0 5]}}
-   [:> <:suspense> {:fallback nil}
+  [<:canvas> {:camera #js {:fov 75 :position #js [0 0 5]}}
+   [<:suspense> {:fallback nil}
     [<box>]]])

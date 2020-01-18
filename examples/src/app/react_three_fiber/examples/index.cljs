@@ -1,5 +1,6 @@
 (ns react-three-fiber.examples.index
   (:require [uix.dom.alpha :as uix.dom]
+            [uix.hacks]
             [react-three-fiber.examples.lib.react-router-dom :refer [<:router>]]
             [react-three-fiber.examples.lib.dom :refer [get-element-by-id]]
             [react-three-fiber.examples.pages.intro :refer [<intro>]]
@@ -9,8 +10,8 @@
 ; -- app --------------------------------------------------------------------------------------------------------------------
 
 (defn <app> []
-  [:> <:router>
-   [:> <:global-styles>]
+  [<:router>
+   [<:global-styles>]
    [<intro>]])
 
 ; ---------------------------------------------------------------------------------------------------------------------------

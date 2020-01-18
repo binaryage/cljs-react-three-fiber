@@ -4,7 +4,7 @@
             [react-three-fiber.examples.demos :as demos]
             [react-three-fiber.examples.lib.react :refer [<:suspense>]]
             [react-three-fiber.examples.styles :refer [<:page-styles>]]
-            [react-three-fiber.examples.lib.styled-components :refer [styled-div simple-css]]
+            [react-three-fiber.examples.lib.styled-components :refer [<:styled-div> simple-css]]
             [react-three-fiber.examples.lib.react-router-dom :refer [use-route-match <:switch> <:route> <:redirect> <:link>]]
             [cljs-bean.core :refer [bean ->js]]
             [clojure.string :as string]))
@@ -41,7 +41,7 @@
                  :font-size "1.2em"}})))
 
 (def <:demos-selection-panel>
-  (styled-div
+  (<:styled-div>
     (simple-css
       {:position  "absolute"
        :bottom    "50px"
@@ -49,7 +49,7 @@
        :max-width "260px"})))
 
 (def <:demo-selection-spot>
-  (styled-div
+  (<:styled-div>
     (simple-css
       {:display       "inline-block"
        :width         "20px"
@@ -71,25 +71,25 @@
   (let [match (use-route-match "/demo/:name")
         selected-name (or (get-match-param match) default-demo-name)
         bright? (get-in all-demos [selected-name :bright])]
-    [:> <:demos-selection-panel>
+    [<:demos-selection-panel>
      (for [[name] all-demos]
        (let [selected? (= name selected-name)
              background-color (cond
                                 selected? "salmon"
                                 bright? "#2c2d31"
                                 :default "white")]
-         [:> <:link> {:key name
-                   :to     (str "/demo/" name)}
-          [:> <:demo-selection-spot> {:style {:background-color background-color}}]]))]))
+         [<:link> {:key name
+                   :to  (str "/demo/" name)}
+          [<:demo-selection-spot> {:style {:background-color background-color}}]]))]))
 
 (defn <intro> []
   (let [match (use-route-match "/demo/:name")
         selected-name (or (get-match-param match) default-demo-name)
         bright? (get-in all-demos [selected-name :bright])]
-    [:> <:page>
-     [:> <:suspense> {:fallback nil}
-      [:> <:switch>
-       [:> <:route> {:exact true
+    [<:page>
+     [<:suspense> {:fallback nil}
+      [<:switch>
+       [<:route> {:exact    true
                   :path     (->js (prepare-allowed-paths all-demo-names))
                   :children (fn [route-props]
                               (let [{:keys [match]} (bean route-props)
@@ -98,7 +98,7 @@
                                     component (lookup-component selected-name default-demo-name)
                                     _ (assert component)]
                                 (as-element (<demo-canvas> selected-name component))))}]
-       [:> <:redirect> {:to (str "/demo/" default-demo-name)}]]]
+       [<:redirect> {:to (str "/demo/" default-demo-name)}]]]
      [<demos-selection>]
      [:a {:href  "https://github.com/drcmda/react-three-fiber"
           :style {:color (if bright? "#2c2d31" "white")}}

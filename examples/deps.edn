@@ -22,4 +22,5 @@
   }
 
  :paths
- ["src/app"]}
+ ["src/app"
+  "src/hacks"]}
