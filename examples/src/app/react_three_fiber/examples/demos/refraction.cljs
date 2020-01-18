@@ -60,6 +60,9 @@
                          (sin-pi r7)
                          (cos-pi r8)]}))
 
+(defn set-camera-layer! [camera layer]
+  (j/call-in camera [.-layers .-set] layer))
+
 (defn update-diamonds [gl viewport camera scene clock dummy model-ref env-fbo backface-fbo backface-material refraction-material diamonds]
   (let [model @model-ref]
     (doseq [[i diamond] (map-indexed vector diamonds)]
@@ -93,25 +96,25 @@
 
     ; render env to fbo
     (j/assoc! gl .-autoClear false)
-    (j/call-in camera [.-layers .-set] 1)
+    (set-camera-layer! camera 1)
     (j/call gl .-setRenderTarget env-fbo)
     (j/call gl .-render scene camera)
 
     ; render cube backfaces to fbo
-    (j/call-in camera [.-layers .-set] 0)
+    (set-camera-layer! camera 0)
     (j/assoc! model .-material backface-material)
     (j/call gl .-setRenderTarget backface-fbo)
     (j/call gl .-clearDepth)
     (j/call gl .-render scene camera)
 
     ; render env to screen
-    (j/call-in camera [.-layers .-set] 1)
+    (set-camera-layer! camera 1)
     (j/call gl .-setRenderTarget nil)
     (j/call gl .-render scene camera)
     (j/call gl .-clearDepth)
 
     ; render cube with refraction material to screen
-    (j/call-in camera [.-layers .-set] 0)
+    (set-camera-layer! camera 0)
     (j/assoc! model .-material refraction-material)
     (j/call gl .-render scene camera)))
 
