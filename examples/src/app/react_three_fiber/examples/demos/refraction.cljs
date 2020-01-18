@@ -35,12 +35,12 @@
                 (j/assoc! texture .-minFilter linear-filter))
               [(.-minFilter texture)])
 
-    [:> "mesh" {:layers 1
-                :scale  #js [adapted-width adapted-height 1]}
-     [:> "planeBufferGeometry" {:attach "geometry"}]
-     [:> "meshBasicMaterial" {:attach    "material"
-                              :map       texture
-                              :depthTest false}]]))
+    [:mesh {:layers 1
+            :scale  #js [adapted-width adapted-height 1]}
+     [:planeBufferGeometry {:attach "geometry"}]
+     [:meshBasicMaterial {:attach    "material"
+                          :map       texture
+                          :depthTest false}]]))
 
 (defn gen-random-diamond [viewport i]
   (let [w (.-width viewport)
@@ -141,12 +141,12 @@
 
     (use-frame (partial update-diamonds gl viewport camera scene clock dummy model env-fbo backface-fbo backface-material refraction-material diamonds) 1)
 
-    [:> "instancedMesh" {:ref  model
-                         :args #js [nil nil (count diamonds)]}
-     [:> "bufferGeometry" (merge {:dispose false
-                                  :attach  "geometry"}
-                                 (bean gltf-geometry))]
-     [:> "meshBasicMaterial" {:attach "material"}]]))
+    [:instancedMesh {:ref  model
+                     :args #js [nil nil (count diamonds)]}
+     [:bufferGeometry (merge {:dispose false
+                              :attach  "geometry"}
+                             (bean gltf-geometry))]
+     [:meshBasicMaterial {:attach "material"}]]))
 
 (defn app []
   [:> canvas {:camera #js {:fov 50 :position #js [0 0 30]}}
