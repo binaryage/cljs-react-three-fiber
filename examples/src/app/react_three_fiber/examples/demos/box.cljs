@@ -1,6 +1,5 @@
 (ns react-three-fiber.examples.demos.box
   (:require [react-three-fiber.core :refer [<:canvas> use-three use-frame]]
-            [react-three-fiber.examples.lib.react :refer [<:suspense>]]
             [uix.core.alpha :as uix]
             [applied-science.js-interop :as j]))
 
@@ -23,5 +22,5 @@
 
 (defn <app> []
   [<:canvas> {:camera #js {:fov 75 :position #js [0 0 2]}}
-   [<:suspense> {:fallback nil}
+   [:# {:fallback nil}
     [<box>]]])

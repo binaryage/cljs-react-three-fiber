@@ -1,6 +1,5 @@
 (ns react-three-fiber.examples.demos.refraction
   (:require [react-three-fiber.core :refer [<:canvas> use-three use-frame use-loader]]
-            [react-three-fiber.examples.lib.react :refer [<:suspense>]]
             [react-three-fiber.examples.lib.three :refer [create-texture-loader
                                                           texture-loader-class
                                                           linear-filter
@@ -157,6 +156,6 @@
 
 (defn <app> []
   [<:canvas> {:camera #js {:fov 50 :position #js [0 0 30]}}
-   [<:suspense> {:fallback nil}
+   [:# {:fallback nil}
     [<background>]
     [<diamonds>]]])

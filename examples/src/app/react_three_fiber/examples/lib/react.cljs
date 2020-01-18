@@ -2,4 +2,5 @@
   (:require [react :refer [Suspense]]
             [uix.hacks :refer [mark-as-native!]]))
 
-(def <:suspense> (mark-as-native! Suspense))
+; uix has a special way how to specify suspense via :#
+; (def <:suspense> (mark-as-native! Suspense))

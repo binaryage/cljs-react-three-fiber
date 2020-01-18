@@ -2,7 +2,6 @@
   (:require [uix.core.alpha :refer [as-react as-element]]
             [applied-science.js-interop :as j]
             [react-three-fiber.examples.demos :as demos]
-            [react-three-fiber.examples.lib.react :refer [<:suspense>]]
             [react-three-fiber.examples.styles :refer [<:page-styles>]]
             [react-three-fiber.examples.lib.styled-components :refer [<:styled-div> simple-css]]
             [react-three-fiber.examples.lib.react-router-dom :refer [use-route-match <:switch> <:route> <:redirect> <:link>]]
@@ -89,7 +88,7 @@
         selected-name (or (get-match-param match) default-demo-name)
         bright? (get-in all-demos [selected-name :bright?])]
     [<:page>
-     [<:suspense> {:fallback nil}
+     [:# {:fallback nil}
       [<:switch>
        [<:route> {:exact    true
                   :path     (->js (prepare-allowed-paths all-demo-names))
