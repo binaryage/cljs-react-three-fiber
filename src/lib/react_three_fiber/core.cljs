@@ -15,10 +15,10 @@
 (def <:canvas> (mark-as-native! react-three-fiber/Canvas))
 
 (defn use-loader
-  ([proto url]
-   (useLoader proto url))
-  ([proto url extensions]
-   (useLoader proto url extensions)))
+  ([loader-class url]
+   (useLoader loader-class url))
+  ([loader-class url extensions]
+   (useLoader loader-class url extensions)))
 
 (defn use-three []
   (bean (useThree)))
