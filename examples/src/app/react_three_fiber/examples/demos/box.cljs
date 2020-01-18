@@ -22,5 +22,5 @@
 
 (defn <app> []
   [<:canvas> {:camera #js {:fov 75 :position #js [0 0 2]}}
-   [:# {:fallback nil}
+   [:# {:fallback "loading box demo"}
     [<box>]]])

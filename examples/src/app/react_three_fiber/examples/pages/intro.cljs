@@ -88,7 +88,7 @@
         selected-name (or (get-match-param match) default-demo-name)
         bright? (get-in all-demos [selected-name :bright?])]
     [<:page>
-     [:# {:fallback nil}
+     [:# {:fallback "loading intro page"}
       [<:switch>
        [<:route> {:exact    true
                   :path     (->js (prepare-allowed-paths all-demo-names))
