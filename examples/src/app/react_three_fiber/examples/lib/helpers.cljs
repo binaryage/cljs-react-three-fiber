@@ -20,17 +20,42 @@
   ([o x y z]
    (j/call-in o [.-position .-set] x y z)))
 
+(defn get-position [o]
+  (j/get o .-position))
+
+(defn update-position! [o f]
+  (let [r (get-position o)
+        [x y z] (f (j/get r .-x) (j/get r .-y) (j/get r .-z))]
+    (set-position! o x y z)))
+
 (defn set-rotation!
   ([o v]
    (set-rotation! o (get v 0) (get v 1) (get v 2)))
   ([o x y z]
-   (j/call-in o [.-rotation .-set] x y z)))
+   (j/call-in o [.-rotation .-set] x y z)
+   o))
+
+(defn get-rotation [o]
+  (j/get o .-rotation))
+
+(defn update-rotation! [o f]
+  (let [r (get-rotation o)
+        [x y z] (f (j/get r .-x) (j/get r .-y) (j/get r .-z))]
+    (set-rotation! o x y z)))
 
 (defn set-scale!
   ([o v]
    (set-scale! o (get v 0) (get v 1) (get v 2)))
   ([o x y z]
    (j/call-in o [.-scale .-set] x y z)))
+
+(defn get-scale [o]
+  (j/get o .-scale))
+
+(defn update-scale! [o f]
+  (let [r (get-scale o)
+        [x y z] (f (j/get r .-x) (j/get r .-y) (j/get r .-z))]
+    (set-scale! o x y z)))
 
 (defn delta-rotation
   ([rotation dv]

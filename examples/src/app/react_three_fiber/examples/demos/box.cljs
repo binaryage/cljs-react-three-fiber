@@ -1,11 +1,12 @@
 (ns react-three-fiber.examples.demos.box
   (:require [react-three-fiber.core :refer [<:canvas> use-three use-frame]]
             [uix.core.alpha :as uix]
-            [applied-science.js-interop :as j]))
+            [applied-science.js-interop :as j]
+            [react-three-fiber.examples.lib.helpers :refer [update-rotation!]]))
 
 (defn rotate! [node]
-  (j/update-in! node [.-rotation .-x] #(+ % 0.01))
-  (j/update-in! node [.-rotation .-y] #(+ % 0.01)))
+  (update-rotation! node (fn [x y z]
+                           [(+ x 0.01) (+ y 0.01) z])))
 
 (defn update! [mesh]
   (rotate! mesh))
