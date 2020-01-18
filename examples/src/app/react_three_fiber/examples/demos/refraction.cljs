@@ -14,14 +14,20 @@
                                                             delta-rotation
                                                             update-vec!
                                                             get-gltf-geometry
-                                                            set-material!]]
+                                                            set-material!
+                                                            get-texture
+                                                            set-min-filter!
+                                                            update-matrix!
+                                                            set-matrix-at!
+                                                            get-elapsed-time
+                                                            get-matrix
+                                                            set-instance-matrix-needs-update!]]
             [react-three-fiber.examples.lib.misc :refer [gltf-loader-class
                                                          create-backface-material
                                                          create-refraction-material]]
             [react-three-fiber.examples.lib.gl :refer [with-gl!]]
             [uix.core.alpha :as uix]
-            [cljs-bean.core :refer [bean]]
-            [applied-science.js-interop :as j]))
+            [cljs-bean.core :refer [bean]]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
 
@@ -51,7 +57,7 @@
   (let [model @model-ref
         {:keys [env-fbo backface-fbo backface-material refraction-material]} resources]
     (doseq [[i diamond] (map-indexed vector diamonds)]
-      (let [t (.getElapsedTime clock)
+      (let [t (get-elapsed-time clock)
             {:keys [position rotation direction factor]} (bean diamond)
             rot-delta (* factor t)
             scale (+ 1 factor)]
@@ -68,10 +74,10 @@
         (set-rotation! dummy (delta-rotation rotation rot-delta rot-delta rot-delta))
         (set-scale! dummy scale scale scale)
 
-        (.updateMatrix dummy)
-        (.setMatrixAt model i (.-matrix dummy))))
+        (update-matrix! dummy)
+        (set-matrix-at! model i (get-matrix dummy))))
 
-    (j/assoc-in! model [.-instanceMatrix .-needsUpdate] true)
+    (set-instance-matrix-needs-update! model true)
 
     ; render env to fbo
     (set-camera-layer! camera 1)
@@ -112,8 +118,8 @@
                              height (.-height size)
                              env-fbo (create-webgl-render-target width height)
                              backface-fbo (create-webgl-render-target width height)
-                             refraction-material-opts {:envMap      (.-texture env-fbo)
-                                                       :backfaceMap (.-texture backface-fbo)
+                             refraction-material-opts {:envMap      (get-texture env-fbo)
+                                                       :backfaceMap (get-texture backface-fbo)
                                                        :resolution  #js [width height]}]
                          {:env-fbo             env-fbo
                           :backface-fbo        backface-fbo
@@ -147,10 +153,10 @@
         viewport-height (/ (.-height viewport) aspect-height)
         base (if (> aspect aspect-ratio) viewport-width viewport-height)
         adapted-height (* aspect-height base)
-        adapted-width (* aspect-width base)]
-    (uix/memo (fn []
-                (j/assoc! texture .-minFilter linear-filter))
-              [(.-minFilter texture)])
+        adapted-width (* aspect-width base)
+        update-texture-fn (fn []
+                            (set-min-filter! texture linear-filter))]
+    (uix/memo update-texture-fn [texture])
 
     [:mesh {:layers 1
             :scale  #js [adapted-width adapted-height 1]}

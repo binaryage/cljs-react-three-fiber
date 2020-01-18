@@ -55,3 +55,24 @@
 
 (defn set-material! [model material]
   (j/assoc! model .-material material))
+
+(defn get-texture [material]
+  (.-texture material))
+
+(defn set-min-filter! [texture filter]
+  (j/assoc! texture .-minFilter filter))
+
+(defn update-matrix! [model]
+  (.updateMatrix model))
+
+(defn set-matrix-at! [model index matrix]
+  (.setMatrixAt model index matrix))
+
+(defn get-elapsed-time [clock]
+  (.getElapsedTime clock))
+
+(defn get-matrix [model]
+  (.-matrix model))
+
+(defn set-instance-matrix-needs-update! [model val]
+  (j/assoc-in! model [.-instanceMatrix .-needsUpdate] val))
