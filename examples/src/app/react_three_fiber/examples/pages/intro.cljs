@@ -1,12 +1,12 @@
 (ns react-three-fiber.examples.pages.intro
-  (:require [uix.core.alpha :refer [as-react as-element]]
-            [applied-science.js-interop :as j]
+  (:require [cljs-bean.core :refer [bean ->js]]
+            [uix.core.alpha :refer [as-react as-element]]
+            [clojure.string :as string]
             [react-three-fiber.examples.demos :as demos]
             [react-three-fiber.examples.styles :refer [<:page-styles>]]
             [react-three-fiber.examples.lib.styled-components :refer [<:styled-div> simple-css]]
             [react-three-fiber.examples.lib.react-router-dom :refer [use-route-match <:switch> <:route> <:redirect> <:link>]]
-            [cljs-bean.core :refer [bean ->js]]
-            [clojure.string :as string]))
+            [react-three-fiber.examples.lib.helpers :refer [get-match-param]]))
 
 (def github-home-url "https://github.com/binaryage/cljs-react-three-fiber")
 
@@ -17,9 +17,6 @@
 (def default-demo-name (first demos/all-demos))
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
-
-(defn get-match-param [match & [index]]
-  (j/get-in match [.-params (or index 0)]))
 
 (defn lookup-component [name & [default]]
   (get-in all-demos [name :component] default))

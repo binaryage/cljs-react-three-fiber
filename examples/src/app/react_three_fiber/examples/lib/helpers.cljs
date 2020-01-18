@@ -101,3 +101,7 @@
 
 (defn set-instance-matrix-needs-update! [model val]
   (j/assoc-in! model [.-instanceMatrix .-needsUpdate] val))
+
+(defn get-match-param [match & [index]]
+  (j/get-in match [.-params (or index 0)]))
+
