@@ -8,6 +8,25 @@
             [react-three-fiber.examples.lib.react-router-dom :refer [use-route-match switch route redirect link]]
             [clojure.string :as string]))
 
+; -- data -------------------------------------------------------------------------------------------------------------------
+
+(def default-component-name "Box")
+(def visible-components all-demos)
+
+; -- helpers ----------------------------------------------------------------------------------------------------------------
+
+(defn get-match-name [match & [default]]
+  (j/get-in match [.-params .-name] default))
+
+(defn lookup-component [name]
+  (get-in visible-components [name :component]))
+
+(defn demo-canvas [name demo]
+  [:div#demo-canvas {:className (str "demo-" (string/lower-case name))}
+   [demo name]])
+
+; -- styles -----------------------------------------------------------------------------------------------------------------
+
 (def page
   (page-styles
     (simple-css
@@ -19,59 +38,6 @@
                  :bottom    "60px"
                  :right     "60px"
                  :font-size "1.2em"}})))
-
-(def default-component-name "Box")
-(def visible-components all-demos)
-
-(defn get-match-name [match & [default]]
-  (j/get-in match [.-params .-name] default))
-
-(defn lookup-component [name]
-  (get-in visible-components [name :component]))
-
-(declare <demos>)
-
-(defn demo-canvas [name demo]
-  [:div#demo-canvas {:className (str "demo-" (string/lower-case name))}
-   [demo name]])
-
-(defn <intro> []
-  (let [match (use-route-match "/demo/:name")
-        selected-component-name (get-match-name match default-component-name)
-        bright? (get-in visible-components [selected-component-name :bright])]
-    [:> page
-     [:> suspense {:fallback nil}
-      [:> switch
-       [:> route {:exact    true
-                  :path     "/demo/:name"
-                  :children (fn [route-props]
-                              (let [match (.-match route-props)
-                                    selected-component-name (get-match-name match default-component-name)
-                                    component (lookup-component selected-component-name)]
-                                (assert component)
-                                (as-element (demo-canvas selected-component-name component))))}]
-       [:> redirect {:to (str "/demo/" default-component-name)}]]]
-     [<demos>]
-     [:a {:href  "https://github.com/drcmda/react-three-fiber"
-          :style {:color (if bright? "#2c2d31" "white")}}
-      "Github"]]))
-
-(declare demo-panel)
-(declare spot)
-
-(defn <demos> []
-  (let [match (use-route-match "/demo/:name")
-        selected-component-name (get-match-name match default-component-name)
-        bright? (get-in visible-components [selected-component-name :bright])]
-    [:> demo-panel
-     (for [[name] visible-components]
-       (let [selected? (= name selected-component-name)]
-         [:> link {:key name
-                   :to  (str "/demo/" name)}
-          [:> spot {:style {:background (cond
-                                          selected? "salmon"
-                                          bright? "#2c2d31"
-                                          :default "white")}}]]))]))
 
 (def demo-panel
   (styled-div
@@ -94,3 +60,39 @@
        :border-width  "2px"
        :border-style  "solid"})))
 
+; -- components -------------------------------------------------------------------------------------------------------------
+
+(defn <demos> []
+  (let [match (use-route-match "/demo/:name")
+        selected-component-name (get-match-name match default-component-name)
+        bright? (get-in visible-components [selected-component-name :bright])]
+    [:> demo-panel
+     (for [[name] visible-components]
+       (let [selected? (= name selected-component-name)]
+         [:> link {:key name
+                   :to  (str "/demo/" name)}
+          [:> spot {:style {:background (cond
+                                          selected? "salmon"
+                                          bright? "#2c2d31"
+                                          :default "white")}}]]))]))
+
+(defn <intro> []
+  (let [match (use-route-match "/demo/:name")
+        selected-component-name (get-match-name match default-component-name)
+        bright? (get-in visible-components [selected-component-name :bright])]
+    [:> page
+     [:> suspense {:fallback nil}
+      [:> switch
+       [:> route {:exact    true
+                  :path     "/demo/:name"
+                  :children (fn [route-props]
+                              (let [match (.-match route-props)
+                                    selected-component-name (get-match-name match default-component-name)
+                                    component (lookup-component selected-component-name)]
+                                (assert component)
+                                (as-element (demo-canvas selected-component-name component))))}]
+       [:> redirect {:to (str "/demo/" default-component-name)}]]]
+     [<demos>]
+     [:a {:href  "https://github.com/drcmda/react-three-fiber"
+          :style {:color (if bright? "#2c2d31" "white")}}
+      "Github"]]))
