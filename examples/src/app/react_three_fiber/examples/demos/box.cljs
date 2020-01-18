@@ -1,7 +1,6 @@
 (ns react-three-fiber.examples.demos.box
-  (:require [react-three-fiber.core :refer [<:canvas> use-three use-frame]]
-            [uix.core.alpha :as uix]
-            [applied-science.js-interop :as j]
+  (:require [uix.core.alpha :as uix]
+            [react-three-fiber.core :refer [<:canvas> use-three use-frame]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation!]]))
 
 (defn rotate! [node]
