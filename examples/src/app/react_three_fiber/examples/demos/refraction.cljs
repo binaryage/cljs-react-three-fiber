@@ -15,13 +15,13 @@
                                                             update-vec!
                                                             get-gltf-geometry
                                                             set-material!]]
+            [react-three-fiber.examples.lib.misc :refer [gltf-loader-class
+                                                         create-backface-material
+                                                         create-refraction-material]]
             [react-three-fiber.examples.lib.gl :refer [with-gl!]]
             [uix.core.alpha :as uix]
             [cljs-bean.core :refer [bean]]
-            [applied-science.js-interop :as j]
-            ["three/examples/jsm/loaders/GLTFLoader" :refer [GLTFLoader]]
-            ["./../js/shaders/Backface" :default BackfaceMaterial]
-            ["./../js/shaders/Refraction" :default RefractionMaterial]))
+            [applied-science.js-interop :as j]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
 
@@ -47,8 +47,9 @@
 
 ; -- update loop ------------------------------------------------------------------------------------------------------------
 
-(defn update-diamonds [gl viewport camera scene clock dummy model-ref env-fbo backface-fbo backface-material refraction-material diamonds]
-  (let [model @model-ref]
+(defn update-diamonds [gl viewport clock camera scene dummy model-ref resources diamonds]
+  (let [model @model-ref
+        {:keys [env-fbo backface-fbo backface-material refraction-material]} resources]
     (doseq [[i diamond] (map-indexed vector diamonds)]
       (let [t (.getElapsedTime clock)
             {:keys [position rotation direction factor]} (bean diamond)
@@ -74,7 +75,7 @@
 
     ; render env to fbo
     (set-camera-layer! camera 1)
-    (with-gl!
+    (with-gl! gl
       (:-auto-clear false)
       (:set-render-target env-fbo)
       (:render scene camera))
@@ -82,14 +83,14 @@
     ; render cube backfaces to fbo
     (set-camera-layer! camera 0)
     (set-material! model backface-material)
-    (with-gl!
+    (with-gl! gl
       (:set-render-target backface-fbo)
       (:clear-depth)
       (:render scene camera))
 
     ; render env to screen
     (set-camera-layer! camera 1)
-    (with-gl!
+    (with-gl! gl
       (:set-render-target nil)
       (:render scene camera)
       (:clear-depth))
@@ -97,42 +98,41 @@
     ; render cube with refraction material to screen
     (set-camera-layer! camera 0)
     (set-material! model refraction-material)
-    (with-gl! (:render scene camera))))
+    (with-gl! gl (:render scene camera))))
 
 ; -- components -------------------------------------------------------------------------------------------------------------
 
 (defn <diamonds> []
   (let [{:keys [size viewport gl scene camera clock]} (use-three)
         model-ref (uix/ref)
-        gltf (use-loader GLTFLoader diamond-url)
+        gltf (use-loader gltf-loader-class diamond-url)
         gltf-geometry (get-gltf-geometry gltf 1)
-
-        [env-fbo backface-fbo backface-material refraction-material]
-        (uix/memo (fn []
-                    (let [w (.-width size)
-                          h (.-height size)
-                          env-fbo (create-webgl-render-target w h)
-                          backface-fbo (create-webgl-render-target w h)
-                          backface-material (BackfaceMaterial.)
-                          refraction-material (RefractionMaterial. #js {:envMap      (.-texture env-fbo)
-                                                                        :backfaceMap (.-texture backface-fbo)
-                                                                        :resolution  #js [w h]})]
-                      #js [env-fbo backface-fbo backface-material refraction-material]))
-                  [size])
-
+        resources-fn (fn []
+                       (let [width (.-width size)
+                             height (.-height size)
+                             env-fbo (create-webgl-render-target width height)
+                             backface-fbo (create-webgl-render-target width height)
+                             refraction-material-opts {:envMap      (.-texture env-fbo)
+                                                       :backfaceMap (.-texture backface-fbo)
+                                                       :resolution  #js [width height]}]
+                         {:env-fbo             env-fbo
+                          :backface-fbo        backface-fbo
+                          :backface-material   (create-backface-material)
+                          :refraction-material (create-refraction-material refraction-material-opts)}))
+        resources (uix/memo resources-fn [size])
+        diamonds-fn (fn []
+                      (into-array
+                        (->> (range 80)
+                             (map-indexed (partial gen-random-diamond viewport)))))
+        diamonds (uix/memo diamonds-fn [viewport])
         dummy (uix/memo #(create-object-3d))
-
-        diamonds
-        (uix/memo (fn []
-                    (into-array
-                      (->> (range 80)
-                           (map-indexed (partial gen-random-diamond viewport)))))
-                  [viewport])
-
-        ]
-
-    (use-frame (partial update-diamonds gl viewport camera scene clock dummy model-ref env-fbo backface-fbo backface-material refraction-material diamonds) 1)
-
+        update-fn (partial update-diamonds
+                           gl viewport clock
+                           camera scene
+                           dummy model-ref
+                           resources
+                           diamonds)]
+    (use-frame update-fn 1)
     [:instancedMesh {:ref model-ref :args #js [nil nil (count diamonds)]}
      [:bufferGeometry (merge {:dispose false
                               :attach  "geometry"}
