@@ -9,6 +9,8 @@
             [cljs-bean.core :refer [bean ->js]]
             [clojure.string :as string]))
 
+(def github-home-url "https://github.com/binaryage/cljs-react-three-fiber")
+
 ; -- data -------------------------------------------------------------------------------------------------------------------
 
 (def all-demos (apply hash-map demos/all-demos))
@@ -100,6 +102,6 @@
                                 (as-element (<demo-canvas> selected-name component))))}]
        [<:redirect> {:to (str "/demo/" default-demo-name)}]]]
      [<demos-selection>]
-     [:a {:href  "https://github.com/drcmda/react-three-fiber"
+     [:a {:href  github-home-url
           :style {:color (if bright? "#2c2d31" "white")}}
       "Github"]]))
