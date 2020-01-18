@@ -7,14 +7,18 @@
    (str "demo placeholder for '" name "'")])
 
 (def all-demos
-  {"box"        {:component box/<app>}
-   "refraction" {:desc      ""
-                 :tags      []
-                 :component refraction/app
-                 :bright    false}
-   "demo1"      {:desc      ""
-                 :tags      []
-                 :component <demo-placeholder>
-                 :bright    false}})
+  ; note that order matters here, first demo is the default one
+  ["box"
+   {:component box/<app>}
 
-(def default-demo-name "box")
+   "refraction"
+   {:desc      ""
+    :tags      []
+    :component refraction/app
+    :bright    false}
+
+   "demo1"
+   {:desc      ""
+    :tags      []
+    :component <demo-placeholder>
+    :bright    false}])

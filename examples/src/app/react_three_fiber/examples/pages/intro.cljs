@@ -11,9 +11,9 @@
 
 ; -- data -------------------------------------------------------------------------------------------------------------------
 
-(def default-demo-name demos/default-demo-name)
-(def visible-demos demos/all-demos)
-(def all-demo-names (keys visible-demos))
+(def all-demos (apply hash-map demos/all-demos))
+(def all-demo-names (take-nth 2 demos/all-demos))
+(def default-demo-name (first demos/all-demos))
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
@@ -21,7 +21,7 @@
   (j/get-in match [.-params (or index 0)]))
 
 (defn lookup-component [name & [default]]
-  (get-in visible-demos [name :component] default))
+  (get-in all-demos [name :component] default))
 
 (defn prepare-allowed-paths [names]
   (map #(str "/demo/(" % ")") names))
@@ -70,9 +70,9 @@
 (defn <demos-selection> []
   (let [match (use-route-match "/demo/:name")
         selected-name (or (get-match-param match) default-demo-name)
-        bright? (get-in visible-demos [selected-name :bright])]
+        bright? (get-in all-demos [selected-name :bright])]
     [:> demos-selection-panel
-     (for [[name] visible-demos]
+     (for [[name] all-demos]
        (let [selected? (= name selected-name)
              background-color (cond
                                 selected? "salmon"
@@ -85,7 +85,7 @@
 (defn <intro> []
   (let [match (use-route-match "/demo/:name")
         selected-name (or (get-match-param match) default-demo-name)
-        bright? (get-in visible-demos [selected-name :bright])]
+        bright? (get-in all-demos [selected-name :bright])]
     [:> page
      [:> suspense {:fallback nil}
       [:> switch
