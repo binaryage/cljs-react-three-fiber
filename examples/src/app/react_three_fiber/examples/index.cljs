@@ -1,16 +1,16 @@
 (ns react-three-fiber.examples.index
   (:require [uix.dom.alpha :as uix.dom]
-            [react-three-fiber.examples.lib.react-router-dom :refer [router]]
+            [react-three-fiber.examples.lib.react-router-dom :refer [<:router>]]
             [react-three-fiber.examples.lib.dom :refer [get-element-by-id]]
             [react-three-fiber.examples.pages.intro :refer [<intro>]]
-            [react-three-fiber.core :refer [use-frame canvas]]
-            [react-three-fiber.examples.styles :refer [global-styles]]))
+            [react-three-fiber.core :refer [use-frame <:canvas>]]
+            [react-three-fiber.examples.styles :refer [<:global-styles>]]))
 
 ; -- app --------------------------------------------------------------------------------------------------------------------
 
 (defn <app> []
-  [:> router
-   [:> global-styles]
+  [:> <:router>
+   [:> <:global-styles>]
    [<intro>]])
 
 ; ---------------------------------------------------------------------------------------------------------------------------

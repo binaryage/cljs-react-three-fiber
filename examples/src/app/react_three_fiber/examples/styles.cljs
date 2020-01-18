@@ -5,14 +5,14 @@
                                                                       create-global-style
                                                                       inherit-styles]]))
 
-(def shared-page-styles
+(def <:shared-page-styles>
   (-> (inline-css "./styles/page.scss")
       (styled-div)))
 
-(def global-styles
+(def <:global-styles>
   (-> (inline-css "./styles/global.scss")
       (create-global-style)))
 
-(defn page-styles [& css]
+(defn <:page-styles> [& css]
   (->> (string/join "\n" css)
-       (inherit-styles shared-page-styles)))
+       (inherit-styles <:shared-page-styles>)))

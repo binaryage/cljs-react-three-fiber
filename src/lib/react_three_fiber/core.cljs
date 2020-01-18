@@ -11,7 +11,7 @@
   ([callback priority]
    (useFrame callback priority)))
 
-(def canvas react-three-fiber/Canvas)
+(def <:canvas> react-three-fiber/Canvas)
 
 (defn use-loader
   ([proto url]

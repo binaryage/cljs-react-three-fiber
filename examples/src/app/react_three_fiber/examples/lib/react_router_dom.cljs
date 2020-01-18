@@ -1,15 +1,15 @@
 (ns react-three-fiber.examples.lib.react-router-dom
   (:require [react-router-dom :refer [HashRouter Link Route Redirect Switch useRouteMatch]]))
 
-(def router HashRouter)
-
 (defn use-route-match [path]
   (useRouteMatch path))
 
-(def switch Switch)
+(def <:router> HashRouter)
 
-(def route Route)
+(def <:switch> Switch)
 
-(def redirect Redirect)
+(def <:route> Route)
 
-(def link Link)
+(def <:redirect> Redirect)
+
+(def <:link> Link)
