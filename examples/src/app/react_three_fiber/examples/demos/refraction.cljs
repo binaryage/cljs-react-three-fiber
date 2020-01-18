@@ -16,31 +16,15 @@
             ["./../js/shaders/Backface" :default BackfaceMaterial]
             ["./../js/shaders/Refraction" :default RefractionMaterial]))
 
+; -- constants --------------------------------------------------------------------------------------------------------------
+
 (def texture-url "/resources/images/backdrop.jpg")
 (def diamond-url "/resources/gltf/diamond.glb")
 
 (def aspect-h 3800)
 (def aspect-w 5000)
 
-(defn <background> []
-  (let [{:keys [viewport aspect]} (use-three)
-        texture (use-loader texture-loader-class texture-url)
-        aspect-ratio (/ aspect-w aspect-h)
-        vw (/ (.-width viewport) aspect-w)
-        vh (/ (.-height viewport) aspect-h)
-        base (if (> aspect aspect-ratio) vw vh)
-        adapted-height (* aspect-h base)
-        adapted-width (* aspect-w base)]
-    (uix/memo (fn []
-                (j/assoc! texture .-minFilter linear-filter))
-              [(.-minFilter texture)])
-
-    [:mesh {:layers 1
-            :scale  #js [adapted-width adapted-height 1]}
-     [:planeBufferGeometry {:attach "geometry"}]
-     [:meshBasicMaterial {:attach    "material"
-                          :map       texture
-                          :depthTest false}]]))
+; -- helpers ----------------------------------------------------------------------------------------------------------------
 
 (defn gen-random-diamond [viewport i]
   (let [w (.-width viewport)
@@ -53,6 +37,8 @@
          :rotation  #js [(sin-pi r6)
                          (sin-pi r7)
                          (cos-pi r8)]}))
+
+; -- update loop ------------------------------------------------------------------------------------------------------------
 
 (defn update-diamonds [gl viewport camera scene clock dummy model-ref env-fbo backface-fbo backface-material refraction-material diamonds]
   (let [model @model-ref]
@@ -109,6 +95,8 @@
     (j/assoc! model .-material refraction-material)
     (j/call gl .-render scene camera)))
 
+; -- components -------------------------------------------------------------------------------------------------------------
+
 (defn <diamonds> []
   (let [{:keys [size viewport gl scene camera clock]} (use-three)
         model (uix/ref)
@@ -148,7 +136,27 @@
                              (bean gltf-geometry))]
      [:meshBasicMaterial {:attach "material"}]]))
 
-(defn app []
+(defn <background> []
+  (let [{:keys [viewport aspect]} (use-three)
+        texture (use-loader texture-loader-class texture-url)
+        aspect-ratio (/ aspect-w aspect-h)
+        vw (/ (.-width viewport) aspect-w)
+        vh (/ (.-height viewport) aspect-h)
+        base (if (> aspect aspect-ratio) vw vh)
+        adapted-height (* aspect-h base)
+        adapted-width (* aspect-w base)]
+    (uix/memo (fn []
+                (j/assoc! texture .-minFilter linear-filter))
+              [(.-minFilter texture)])
+
+    [:mesh {:layers 1
+            :scale  #js [adapted-width adapted-height 1]}
+     [:planeBufferGeometry {:attach "geometry"}]
+     [:meshBasicMaterial {:attach    "material"
+                          :map       texture
+                          :depthTest false}]]))
+
+(defn <app> []
   [:> <:canvas> {:camera #js {:fov 50 :position #js [0 0 30]}}
    [:> <:suspense> {:fallback nil}
     [<background>]

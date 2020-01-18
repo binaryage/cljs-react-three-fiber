@@ -14,7 +14,7 @@
    "refraction"
    {:desc      ""
     :tags      []
-    :component refraction/app
+    :component refraction/<app>
     :bright    false}
 
    "demo1"
