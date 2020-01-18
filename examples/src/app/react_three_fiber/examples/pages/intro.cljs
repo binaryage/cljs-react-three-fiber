@@ -29,13 +29,13 @@
 (defn lookup-component [name]
   (get-in visible-components [name :component]))
 
-(declare demos)
+(declare <demos>)
 
 (defn demo-canvas [name demo]
   [:div#demo-canvas {:className (str "demo-" (string/lower-case name))}
    [demo name]])
 
-(defn intro []
+(defn <intro> []
   (let [match (use-route-match "/demo/:name")
         selected-component-name (get-match-name match default-component-name)
         bright? (get-in visible-components [selected-component-name :bright])]
@@ -51,7 +51,7 @@
                                 (assert component)
                                 (as-element (demo-canvas selected-component-name component))))}]
        [:> redirect {:to (str "/demo/" default-component-name)}]]]
-     [demos]
+     [<demos>]
      [:a {:href  "https://github.com/drcmda/react-three-fiber"
           :style {:color (if bright? "#2c2d31" "white")}}
       "Github"]]))
@@ -59,7 +59,7 @@
 (declare demo-panel)
 (declare spot)
 
-(defn demos []
+(defn <demos> []
   (let [match (use-route-match "/demo/:name")
         selected-component-name (get-match-name match default-component-name)
         bright? (get-in visible-components [selected-component-name :bright])]

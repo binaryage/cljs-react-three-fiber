@@ -8,7 +8,7 @@
   (j/update-in! node [.-rotation .-x] #(+ % 0.01))
   (j/update-in! node [.-rotation .-y] #(+ % 0.01)))
 
-(defn box []
+(defn <box> []
   (let [mesh-ref (uix/ref)]
     (use-frame #(rotate @mesh-ref))
     [:mesh {:ref             mesh-ref
@@ -18,7 +18,7 @@
      [:boxBufferGeometry {:attach "geometry" :args #js [1, 2, 3]}]
      [:meshNormalMaterial {:attach "material"}]]))
 
-(defn app []
+(defn <app> []
   [:> canvas {:camera #js {:fov 75 :position #js [0 0 5]}}
    [:> suspense {:fallback nil}
-    [box]]])
+    [<box>]]])

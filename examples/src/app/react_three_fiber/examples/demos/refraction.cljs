@@ -22,7 +22,7 @@
 (def aspect-h 3800)
 (def aspect-w 5000)
 
-(defn background []
+(defn <background> []
   (let [{:keys [viewport aspect]} (use-three)
         texture (use-loader texture-loader-class texture-url)
         aspect-ratio (/ aspect-w aspect-h)
@@ -109,7 +109,7 @@
     (j/assoc! model .-material refraction-material)
     (j/call gl .-render scene camera)))
 
-(defn diamonds []
+(defn <diamonds> []
   (let [{:keys [size viewport gl scene camera clock]} (use-three)
         model (uix/ref)
         gltf (use-loader GLTFLoader diamond-url)
@@ -151,5 +151,5 @@
 (defn app []
   [:> canvas {:camera #js {:fov 50 :position #js [0 0 30]}}
    [:> suspense {:fallback nil}
-    [background]
-    [diamonds]]])
+    [<background>]
+    [<diamonds>]]])
