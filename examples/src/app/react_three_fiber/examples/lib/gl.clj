@@ -32,24 +32,33 @@
         `(~'applied-science.js-interop/assoc! ~gl-sym ~command-sym ~@args)))))
 
 (defmacro with-gl! [& body]
-  (let [implicit-gl? (list? (first body))
-        gl-sym (if implicit-gl? 'gl (gensym "gl_"))
+  (let [first-item (first body)
+        implicit-gl? (and (list? first-item) (keyword? (first first-item)))
+        plain-gl? (symbol? first-item)
+        gl-sym (cond
+                 implicit-gl? 'gl
+                 plain-gl? first-item
+                 :else (gensym "gl_"))
         effective-body (if implicit-gl? body (rest body))
         commands (prepare-gl-commands gl-sym effective-body)]
-    (if implicit-gl?
+    (if (or implicit-gl? plain-gl?)
       `(do ~@commands)
-      `(let [~gl-sym ~(first body)]
+      `(let [~gl-sym ~first-item]
          ~@commands))))
 
 ; ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 (comment
 
-  (macroexpand-1 '(with-gl! gl
+  (macroexpand-1 '(with-gl!
                     (:setRenderTarget! 1)
                     (:-autoClear! false)))
 
-  (macroexpand-1 '(with-gl!
+  (macroexpand-1 '(with-gl! glsymbol
+                    (:setRenderTarget! 1)
+                    (:-autoClear! false)))
+
+  (macroexpand-1 '(with-gl! (some-code 1 2 3)
                     (:setRenderTarget! 1)
                     (:-autoClear! false)))
 
