@@ -70,7 +70,7 @@
 (defn <demos-selection> []
   (let [match (use-route-match "/demo/(.*)")
         selected-name (or (get-match-param match) default-demo-name)
-        bright? (get-in all-demos [selected-name :bright])]
+        bright? (get-in all-demos [selected-name :bright?])]
     [<:demos-selection-panel>
      (for [name all-demo-names]
        (let [selected? (= name selected-name)
@@ -85,7 +85,7 @@
 (defn <intro> []
   (let [match (use-route-match "/demo/(.*)")
         selected-name (or (get-match-param match) default-demo-name)
-        bright? (get-in all-demos [selected-name :bright])]
+        bright? (get-in all-demos [selected-name :bright?])]
     [<:page>
      [<:suspense> {:fallback nil}
       [<:switch>

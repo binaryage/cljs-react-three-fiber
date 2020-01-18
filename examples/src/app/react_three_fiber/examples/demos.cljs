@@ -9,16 +9,16 @@
 (def all-demos
   ; note that order matters here, first demo is the default one
   ["box"
-   {:component box/<app>}
+   {:component box/<app>
+    :bright?   true}
 
    "refraction"
    {:desc      ""
     :tags      []
-    :component refraction/<app>
-    :bright    false}
+    :component refraction/<app>}
 
    "demo1"
    {:desc      ""
     :tags      []
     :component <demo-placeholder>
-    :bright    false}])
+    :bright?   true}])
