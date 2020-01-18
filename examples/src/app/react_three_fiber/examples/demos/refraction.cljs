@@ -1,8 +1,11 @@
 (ns react-three-fiber.examples.demos.refraction
   (:require [react-three-fiber.core :refer [canvas use-three use-frame use-loader]]
             [react-three-fiber.examples.lib.react :refer [suspense]]
-            [react-three-fiber.examples.lib.three :refer [texture-loader]]
-            [three :refer [LinearFilter WebGLRenderTarget Object3D]]
+            [react-three-fiber.examples.lib.three :refer [create-texture-loader
+                                                          texture-loader-class
+                                                          linear-filter
+                                                          create-webgl-render-target
+                                                          create-object-3d]]
             [uix.core.alpha :as uix]
             [cljs-bean.core :refer [bean]]
             [applied-science.js-interop :as j]
@@ -18,7 +21,7 @@
 
 (defn background []
   (let [{:keys [viewport aspect]} (use-three)
-        texture (use-loader texture-loader texture-url)
+        texture (use-loader texture-loader-class texture-url)
         aspect-ratio (/ aspect-w aspect-h)
         vw (/ (.-width viewport) aspect-w)
         vh (/ (.-height viewport) aspect-h)
@@ -26,7 +29,7 @@
         adapted-height (* aspect-h base)
         adapted-width (* aspect-w base)]
     (uix/memo (fn []
-                (j/assoc! texture .-minFilter LinearFilter))
+                (j/assoc! texture .-minFilter linear-filter))
               [(.-minFilter texture)])
 
     [:> "mesh" {:layers 1
@@ -122,8 +125,8 @@
         (uix/memo (fn []
                     (let [w (.-width size)
                           h (.-height size)
-                          env-fbo (WebGLRenderTarget. w h)
-                          backface-fbo (WebGLRenderTarget. w h)
+                          env-fbo (create-webgl-render-target w h)
+                          backface-fbo (create-webgl-render-target w h)
                           backface-material (BackfaceMaterial.)
                           refraction-material (RefractionMaterial. #js {:envMap      (.-texture env-fbo)
                                                                         :backfaceMap (.-texture backface-fbo)
@@ -131,8 +134,7 @@
                       #js [env-fbo backface-fbo backface-material refraction-material]))
                   [size])
 
-        dummy (uix/memo (fn []
-                          (Object3D.)))
+        dummy (uix/memo #(create-object-3d))
 
         diamonds
         (uix/memo (fn []
