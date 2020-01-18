@@ -8,7 +8,13 @@
                                                           create-object-3d]]
             [react-three-fiber.examples.lib.helpers :refer [sin-pi cos-pi
                                                             give-random-number
-                                                            set-camera-layer!]]
+                                                            set-camera-layer!
+                                                            set-position!
+                                                            set-rotation!
+                                                            set-scale!
+                                                            delta-rotation
+                                                            update-vec!
+                                                            get-gltf-geometry]]
             [uix.core.alpha :as uix]
             [cljs-bean.core :refer [bean]]
             [applied-science.js-interop :as j]
@@ -21,8 +27,8 @@
 (def texture-url "/resources/images/backdrop.jpg")
 (def diamond-url "/resources/gltf/diamond.glb")
 
-(def aspect-h 3800)
-(def aspect-w 5000)
+(def aspect-height 3800)
+(def aspect-width 5000)
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
@@ -44,27 +50,21 @@
   (let [model @model-ref]
     (doseq [[i diamond] (map-indexed vector diamonds)]
       (let [t (.getElapsedTime clock)
-            position (j/get diamond .-position)
-            rotation (j/get diamond .-rotation)
-            direction (j/get diamond .-direction)
-            factor (j/get diamond .-factor)
+            {:keys [position rotation direction factor]} (bean diamond)
             rot-delta (* factor t)
-            s (+ 1 factor)]
-        (j/update! position 1 (fn [old-y] (- old-y (* (/ factor 5) direction))))
+            scale (+ 1 factor)]
+        (update-vec! position (fn [x y z] #js [x (- y (* (/ factor 5) direction)) z]))
 
-        (when (if (= direction 1) (< (j/get position 1) -50) (> (j/get position 1) 50))
+        (when (if (= direction 1) (< (aget position 1) -50) (> (aget position 1) 50))
           (let [w (.-width viewport)
                 [r1] (repeatedly give-random-number)]
-            (j/assoc! diamond .-position #js[(if (< i 5) 0 (- (/ w 2) (* r1 w)))
-                                             (* 50 direction)
-                                             (j/get position 2)])))
+            (update-vec! position (constantly #js[(if (< i 5) 0 (- (/ w 2) (* r1 w)))
+                                                  (* 50 direction)
+                                                  (aget position 2)]))))
 
-        (j/call-in dummy [.-position .-set] (j/get position 0) (j/get position 1) (j/get position 2))
-        (j/call-in dummy [.-rotation .-set]
-                   (+ (j/get rotation 0) rot-delta)
-                   (+ (j/get rotation 1) rot-delta)
-                   (+ (j/get rotation 2) rot-delta))
-        (j/call-in dummy [.-scale .-set] s s s)
+        (set-position! dummy position)
+        (set-rotation! dummy (delta-rotation rotation rot-delta rot-delta rot-delta))
+        (set-scale! dummy scale scale scale)
 
         (.updateMatrix dummy)
         (.setMatrixAt model i (.-matrix dummy))))
@@ -99,9 +99,9 @@
 
 (defn <diamonds> []
   (let [{:keys [size viewport gl scene camera clock]} (use-three)
-        model (uix/ref)
+        model-ref (uix/ref)
         gltf (use-loader GLTFLoader diamond-url)
-        gltf-geometry (j/get-in gltf [.-__$ 1 .-geometry])
+        gltf-geometry (get-gltf-geometry gltf 1)
 
         [env-fbo backface-fbo backface-material refraction-material]
         (uix/memo (fn []
@@ -127,10 +127,9 @@
 
         ]
 
-    (use-frame (partial update-diamonds gl viewport camera scene clock dummy model env-fbo backface-fbo backface-material refraction-material diamonds) 1)
+    (use-frame (partial update-diamonds gl viewport camera scene clock dummy model-ref env-fbo backface-fbo backface-material refraction-material diamonds) 1)
 
-    [:instancedMesh {:ref  model
-                     :args #js [nil nil (count diamonds)]}
+    [:instancedMesh {:ref model-ref :args #js [nil nil (count diamonds)]}
      [:bufferGeometry (merge {:dispose false
                               :attach  "geometry"}
                              (bean gltf-geometry))]
@@ -139,12 +138,12 @@
 (defn <background> []
   (let [{:keys [viewport aspect]} (use-three)
         texture (use-loader texture-loader-class texture-url)
-        aspect-ratio (/ aspect-w aspect-h)
-        vw (/ (.-width viewport) aspect-w)
-        vh (/ (.-height viewport) aspect-h)
-        base (if (> aspect aspect-ratio) vw vh)
-        adapted-height (* aspect-h base)
-        adapted-width (* aspect-w base)]
+        aspect-ratio (/ aspect-width aspect-height)
+        viewport-width (/ (.-width viewport) aspect-width)
+        viewport-height (/ (.-height viewport) aspect-height)
+        base (if (> aspect aspect-ratio) viewport-width viewport-height)
+        adapted-height (* aspect-height base)
+        adapted-width (* aspect-width base)]
     (uix/memo (fn []
                 (j/assoc! texture .-minFilter linear-filter))
               [(.-minFilter texture)])
