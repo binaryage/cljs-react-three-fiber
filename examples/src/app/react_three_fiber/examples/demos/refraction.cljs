@@ -73,28 +73,31 @@
     (j/assoc-in! model [.-instanceMatrix .-needsUpdate] true)
 
     ; render env to fbo
-    (j/assoc! gl .-autoClear false)
     (set-camera-layer! camera 1)
-    (j/call gl .-setRenderTarget env-fbo)
-    (j/call gl .-render scene camera)
+    (with-gl!
+      (:-auto-clear false)
+      (:set-render-target env-fbo)
+      (:render scene camera))
 
     ; render cube backfaces to fbo
     (set-camera-layer! camera 0)
     (set-material! model backface-material)
-    (j/call gl .-setRenderTarget backface-fbo)
-    (j/call gl .-clearDepth)
-    (j/call gl .-render scene camera)
+    (with-gl!
+      (:set-render-target backface-fbo)
+      (:clear-depth)
+      (:render scene camera))
 
     ; render env to screen
     (set-camera-layer! camera 1)
-    (j/call gl .-setRenderTarget nil)
-    (j/call gl .-render scene camera)
-    (j/call gl .-clearDepth)
+    (with-gl!
+      (:set-render-target nil)
+      (:render scene camera)
+      (:clear-depth))
 
     ; render cube with refraction material to screen
     (set-camera-layer! camera 0)
     (set-material! model refraction-material)
-    (j/call gl .-render scene camera)))
+    (with-gl! (:render scene camera))))
 
 ; -- components -------------------------------------------------------------------------------------------------------------
 
