@@ -52,3 +52,6 @@
 
 (defn get-gltf-geometry [gltf & [index]]
   (j/get-in gltf [.-__$ (or index 0) .-geometry]))
+
+(defn set-material! [model material]
+  (j/assoc! model .-material material))

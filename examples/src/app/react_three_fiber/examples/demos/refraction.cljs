@@ -13,7 +13,9 @@
                                                             set-scale!
                                                             delta-rotation
                                                             update-vec!
-                                                            get-gltf-geometry]]
+                                                            get-gltf-geometry
+                                                            set-material!]]
+            [react-three-fiber.examples.lib.gl :refer [with-gl!]]
             [uix.core.alpha :as uix]
             [cljs-bean.core :refer [bean]]
             [applied-science.js-interop :as j]
@@ -78,7 +80,7 @@
 
     ; render cube backfaces to fbo
     (set-camera-layer! camera 0)
-    (j/assoc! model .-material backface-material)
+    (set-material! model backface-material)
     (j/call gl .-setRenderTarget backface-fbo)
     (j/call gl .-clearDepth)
     (j/call gl .-render scene camera)
@@ -91,7 +93,7 @@
 
     ; render cube with refraction material to screen
     (set-camera-layer! camera 0)
-    (j/assoc! model .-material refraction-material)
+    (set-material! model refraction-material)
     (j/call gl .-render scene camera)))
 
 ; -- components -------------------------------------------------------------------------------------------------------------
