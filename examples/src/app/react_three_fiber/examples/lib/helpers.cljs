@@ -2,6 +2,12 @@
   (:require [cljs-bean.core :refer [bean]]
             [applied-science.js-interop :as j]))
 
+(defn sin [x]
+  (Math/sin x))
+
+(defn cos [x]
+  (Math/cos x))
+
 (defn give-random-number []
   (Math/random))
 
@@ -75,9 +81,6 @@
     (aset v 2 (aget res 2)))
   v)
 
-(defn get-gltf-geometry [gltf & [index]]
-  (j/get-in gltf [.-__$ (or index 0) .-geometry]))
-
 (defn set-material! [model material]
   (j/assoc! model .-material material))
 
@@ -105,3 +108,18 @@
 (defn get-match-param [match & [index]]
   (j/get-in match [.-params (or index 0)]))
 
+
+(defn get-gltf-geometry [gltf & [index]]
+  (j/get-in gltf [.-__$ (or index 0) .-geometry]))
+
+(defn get-gltf-material [gltf & [index]]
+  (j/get-in gltf [.-__$ (or index 0) .-material]))
+
+(defn get-gltf-morph-target-dictionary [gltf & [index]]
+  (j/get-in gltf [.-__$ (or index 0) .-morphTargetDictionary]))
+
+(defn get-gltf-morph-target-influences [gltf & [index]]
+  (j/get-in gltf [.-__$ (or index 0) .-morphTargetInfluences]))
+
+(defn get-gltf-animation [gltf & [index]]
+  (j/get-in gltf [.-animations (or index 0)]))

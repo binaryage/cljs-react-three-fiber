@@ -1,5 +1,6 @@
 (ns react-three-fiber.examples.lib.three
-  (:require [three :refer [TextureLoader LinearFilter WebGLRenderTarget Object3D]]))
+  (:require [three :refer [TextureLoader FontLoader LinearFilter WebGLRenderTarget Object3D Vector3
+                           AnimationMixer]]))
 
 (def linear-filter LinearFilter)
 
@@ -19,3 +20,18 @@
 
 (defn create-object-3d []
   (object-3d-class.))
+
+(def font-loader-class FontLoader)
+
+(defn create-font-loader
+  ([] (font-loader-class.))
+  ([manager] (font-loader-class. manager)))
+
+(defn create-vector3 []
+  (Vector3.))
+
+(def animation-mixer-class AnimationMixer)
+
+(defn create-animation-mixer
+  ([] (animation-mixer-class.))
+  ([root] (animation-mixer-class. root)))
