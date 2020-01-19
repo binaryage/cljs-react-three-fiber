@@ -165,7 +165,7 @@
                           :map       texture
                           :depthTest false}]]))
 
-(defn <app> []
+(defn <demo> []
   [<:canvas> {:camera #js {:fov 50 :position #js [0 0 30]}}
    [:# {:fallback "loading refraction demo"}
     [<background>]

@@ -20,7 +20,7 @@
      [:boxBufferGeometry {:attach "geometry" :args #js [1, 1, 1]}]
      [:meshNormalMaterial {:attach "material"}]]))
 
-(defn <app> []
+(defn <demo> []
   [<:canvas> {:camera #js {:fov 75 :position #js [0 0 2]}}
    [:# {:fallback "loading box demo"}
     [<box>]]])

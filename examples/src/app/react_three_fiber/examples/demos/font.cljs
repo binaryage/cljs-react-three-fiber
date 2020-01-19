@@ -139,7 +139,7 @@
                 :speed    speed
                 :factor   factor}]))])
 
-(defn <app> []
+(defn <demo> []
   [<:canvas> {:camera #js {:position #js [0 0 35]}
               :style  {:background "radial-gradient(at 50% 60%, #873740 0%, #272730 40%, #171720 80%, #070710 100%)"}}
    [:ambientLight {:intensity 2}]

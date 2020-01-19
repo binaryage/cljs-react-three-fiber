@@ -10,18 +10,18 @@
 (def all-demos
   ; note that order matters here, first demo is the default one
   ["box"
-   {:component box/<app>
+   {:component box/<demo>
     :bright?   true}
 
    "refraction"
    {:desc      ""
     :tags      []
-    :component refraction/<app>}
+    :component refraction/<demo>}
 
    "font"
    {:desc      ""
     :tags      []
-    :component font/<app>}
+    :component font/<demo>}
 
    "demo1"
    {:desc      ""
