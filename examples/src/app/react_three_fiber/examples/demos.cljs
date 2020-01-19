@@ -1,7 +1,8 @@
 (ns react-three-fiber.examples.demos
   (:require [react-three-fiber.examples.demos.box :as box]
             [react-three-fiber.examples.demos.refraction :as refraction]
-            [react-three-fiber.examples.demos.font :as font]))
+            [react-three-fiber.examples.demos.font :as font]
+            [react-three-fiber.examples.demos.mesh-line :as mesh-line]))
 
 (defn <demo-placeholder> [props _component]
   [:div.demo-placeholder
@@ -22,6 +23,12 @@
    {:desc      ""
     :tags      []
     :component font/<demo>}
+
+   "mesh-line"
+   {:desc      ""
+    :tags      []
+    :component mesh-line/<demo>
+    :bright?   true}
 
    "demo1"
    {:desc      ""

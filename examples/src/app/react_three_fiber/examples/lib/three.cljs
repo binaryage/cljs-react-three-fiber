@@ -1,6 +1,6 @@
 (ns react-three-fiber.examples.lib.three
   (:require [three :refer [TextureLoader FontLoader LinearFilter WebGLRenderTarget Object3D Vector3
-                           AnimationMixer]]))
+                           AnimationMixer CatmullRomCurve3]]))
 
 (def linear-filter LinearFilter)
 
@@ -27,11 +27,17 @@
   ([] (font-loader-class.))
   ([manager] (font-loader-class. manager)))
 
-(defn create-vector3 []
-  (Vector3.))
+(defn create-vector3
+  ([] (Vector3.))
+  ([x y z] (Vector3. x y z)))
 
 (def animation-mixer-class AnimationMixer)
 
 (defn create-animation-mixer
   ([] (animation-mixer-class.))
   ([root] (animation-mixer-class. root)))
+
+(def catmull-rom-curve3-class CatmullRomCurve3)
+
+(defn create-catmull-rom-curve3
+  ([points] (catmull-rom-curve3-class. points)))
