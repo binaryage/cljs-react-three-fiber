@@ -61,9 +61,10 @@
 
 ; -- components -------------------------------------------------------------------------------------------------------------
 
-(defn <demo-canvas> [name <demo>]
-  [:div#demo-canvas {:className (str "demo-" (string/lower-case name))}
-   [<demo> name]])
+(defn <demo-canvas> [props <demo>]
+  (let [{:keys [name]} props]
+    [:div#demo-canvas {:className (str "demo-" (string/lower-case name))}
+     [<demo> {:name name}]]))
 
 (defn <demos-selection> []
   (let [match (use-route-match "/demo/(.*)")
@@ -95,7 +96,7 @@
                                     _ (assert selected-name)
                                     component (lookup-component selected-name default-demo-name)
                                     _ (assert component)]
-                                (as-element (<demo-canvas> selected-name component))))}]
+                                (as-element (<demo-canvas> {:name selected-name} component))))}]
        [<:redirect> {:to (str "/demo/" default-demo-name)}]]]
      [<demos-selection>]
      [:a {:href  github-home-url

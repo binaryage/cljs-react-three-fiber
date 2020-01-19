@@ -3,9 +3,9 @@
             [react-three-fiber.examples.demos.refraction :as refraction]
             [react-three-fiber.examples.demos.font :as font]))
 
-(defn <demo-placeholder> [name _component]
+(defn <demo-placeholder> [props _component]
   [:div.demo-placeholder
-   (str "demo placeholder for '" name "'")])
+   (str "demo placeholder for '" (:name props) "'")])
 
 (def all-demos
   ; note that order matters here, first demo is the default one
