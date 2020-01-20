@@ -8,10 +8,10 @@
 
   uix.core                    {:git/url   "https://github.com/roman01la/uix.git"
                                :deps/root "core"
-                               :sha       "d640324d5bbcc7869e72b75c52b037676628a3ac"}
+                               :sha       "27172a3a24e7ee099f6c7e2b137cf2965eb6538c"}
   uix.dom                     {:git/url   "https://github.com/roman01la/uix.git"
                                :deps/root "dom"
-                               :sha       "d640324d5bbcc7869e72b75c52b037676628a3ac"}
+                               :sha       "27172a3a24e7ee099f6c7e2b137cf2965eb6538c"}
 
   binaryage/react-three-fiber {:local/root ".."}
   binaryage/devtools          {:mvn/version "RELEASE"}
