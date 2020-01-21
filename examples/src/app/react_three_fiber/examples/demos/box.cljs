@@ -22,5 +22,4 @@
 
 (defn <demo> []
   [<:canvas> {:camera #js {:fov 75 :position #js [0 0 2]}}
-   [:# {:fallback "loading box demo"}
-    [<box>]]])
+   [<box>]])
