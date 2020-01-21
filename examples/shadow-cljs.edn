@@ -5,6 +5,10 @@
             {:target     :browser
              :output-dir "public/.compiled"
              :asset-path "/.compiled"
+             :js-options {; this is needed to instruct closure compiler to NOT remove unused names of anonymous functions
+                          ; this is preferred, we want to see all component names in React Devtools
+                          ; https://github.com/react-spring/react-three-fiber/issues/282
+                          :anon-fn-naming-policy :unmapped}
              :devtools   {; TODO: remove after https://github.com/thheller/shadow-cljs/issues/637
                           :loader-mode :script
                           :preloads    [react-three-fiber.examples.preload]}
