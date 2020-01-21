@@ -1,6 +1,7 @@
 (ns react-three-fiber.examples.lib.three
   (:require [three :refer [TextureLoader FontLoader LinearFilter WebGLRenderTarget Object3D Vector3
-                           AnimationMixer CatmullRomCurve3]]))
+                           AnimationMixer CatmullRomCurve3]]
+            [applied-science.js-interop :as j]))
 
 (def linear-filter LinearFilter)
 
@@ -41,3 +42,6 @@
 
 (defn create-catmull-rom-curve3
   ([points] (catmull-rom-curve3-class. points)))
+
+(defn deg-to-rad [n]
+  (j/call-in three [.-Math .-degToRad] n))
