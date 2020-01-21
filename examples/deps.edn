@@ -23,4 +23,5 @@
 
  :paths
  ["src/app"
+  "src/dev"
   "src/hacks"]}

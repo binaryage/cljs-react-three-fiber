@@ -5,5 +5,7 @@
             {:target     :browser
              :output-dir "public/.compiled"
              :asset-path "/.compiled"
-             :devtools   {:loader-mode :script}                                                                               ; TODO: remove after https://github.com/thheller/shadow-cljs/issues/637
+             :devtools   {; TODO: remove after https://github.com/thheller/shadow-cljs/issues/637
+                          :loader-mode :script
+                          :preloads    [react-three-fiber.examples.preload]}
              :modules    {:main {:init-fn react-three-fiber.examples.index/main!}}}}}
