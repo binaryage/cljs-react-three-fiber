@@ -20,6 +20,9 @@
 (defn set-camera-layer! [camera layer]
   (j/call-in camera [.-layers .-set] layer))
 
+(defn camera-look-at! [camera x y z]
+  (j/call camera .-lookAt x y z))
+
 (defn set-position!
   ([o v]
    (set-position! o (get v 0) (get v 1) (get v 2)))
@@ -123,3 +126,26 @@
 
 (defn get-gltf-animation [gltf & [index]]
   (j/get-in gltf [.-animations (or index 0)]))
+
+(defn interpolate [o f]
+  (j/call o .-interpolate f))
+
+(defn get-shape-uuid [o]
+  (j/get-in o [.-shape .-uuid]))
+
+(defn get-path-fill-opacity [path]
+  (j/get-in path [.-userData .-style .-fillOpacity]))
+
+(defn get-path-color [path]
+  (j/get path .-color))
+
+(defn path->raw-shapes
+  ([path]
+   (j/call path .-toShapes))
+  ([path is-ccw?]
+   (j/call path .-toShapes is-ccw?))
+  ([path is-ccw? no-holes?]
+   (j/call path .-toShapes is-ccw? no-holes?)))
+
+(defn get-spring-color [spring]
+  (j/get spring .-color))

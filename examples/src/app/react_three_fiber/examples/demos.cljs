@@ -3,7 +3,8 @@
             [react-three-fiber.examples.demos.refraction :as refraction]
             [react-three-fiber.examples.demos.font :as font]
             [react-three-fiber.examples.demos.montage :as montage]
-            [react-three-fiber.examples.demos.mesh-line :as mesh-line]))
+            [react-three-fiber.examples.demos.mesh-line :as mesh-line]
+            [react-three-fiber.examples.demos.svg-loader :as svg-loader]))
 
 (defn <demo-placeholder> [props _component]
   [:div.demo-placeholder
@@ -36,6 +37,11 @@
     :tags      []
     :component mesh-line/<demo>
     :bright?   true}
+
+   "svg-loader"
+   {:desc      ""
+    :tags      []
+    :component svg-loader/<demo>}
 
    "demo1"
    {:desc      ""
