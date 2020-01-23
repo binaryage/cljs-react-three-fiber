@@ -14,9 +14,25 @@
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
 
-(def colors ["#21242d" "#ea5158" "#0d4663" "#ffbcb7" "#2d4a3e" "#8bd8d2"])
+(def page-flip-delay 3000)
+(def background-color-spring-delay 500)
+
+(def svg-colors ["#21242d" "#ea5158" "#0d4663" "#ffbcb7" "#2d4a3e" "#8bd8d2"])
 (def svg-names ["night" "city" "morning" "tubes" "woods" "beach"])
-(def all-urls (map #(str "resources/images/svg/" % ".svg") svg-names))
+(def svg-urls (map #(str "resources/images/svg/" % ".svg") svg-names))
+
+(def camera-config #js {:fov      90
+                        :position #js [0 0 550]
+                        :near     0.1
+                        :far      20000})
+
+(def transition-spring-config #js {:mass     4
+                                   :tension  500
+                                   :friction 100})
+
+(def background-color-spring-config #js {:mass     5
+                                         :tension  800
+                                         :friction 400})
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
@@ -33,10 +49,33 @@
                                 :index       index})]
     (map raw-shape->shape raw-shapes)))
 
-(defn prepare-page-shapes-map [svgs]
+(defn prepare-page-shapes [svgs]
   (for [svg svgs]
     (let [{:keys [paths]} (bean svg)]
       (flatten (map-indexed path->shapes paths)))))
+
+(defn make-transition-spec []
+  #js {:from   #js {:rotation #js [0 0.4 0]
+                    :position #js [-500 0 0]
+                    :opacity  0}
+       :enter  #js {:rotation #js [0 0 0]
+                    :position #js [0 0 0]
+                    :opacity  1}
+       :leave  #js {:rotation #js [0 -0.4 0]
+                    :position #js [500 0 0]
+                    :opacity  0}
+       :order  #js ["leave" "enter" "update"]
+       :config transition-spring-config
+       :trail  5
+       :lazy   true
+       :unique true
+       :reset  true})
+
+(defn make-background-color-spring-config [page]
+  #js {:from   #js {:color (first svg-colors)}
+       :color  (nth svg-colors page)
+       :delay  background-color-spring-delay
+       :config background-color-spring-config})
 
 ; -- components -------------------------------------------------------------------------------------------------------------
 
@@ -45,36 +84,24 @@
         current-page (uix/state 0)
         flip-page! #(swap! current-page (fn [i] (js-mod (inc i) (count urls))))
         svgs (use-loader svg-loader (->js urls))
-        page-shapes-map (uix/memo #(->js (prepare-page-shapes-map svgs)) [svgs])
-        spring (use-spring #js {:from   #js {:color (first colors)}
-                                :color  (nth colors @current-page)
-                                :delay  500
-                                :config #js {:mass     5
-                                             :tension  800
-                                             :friction 400}})
-        transitions (use-transition (nth page-shapes-map @current-page)
-                                    get-shape-uuid
-                                    #js {:from   #js {:rotation #js [0 0.4 0] :position #js [-500 0 0] :opacity 0}
-                                         :enter  #js {:rotation #js [0 0 0] :position #js [0 0 0] :opacity 1}
-                                         :leave  #js {:rotation #js [0 -0.4 0] :position #js [500 0 0] :opacity 0}
-                                         :order  #js ["leave" "enter" "update"]
-                                         :config #js {:mass 4 :tension 500 :friction 100}
-                                         :trail  5
-                                         :lazy   true
-                                         :unique true
-                                         :reset  true})]
-    (uix/effect! #(js/setInterval flip-page! 3000), [])
+        pages (uix/memo #(->js (prepare-page-shapes svgs)) [svgs])
+        background-color-spring (use-spring (make-background-color-spring-config @current-page))
+        transitions (use-transition (nth pages @current-page) get-shape-uuid (make-transition-spec))]                         ; transition spec will be mutated
+    (uix/effect! #(js/setInterval flip-page! page-flip-delay), [])
     [:<>
+     ; lights
      [:ambientLight {:intensity 0.5}]
      [:spotLight {:intensity 0.5
                   :position  #js [300 300 4000]}]
+     ; background plane
      [:mesh {:scale    #js [10000 10000 1]
              :rotation #js [0 -0.2 0]}
       [:planeBufferGeometry {:attach "geometry"
                              :args   #js [1 1]}]
-      [:> (animated :meshPhongMaterial) {:attach    "material"
-                                         :color     (get-spring-color spring)
-                                         :depthTest false}]]
+      [:> (animated :meshPhongMaterial) {:attach     "material"
+                                         :color      (get-spring-color background-color-spring)
+                                         :depth-test false}]]
+     ; page shapes
      [:> (animated :group) {:position #js [1220 700 @current-page]
                             :rotation #js [0 0 Math/PI]}
       (for [transition transitions]
@@ -89,7 +116,7 @@
            [:> (animated :meshPhongMaterial) {:attach      "material"
                                               :color       color
                                               :opacity     opacity
-                                              :depthWrite  false
+                                              :depth-write false
                                               :transparent true}]
            [:shapeBufferGeometry {:attach "geometry"
                                   :args   #js [shape]}]]))]]))
@@ -97,9 +124,6 @@
 (defn <demo> []
   [<:canvas> {:invalidate-frameloop true
               :on-created           init-canvas!
-              :camera               #js {:fov      90
-                                         :position #js [0 0 550]
-                                         :near     0.1
-                                         :far      20000}}
+              :camera               camera-config}
    [:# {:fallback "svg-loader demo is loading"}
-    [<scene> {:urls all-urls}]]])
+    [<scene> {:urls svg-urls}]]])
