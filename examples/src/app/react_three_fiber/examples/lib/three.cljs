@@ -5,11 +5,11 @@
 
 (def linear-filter LinearFilter)
 
-(def texture-loader-class TextureLoader)
+(def texture-loader TextureLoader)
 
 (defn create-texture-loader
-  ([] (texture-loader-class.))
-  ([manager] (texture-loader-class. manager)))
+  ([] (texture-loader.))
+  ([manager] (texture-loader. manager)))
 
 (def webgl-render-target-class WebGLRenderTarget)
 
@@ -22,11 +22,11 @@
 (defn create-object-3d []
   (object-3d-class.))
 
-(def font-loader-class FontLoader)
+(def font-loader FontLoader)
 
 (defn create-font-loader
-  ([] (font-loader-class.))
-  ([manager] (font-loader-class. manager)))
+  ([] (font-loader.))
+  ([manager] (font-loader. manager)))
 
 (defn create-vector3
   ([] (Vector3.))

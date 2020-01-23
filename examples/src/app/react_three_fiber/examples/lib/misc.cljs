@@ -5,8 +5,8 @@
             ["./../js/shaders/Backface" :default BackfaceMaterial]
             ["./../js/shaders/Refraction" :default RefractionMaterial]))
 
-(def gltf-loader-class GLTFLoader)
-(def svg-loader-class SVGLoader)
+(def gltf-loader GLTFLoader)
+(def svg-loader SVGLoader)
 
 (def backface-material-class BackfaceMaterial)
 (def refraction-material-class RefractionMaterial)

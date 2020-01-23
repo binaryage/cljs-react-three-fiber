@@ -17,10 +17,10 @@
    (useFrame callback priority)))
 
 (defn use-loader
-  ([loader-class url]
-   (useLoader loader-class url))
-  ([loader-class url extensions]
-   (useLoader loader-class url extensions)))
+  ([loader url]
+   (useLoader loader url))
+  ([loader url extensions]
+   (useLoader loader url extensions)))
 
 (defn use-three []
   (bean (useThree)))

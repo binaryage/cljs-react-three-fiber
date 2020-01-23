@@ -2,7 +2,7 @@
   (:require [uix.core.alpha :as uix]
             [cljs-bean.core :refer [bean ->js]]
             [react-three-fiber.core :refer [<:canvas> use-loader]]
-            [react-three-fiber.examples.lib.misc :refer [svg-loader-class]]
+            [react-three-fiber.examples.lib.misc :refer [svg-loader]]
             [react-three-fiber.examples.lib.react-spring-three :refer [animated use-spring use-transition]]
             [react-three-fiber.examples.lib.helpers :refer [camera-look-at!
                                                             interpolate
@@ -44,7 +44,7 @@
   (let [{:keys [urls]} props
         current-page (uix/state 0)
         flip-page! #(swap! current-page (fn [i] (js-mod (inc i) (count urls))))
-        svgs (use-loader svg-loader-class (->js urls))
+        svgs (use-loader svg-loader (->js urls))
         page-shapes-map (uix/memo #(->js (prepare-page-shapes-map svgs)) [svgs])
         spring (use-spring #js {:from   #js {:color (first colors)}
                                 :color  (nth colors @current-page)

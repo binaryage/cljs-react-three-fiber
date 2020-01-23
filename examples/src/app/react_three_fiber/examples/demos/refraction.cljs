@@ -1,7 +1,7 @@
 (ns react-three-fiber.examples.demos.refraction
   (:require [react-three-fiber.core :refer [<:canvas> use-three use-frame use-loader]]
             [react-three-fiber.examples.lib.three :refer [create-texture-loader
-                                                          texture-loader-class
+                                                          texture-loader
                                                           linear-filter
                                                           create-webgl-render-target
                                                           create-object-3d]]
@@ -22,7 +22,7 @@
                                                             get-elapsed-time
                                                             get-matrix
                                                             set-instance-matrix-needs-update!]]
-            [react-three-fiber.examples.lib.misc :refer [gltf-loader-class
+            [react-three-fiber.examples.lib.misc :refer [gltf-loader
                                                          create-backface-material
                                                          create-refraction-material]]
             [react-three-fiber.examples.lib.gl :refer [with-gl!]]
@@ -111,7 +111,7 @@
 (defn <diamonds> []
   (let [{:keys [size viewport gl scene camera clock]} (use-three)
         model-ref (uix/ref)
-        gltf (use-loader gltf-loader-class diamond-url)
+        gltf (use-loader gltf-loader diamond-url)
         gltf-geometry (get-gltf-geometry gltf 1)
         resources-fn (fn []
                        (let [width (.-width size)
@@ -147,7 +147,7 @@
 
 (defn <background> []
   (let [{:keys [viewport aspect]} (use-three)
-        texture (use-loader texture-loader-class texture-url)
+        texture (use-loader texture-loader texture-url)
         aspect-ratio (/ aspect-width aspect-height)
         viewport-width (/ (.-width viewport) aspect-width)
         viewport-height (/ (.-height viewport) aspect-height)

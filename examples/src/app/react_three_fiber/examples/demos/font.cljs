@@ -1,6 +1,6 @@
 (ns react-three-fiber.examples.demos.font
   (:require [react-three-fiber.core :refer [<:canvas> use-frame use-loader use-update]]
-            [react-three-fiber.examples.lib.three :refer [font-loader-class
+            [react-three-fiber.examples.lib.three :refer [font-loader
                                                           create-animation-mixer
                                                           create-vector3]]
             [react-three-fiber.examples.lib.helpers :refer [give-random-number
@@ -15,7 +15,7 @@
                                                             get-gltf-material
                                                             get-gltf-morph-target-dictionary
                                                             get-gltf-morph-target-influences]]
-            [react-three-fiber.examples.lib.misc :refer [gltf-loader-class]]
+            [react-three-fiber.examples.lib.misc :refer [gltf-loader]]
             [uix.core.alpha :as uix]
             [cljs-bean.core :refer [bean]]
             [applied-science.js-interop :as j]))
@@ -40,7 +40,7 @@
                 h-align "center"
                 size    1
                 color   "#000000"}} props
-        font (use-loader font-loader-class font-url)
+        font (use-loader font-loader font-url)
         font-config-fn (fn []
                          #js {:font           font
                               :size           40
@@ -91,7 +91,7 @@
 
 (defn <bird> [props]
   (let [{:keys [speed factor url]} props
-        gltf (use-loader gltf-loader-class url)
+        gltf (use-loader gltf-loader url)
         group-ref (uix/ref)
         mixer (uix/state #(create-animation-mixer))]
     (uix/effect! (fn []
