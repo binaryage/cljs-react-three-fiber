@@ -6,10 +6,6 @@
             [react-three-fiber.examples.demos.mesh-line :as mesh-line]
             [react-three-fiber.examples.demos.svg-loader :as svg-loader]))
 
-(defn <demo-placeholder> [props _component]
-  [:div.demo-placeholder
-   (str "demo placeholder for '" (:name props) "'")])
-
 (def all-demos
   ; note that order matters here, first demo is the default one
   ["box"
@@ -41,10 +37,4 @@
    "svg-loader"
    {:desc      ""
     :tags      []
-    :component svg-loader/<demo>}
-
-   "demo1"
-   {:desc      ""
-    :tags      []
-    :component <demo-placeholder>
-    :bright?   true}])
+    :component svg-loader/<demo>}])
