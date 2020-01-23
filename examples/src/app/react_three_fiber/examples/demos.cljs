@@ -1,40 +1,37 @@
 (ns react-three-fiber.examples.demos
-  (:require [react-three-fiber.examples.demos.box :as box]
-            [react-three-fiber.examples.demos.refraction :as refraction]
-            [react-three-fiber.examples.demos.font :as font]
-            [react-three-fiber.examples.demos.montage :as montage]
-            [react-three-fiber.examples.demos.mesh-line :as mesh-line]
-            [react-three-fiber.examples.demos.svg-loader :as svg-loader]))
+  (:require [react-three-fiber.examples.lib.loader :refer [lazy-demo]]))
 
 (def all-demos
   ; note that order matters here, first demo is the default one
-  ["box"
-   {:component box/<demo>
+  [
+
+   "box"
+   {:component (lazy-demo "box")
     :bright?   true}
 
    "refraction"
    {:desc      ""
     :tags      []
-    :component refraction/<demo>}
+    :component (lazy-demo "refraction")}
 
    "font"
    {:desc      ""
     :tags      []
-    :component font/<demo>}
+    :component (lazy-demo "font")}
 
    "montage"
    {:desc      ""
     :tags      []
-    :component montage/<demo>
+    :component (lazy-demo "montage")
     :bright?   true}
 
    "mesh-line"
    {:desc      ""
     :tags      []
-    :component mesh-line/<demo>
+    :component (lazy-demo "mesh-line")
     :bright?   true}
 
    "svg-loader"
    {:desc      ""
     :tags      []
-    :component svg-loader/<demo>}])
+    :component (lazy-demo "svg-loader")}])

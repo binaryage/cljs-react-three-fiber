@@ -89,7 +89,7 @@
         selected-demo-name (or (get-match-param match) default-demo-name)
         selected-demo (get all-demos selected-demo-name)]
     [<:page>
-     [:# {:fallback "loading intro page"}
+     [:# {:fallback "loading..."}
       [<:switch>
        [<:route> {:exact    true
                   :path     (->js (all-allowed-paths all-demo-names))
