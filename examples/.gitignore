@@ -4,6 +4,7 @@ public/.compiled
 /target
 /checkouts
 /src/gen
+/vendor
 
 pom.xml
 pom.xml.asc

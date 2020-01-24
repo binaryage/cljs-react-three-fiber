@@ -24,4 +24,14 @@
  :paths
  ["src/app"
   "src/dev"
-  "src/hacks"]}
+  "src/hacks"]
+
+ :aliases
+ {:vendor-uix  {:extra-deps {uix.core {:local/root "vendor/uix/core"}
+                             uix.dom  {:local/root "vendor/uix/dom"}}}
+
+  :shadow-cljs {:extra-deps {thheller/shadow-cljs {:mvn/version "RELEASE"}}
+                :main-opts  ["-m" "shadow.cljs.devtools.cli"]}}
+
+ }
+
