@@ -9,4 +9,5 @@
    "montage" {:component (lazy-demo "montage") :bright? true}
    "mesh-line" {:component (lazy-demo "mesh-line") :bright? true}
    "svg-loader" {:component (lazy-demo "svg-loader")}
-   "physics" {:component (lazy-demo "physics")}])
+   "physics" {:component (lazy-demo "physics")}
+   "gltf-planet" {:component (lazy-demo "gltf-planet")}])

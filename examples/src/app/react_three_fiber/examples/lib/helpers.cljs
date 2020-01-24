@@ -165,3 +165,6 @@
 (defn set-quaternion-copy! [o source]
   (j/call-in o [.-quaternion .-copy] source))
 
+(defn create-float32-array [a]
+  (js/Float32Array. a))
+
