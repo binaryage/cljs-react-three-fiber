@@ -19,8 +19,7 @@
                                                            create-vec3
                                                            add-body-to-world!
                                                            remove-body-from-world!]]
-            [react-three-fiber.examples.lib.interop :refer [doto!]]
-            [applied-science.js-interop :as j]))
+            [react-three-fiber.examples.lib.interop :refer [doto!]]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
 
@@ -46,10 +45,10 @@
       (:shadow-map :-type pcf-soft-shadow-map))))
 
 (defn setup-world! [world]
-  (-> world
-      (j/assoc! .-broadphase (create-naive-broadphase))
-      (j/assoc-in! [.-solver .-iterations] 10)
-      (j/call-in [.-gravity .-set] 0 0 -25)))
+  (doto! world
+    (:-broadphase (create-naive-broadphase))
+    (:solver :-iterations 10)
+    (:gravity :set 0 0 -25)))
 
 (defn schedule-removing-upper-plane! [plane-state-atom]
   (js/setTimeout #(reset! plane-state-atom false) plane-removal-delay))
