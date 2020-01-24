@@ -95,13 +95,12 @@
    [:pointLight {:intensity 20
                  :position  #js [-10 -25 -10]
                  :color     "#200f20"}]
-   [:spotLight {:cast-shadow true
-                :intensity   4
-                :angle       (/ Math/PI 8)
-                :position    #js [15 25 5]
-                ; TODO: figure a way how to quote uix keywords
-                ;:shadow-mapSize-width  2048
-                ;:shadow-mapSize-height 2048
+   [:spotLight {:cast-shadow            true
+                :intensity              4
+                :angle                  (/ Math/PI 8)
+                :position               #js [15 25 5]
+                :'shadow-mapSize-width  2048
+                :'shadow-mapSize-height 2048
                 }]
    [:fog {:attach "fog" :args #js ["#090b1f" 0 25]}]
    [:# {:fallback "loading gltf-planet demo..."}

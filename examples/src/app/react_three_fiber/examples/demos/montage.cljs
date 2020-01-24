@@ -62,14 +62,13 @@
    [:pointLight {:intensity 0.3}]
    ; TODO: it looks like our ambient light is applied twice
    [:ambientLight {:intensity 1}]
-   [:spotLight {:cast-shadow true
-                :intensity   0.2
-                :angle       (/ js/Math.PI 7)
-                :position    #js [150 150 250]
-                :penumbra    1
-                ; TODO: figure a way how to quote uix keywords
-                ;:shadow-mapSize-width  2048
-                ;:shadow-mapSize-height 2048
+   [:spotLight {:cast-shadow            true
+                :intensity              0.2
+                :angle                  (/ js/Math.PI 7)
+                :position               #js [150 150 250]
+                :penumbra               1
+                :'shadow-mapSize-width  2048
+                :'shadow-mapSize-height 2048
                 }]])
 
 (defn <desktop> []
