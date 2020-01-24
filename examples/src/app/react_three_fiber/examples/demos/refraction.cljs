@@ -25,7 +25,7 @@
             [react-three-fiber.examples.lib.misc :refer [gltf-loader
                                                          create-backface-material
                                                          create-refraction-material]]
-            [react-three-fiber.examples.lib.gl :refer [with-gl!]]
+            [react-three-fiber.examples.lib.interop :refer [doto!]]
             [uix.core.alpha :as uix]
             [cljs-bean.core :refer [bean]]))
 
@@ -81,7 +81,7 @@
 
     ; render env to fbo
     (set-camera-layer! camera 1)
-    (with-gl! gl
+    (doto! gl
       (:-auto-clear false)
       (:set-render-target env-fbo)
       (:render scene camera))
@@ -89,14 +89,14 @@
     ; render cube backfaces to fbo
     (set-camera-layer! camera 0)
     (set-material! model backface-material)
-    (with-gl! gl
+    (doto! gl
       (:set-render-target backface-fbo)
       (:clear-depth)
       (:render scene camera))
 
     ; render env to screen
     (set-camera-layer! camera 1)
-    (with-gl! gl
+    (doto! gl
       (:set-render-target nil)
       (:render scene camera)
       (:clear-depth))
@@ -104,7 +104,7 @@
     ; render cube with refraction material to screen
     (set-camera-layer! camera 0)
     (set-material! model refraction-material)
-    (with-gl! gl (:render scene camera))))
+    (doto! gl (:render scene camera))))
 
 ; -- components -------------------------------------------------------------------------------------------------------------
 

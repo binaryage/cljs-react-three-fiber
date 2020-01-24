@@ -19,7 +19,7 @@
                                                            create-vec3
                                                            add-body-to-world!
                                                            remove-body-from-world!]]
-            [react-three-fiber.examples.lib.gl :refer [with-gl!]]
+            [react-three-fiber.examples.lib.interop :refer [doto!]]
             [applied-science.js-interop :as j]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
@@ -41,7 +41,7 @@
 
 (defn init-canvas! [props]
   (let [{:keys [gl]} (bean props)]
-    (with-gl! gl
+    (doto! gl
       (:shadow-map :-enabled true)
       (:shadow-map :-type pcf-soft-shadow-map))))
 

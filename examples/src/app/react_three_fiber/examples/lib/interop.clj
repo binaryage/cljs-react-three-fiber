@@ -1,4 +1,4 @@
-(ns react-three-fiber.examples.lib.gl
+(ns react-three-fiber.examples.lib.interop
   (:require [clojure.string :as string]))
 
 (defn is-a-call? [command]
@@ -32,7 +32,7 @@
         `(~'applied-science.js-interop/call-in ~gl-sym [~@command-symbols] ~@args)
         `(~'applied-science.js-interop/assoc-in! ~gl-sym [~@command-symbols] ~@args)))))
 
-(defmacro with-gl! [& body]
+(defmacro doto! [& body]
   (let [first-item (first body)
         implicit-gl? (and (list? first-item) (keyword? (first first-item)))
         plain-gl? (symbol? first-item)
@@ -51,19 +51,19 @@
 
 (comment
 
-  (macroexpand-1 '(with-gl!
+  (macroexpand-1 '(doto!
                     (:setRenderTarget! 1)
                     (:-autoClear! false)))
 
-  (macroexpand-1 '(with-gl! gl-symbol
+  (macroexpand-1 '(doto! gl-symbol
                     (:setRenderTarget! 1)
                     (:-autoClear! false)))
 
-  (macroexpand-1 '(with-gl! (some-code 1 2 3)
+  (macroexpand-1 '(doto! (some-code 1 2 3)
                     (:setRenderTarget! 1)
                     (:-autoClear! false)))
 
-  (macroexpand-1 '(with-gl! (some-code 1 2 3)
+  (macroexpand-1 '(doto! (some-code 1 2 3)
                     (:sub-obj :setRenderTarget! 1)
                     (:sub-obj :-autoClear! false)))
 
