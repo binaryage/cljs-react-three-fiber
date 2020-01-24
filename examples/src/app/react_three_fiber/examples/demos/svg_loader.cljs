@@ -21,18 +21,21 @@
 (def svg-names ["night" "city" "morning" "tubes" "woods" "beach"])
 (def svg-urls (map #(str "resources/images/svg/" % ".svg") svg-names))
 
-(def camera-config #js {:fov      90
-                        :position #js [0 0 550]
-                        :near     0.1
-                        :far      20000})
+(def camera-config
+  #js {:fov      90
+       :position #js [0 0 550]
+       :near     0.1
+       :far      20000})
 
-(def transition-spring-config #js {:mass     4
-                                   :tension  500
-                                   :friction 100})
+(def transition-spring-config
+  #js {:mass     4
+       :tension  500
+       :friction 100})
 
-(def background-color-spring-config #js {:mass     5
-                                         :tension  800
-                                         :friction 400})
+(def background-color-spring-config
+  #js {:mass     5
+       :tension  800
+       :friction 400})
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
