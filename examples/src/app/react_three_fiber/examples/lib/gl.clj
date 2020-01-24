@@ -23,13 +23,14 @@
                         (remove-exclamation)
                         (kebab-to-camel-case)))))
 
-
 (defn prepare-gl-commands [gl-sym forms]
-  (for [[command & args] forms]
-    (let [command-sym (command->symbol command)]
-      (if (is-a-call? command)
-        `(~'applied-science.js-interop/call ~gl-sym ~command-sym ~@args)
-        `(~'applied-science.js-interop/assoc! ~gl-sym ~command-sym ~@args)))))
+  (for [form forms]
+    (let [commands (take-while keyword? form)
+          args (drop-while keyword? form)
+          command-symbols (map command->symbol commands)]
+      (if (is-a-call? (last commands))
+        `(~'applied-science.js-interop/call-in ~gl-sym [~@command-symbols] ~@args)
+        `(~'applied-science.js-interop/assoc-in! ~gl-sym [~@command-symbols] ~@args)))))
 
 (defmacro with-gl! [& body]
   (let [first-item (first body)
@@ -54,13 +55,17 @@
                     (:setRenderTarget! 1)
                     (:-autoClear! false)))
 
-  (macroexpand-1 '(with-gl! glsymbol
+  (macroexpand-1 '(with-gl! gl-symbol
                     (:setRenderTarget! 1)
                     (:-autoClear! false)))
 
   (macroexpand-1 '(with-gl! (some-code 1 2 3)
                     (:setRenderTarget! 1)
                     (:-autoClear! false)))
+
+  (macroexpand-1 '(with-gl! (some-code 1 2 3)
+                    (:sub-obj :setRenderTarget! 1)
+                    (:sub-obj :-autoClear! false)))
 
   (kebab-to-camel-case "set-render-target")
 
