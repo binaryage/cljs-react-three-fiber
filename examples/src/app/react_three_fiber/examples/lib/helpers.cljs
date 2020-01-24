@@ -149,3 +149,19 @@
 
 (defn get-spring-color [spring]
   (j/get spring .-color))
+
+(defn add-shape! [body shape]
+  (.addShape body shape))
+
+(defn get-context-provider [context]
+  (.-Provider context))
+
+(defn get-quaternion [o]
+  (.-quaternion o))
+
+(defn set-position-copy! [o source]
+  (j/call-in o [.-position .-copy] source))
+
+(defn set-quaternion-copy! [o source]
+  (j/call-in o [.-quaternion .-copy] source))
+

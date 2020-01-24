@@ -8,4 +8,5 @@
    "font" {:component (lazy-demo "font")}
    "montage" {:component (lazy-demo "montage") :bright? true}
    "mesh-line" {:component (lazy-demo "mesh-line") :bright? true}
-   "svg-loader" {:component (lazy-demo "svg-loader")}])
+   "svg-loader" {:component (lazy-demo "svg-loader")}
+   "physics" {:component (lazy-demo "physics")}])
