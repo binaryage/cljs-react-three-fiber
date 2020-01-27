@@ -3,12 +3,11 @@
 
    https://github.com/react-spring/react-three-fiber"
   (:require [react-three-fiber :refer [Canvas Dom useFrame useLoader useThree useUpdate extend]]
-            [cljs-bean.core :refer [bean ->js]]
-            [uix.hacks :refer [mark-as-native!]]))
+            [cljs-bean.core :refer [bean ->js]]))
 
-(def <:canvas> (mark-as-native! react-three-fiber/Canvas))
+(def <canvas> react-three-fiber/Canvas)
 
-(def <:dom> (mark-as-native! react-three-fiber/Dom))
+(def <dom> react-three-fiber/Dom)
 
 (defn use-frame
   ([callback]

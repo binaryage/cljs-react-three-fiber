@@ -1,6 +1,6 @@
 (ns react-three-fiber.examples.demos.mesh-line
-  (:require [uix.core.alpha :as uix]
-            [react-three-fiber.core :refer [<:canvas> use-three use-frame]]
+  (:require [react-three-fiber.examples.lib.ui :refer [$ $$ defnc use-ref use-memo <canvas>]]
+            [react-three-fiber.core :refer [use-three use-frame]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation!
                                                             update-position!
                                                             give-random-number]]
@@ -25,23 +25,23 @@
 
 ; -- components -------------------------------------------------------------------------------------------------------------
 
-(defn <fat-line> [props]
+(defnc <fat-line> [props]
   (let [{:keys [curve width color speed]} props
-        material-ref (uix/ref)]
+        material-ref (use-ref nil)]
     (use-frame (fn []
                  (j/update-in! @material-ref [.-uniforms .-dashOffset .-value] #(- % speed))))
-    [:mesh
-     [:meshLine {:attach "geometry" :vertices curve}]
-     [:meshLineMaterial {:attach      "material"
-                         :ref         material-ref
-                         :transparent true
-                         :depth-test  false
-                         :line-width  width
-                         :color       color
-                         :dash-array  0.1
-                         :dash-ratio  0.9}]]))
+    ($ :mesh
+      ($ :meshLine {:attach "geometry" :vertices curve})
+      ($ :meshLineMaterial {:attach      "material"
+                            :ref         material-ref
+                            :transparent true
+                            :depth-test  false
+                            :line-width  width
+                            :color       color
+                            :dash-array  0.1
+                            :dash-ratio  0.9}))))
 
-(defn <lines> [props]
+(defnc <lines> [props]
   (let [{:keys [total colors]} props
         num-colors (count colors)
         lines-fn (fn []
@@ -67,12 +67,14 @@
                         :width (Math/max 0.1 (* 0.65 r5))
                         :speed (Math/max 0.0001 (* 0.0005 r6))
                         :curve curve})))
-        lines (uix/memo lines-fn [total colors])]
+        lines (use-memo [total colors] (lines-fn))]
     (for [line-props lines]
-      [<fat-line> line-props])))
+      ($$ <fat-line> line-props))))
 
-(defn <rig> [props]
-  (let [{:keys [mouse-ref]} props
+(defnc <rig> [props]
+  (let [; FIXME:
+        {:keys [mouseRef]} props
+        mouse-ref mouseRef
         {:keys [camera]} (use-three)]
     (use-frame (fn []
                  (update-position! camera (fn [x y z]
@@ -83,10 +85,10 @@
                  (.lookAt camera 0 0 0)))
     nil))
 
-(defn <demo> []
-  (let [mouse-ref (uix/ref [0 0])]
-    [<:canvas> {:style         {:background "#ffc9e7"}
-                :camera        #js {:fov 25 :position #js [0 0 10]}
-                :on-mouse-move (partial update-mouse! mouse-ref)}
-     [<lines> {:total 200 :colors line-colors}]
-     [<rig> {:mouse-ref mouse-ref}]]))
+(defnc <demo> []
+  (let [mouse-ref (use-ref [0 0])]
+    ($ <canvas> {:style         {:background "#ffc9e7"}
+                 :camera        #js {:fov 25 :position #js [0 0 10]}
+                 :on-mouse-move (partial update-mouse! mouse-ref)}
+      ($ <lines> {:total 200 :colors line-colors})
+      ($ <rig> {:mouse-ref mouse-ref}))))

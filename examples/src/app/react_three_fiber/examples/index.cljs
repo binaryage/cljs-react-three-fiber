@@ -1,29 +1,28 @@
 (ns react-three-fiber.examples.index
-  (:require [uix.dom.alpha :as uix.dom]
-            [uix.hacks]
-            [react-three-fiber.examples.lib.react-router-dom :refer [<:router>]]
+  (:require [react-three-fiber.examples.lib.ui :as ui :refer [defnc $]]
+            [react-three-fiber.examples.lib.react-router-dom :refer [<router>]]
             [react-three-fiber.examples.lib.dom :refer [get-element-by-id]]
             [react-three-fiber.examples.pages.intro :refer [<intro>]]
-            [react-three-fiber.core :refer [use-frame <:canvas>]]
-            [react-three-fiber.examples.styles :refer [<:global-styles>]]))
+            [react-three-fiber.core :refer [use-frame <canvas>]]
+            [react-three-fiber.examples.styles :refer [<global-styles>]]))
 
 ; -- app --------------------------------------------------------------------------------------------------------------------
 
-(defn <app> []
-  [<:router>
-   [<:global-styles>]
-   [<intro>]])
+(defnc <app> []
+  ($ <router>
+     ($ <global-styles>)
+     ($ <intro>)))
 
 ; ---------------------------------------------------------------------------------------------------------------------------
 
 (def root-el (get-element-by-id "root"))
 
 (defn render! []
-  (uix.dom/render [<app>] root-el))
+  (ui/render! ($ <app>) root-el))
 
 (defn main! []
   (render!))
 
 (defn ^:dev/after-load reload! []
-  (uix.dom/unmount-at-node root-el)
+  (ui/unmount! root-el)
   (render!))

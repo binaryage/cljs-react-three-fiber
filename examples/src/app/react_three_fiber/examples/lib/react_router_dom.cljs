@@ -1,16 +1,16 @@
 (ns react-three-fiber.examples.lib.react-router-dom
   (:require [react-router-dom :refer [HashRouter Link Route Redirect Switch useRouteMatch]]
-            [uix.hacks :refer [mark-as-native!]]))
+            [react-three-fiber.examples.lib.ui :refer [defc-native!]]))
 
 (defn use-route-match [path]
   (useRouteMatch path))
 
-(def <:router> (mark-as-native! HashRouter))
+(defc-native! <router> HashRouter)
 
-(def <:switch> (mark-as-native! Switch))
+(defc-native! <switch> Switch)
 
-(def <:route> (mark-as-native! Route))
+(defc-native! <route> Route)
 
-(def <:redirect> (mark-as-native! Redirect))
+(defc-native! <redirect> Redirect)
 
-(def <:link> (mark-as-native! Link))
+(defc-native! <link> Link)

@@ -1,5 +1,7 @@
 (ns react-three-fiber.examples.demos.refraction
-  (:require [react-three-fiber.core :refer [<:canvas> use-three use-frame use-loader]]
+  (:require [react-three-fiber.examples.lib.ui :refer [use-ref use-memo $ $$ defnc <canvas>]]
+            [react-three-fiber.core :refer [use-three use-frame use-loader]]
+            [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.lib.three :refer [create-texture-loader
                                                           texture-loader
                                                           linear-filter
@@ -26,7 +28,6 @@
                                                          create-backface-material
                                                          create-refraction-material]]
             [react-three-fiber.examples.lib.interop :refer [doto!]]
-            [uix.core.alpha :as uix]
             [cljs-bean.core :refer [bean]]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
@@ -108,30 +109,29 @@
 
 ; -- components -------------------------------------------------------------------------------------------------------------
 
-(defn <diamonds> []
+(defnc <diamonds> []
   (let [{:keys [size viewport gl scene camera clock]} (use-three)
-        model-ref (uix/ref)
+        model-ref (use-ref)
         gltf (use-loader gltf-loader diamond-url)
         gltf-geometry (get-gltf-geometry gltf 1)
-        resources-fn (fn []
-                       (let [width (.-width size)
-                             height (.-height size)
-                             env-fbo (create-webgl-render-target width height)
-                             backface-fbo (create-webgl-render-target width height)
-                             refraction-material-opts {:envMap      (get-texture env-fbo)
-                                                       :backfaceMap (get-texture backface-fbo)
-                                                       :resolution  #js [width height]}]
-                         {:env-fbo             env-fbo
-                          :backface-fbo        backface-fbo
-                          :backface-material   (create-backface-material)
-                          :refraction-material (create-refraction-material refraction-material-opts)}))
-        resources (uix/memo resources-fn [size])
-        diamonds-fn (fn []
-                      (into-array
-                        (->> (range 80)
-                             (map-indexed (partial gen-random-diamond viewport)))))
-        diamonds (uix/memo diamonds-fn [viewport])
-        dummy (uix/memo #(create-object-3d))
+        resources (use-memo :auto-deps
+                            (let [width (.-width size)
+                                  height (.-height size)
+                                  env-fbo (create-webgl-render-target width height)
+                                  backface-fbo (create-webgl-render-target width height)
+                                  refraction-material-opts {:envMap      (get-texture env-fbo)
+                                                            :backfaceMap (get-texture backface-fbo)
+                                                            :resolution  #js [width height]}]
+                              {:env-fbo             env-fbo
+                               :backface-fbo        backface-fbo
+                               :backface-material   (create-backface-material)
+                               :refraction-material (create-refraction-material refraction-material-opts)}))
+        diamonds (use-memo :auto-deps
+                           (into-array
+                             (->> (range 80)
+                                  (map-indexed (partial gen-random-diamond viewport)))))
+        dummy (use-memo :once
+                        (create-object-3d))
         update-fn (partial update-diamonds
                            gl viewport clock
                            camera scene
@@ -139,13 +139,13 @@
                            resources
                            diamonds)]
     (use-frame update-fn 1)
-    [:instancedMesh {:ref model-ref :args #js [nil nil (count diamonds)]}
-     [:bufferGeometry (merge {:dispose false
-                              :attach  "geometry"}
-                             (bean gltf-geometry))]
-     [:meshBasicMaterial {:attach "material"}]]))
+    ($ :instancedMesh {:ref model-ref :args #js [nil nil (count diamonds)]}
+      ($$ :bufferGeometry (merge {:dispose false
+                                  :attach  "geometry"}
+                                 (bean gltf-geometry)))
+      ($ :meshBasicMaterial {:attach "material"}))))
 
-(defn <background> []
+(defnc <background> []
   (let [{:keys [viewport aspect]} (use-three)
         texture (use-loader texture-loader texture-url)
         aspect-ratio (/ aspect-width aspect-height)
@@ -153,20 +153,19 @@
         viewport-height (/ (.-height viewport) aspect-height)
         base (if (> aspect aspect-ratio) viewport-width viewport-height)
         adapted-height (* aspect-height base)
-        adapted-width (* aspect-width base)
-        update-texture-fn (fn []
-                            (set-min-filter! texture linear-filter))]
-    (uix/memo update-texture-fn [texture])
+        adapted-width (* aspect-width base)]
+    (use-memo :auto-deps
+              (set-min-filter! texture linear-filter))
 
-    [:mesh {:layers 1
-            :scale  #js [adapted-width adapted-height 1]}
-     [:planeBufferGeometry {:attach "geometry"}]
-     [:meshBasicMaterial {:attach    "material"
-                          :map       texture
-                          :depthTest false}]]))
+    ($ :mesh {:layers 1
+              :scale  #js [adapted-width adapted-height 1]}
+      ($ :planeBufferGeometry {:attach "geometry"})
+      ($ :meshBasicMaterial {:attach    "material"
+                             :map       texture
+                             :depthTest false}))))
 
-(defn <demo> []
-  [<:canvas> {:camera #js {:fov 50 :position #js [0 0 30]}}
-   [:# {:fallback "loading refraction demo"}
-    [<background>]
-    [<diamonds>]]])
+(defnc <demo> []
+  ($ <canvas> {:camera #js {:fov 50 :position #js [0 0 30]}}
+    ($ <suspense> {:fallback "loading refraction demo"}
+      ($ <background>)
+      ($ <diamonds>))))

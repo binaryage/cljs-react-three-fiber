@@ -10,8 +10,8 @@
                     (let [module-name# ~module-name]
                       (.then (shadow.loader/load module-name#)
                              (fn []
-                               (let [uix-component# (deref (~'cljs.core/resolve ~component))]
-                                 (resolve# (~'js-obj "default" (uix.compiler.alpha/as-lazy-component uix-component#)))))))))))
+                               (let [component# (deref (~'cljs.core/resolve ~component))]
+                                 (resolve# (~'js-obj "default" component#))))))))))
 
 (defmacro lazy-demo [name]
   (let [module-name (str name "-demo")

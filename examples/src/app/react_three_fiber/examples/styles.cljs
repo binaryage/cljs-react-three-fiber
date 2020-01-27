@@ -1,18 +1,18 @@
 (ns react-three-fiber.examples.styles
   (:require [clojure.string :as string]
             [react-three-fiber.examples.lib.styled-components :refer [inline-css
-                                                                      <:styled-div>
-                                                                      <:global-style>
-                                                                      <:inherit-styles>]]))
+                                                                      <styled-div>
+                                                                      <global-style>
+                                                                      <inherit-styles>]]))
 
-(def <:shared-page-styles>
+(def <shared-page-styles>
   (-> (inline-css "./styles/page.scss")
-      (<:styled-div>)))
+      (<styled-div>)))
 
-(def <:global-styles>
+(def <global-styles>
   (-> (inline-css "./styles/global.scss")
-      (<:global-style>)))
+      (<global-style>)))
 
-(defn <:page-styles> [& css]
+(defn <page-styles> [& css]
   (->> (string/join "\n" css)
-       (<:inherit-styles> <:shared-page-styles>)))
+       (<inherit-styles> <shared-page-styles>)))

@@ -6,32 +6,28 @@
   appliedscience/js-interop   {:git/url "https://github.com/appliedsciencestudio/js-interop.git"
                                :sha     "e6b5f0b84b736481269a62beb4ce70f99a30f9a0"}
 
-  uix.core                    {:git/url   "https://github.com/roman01la/uix.git"
-                               :deps/root "core"
-                               :sha       "27172a3a24e7ee099f6c7e2b137cf2965eb6538c"}
-  uix.dom                     {:git/url   "https://github.com/roman01la/uix.git"
-                               :deps/root "dom"
-                               :sha       "27172a3a24e7ee099f6c7e2b137cf2965eb6538c"}
+  lilactown/helix             {:git/url "https://github.com/darwin/helix.git"
+                               :sha     "493e9f225fbafda9d19de7304edd1e40183f30c1"}
+
+  ;lilactown/helix             {:mvn/version "0.0.6"}
 
   binaryage/react-three-fiber {:local/root ".."}
   binaryage/devtools          {:mvn/version "RELEASE"}
 
   ; ----
 
-  thheller/shadow-cljs        {:mvn/version "RELEASE"}
-  }
+  thheller/shadow-cljs        {:mvn/version "RELEASE"}}
 
  :paths
  ["src/app"
-  "src/dev"
-  "src/hacks"]
+  "src/dev"]
 
  :aliases
- {:vendor-uix  {:extra-deps {uix.core {:local/root "vendor/uix/core"}
-                             uix.dom  {:local/root "vendor/uix/dom"}}}
+ {
+  :vendor-helix {:extra-deps {lilactown/helix {:local/root "vendor/helix"}}}
 
-  :shadow-cljs {:extra-deps {thheller/shadow-cljs {:mvn/version "RELEASE"}}
-                :main-opts  ["-m" "shadow.cljs.devtools.cli"]}}
+  :shadow-cljs  {:extra-deps {thheller/shadow-cljs {:mvn/version "RELEASE"}}
+                 :main-opts  ["-m" "shadow.cljs.devtools.cli"]}}
 
  }
 
