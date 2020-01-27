@@ -66,15 +66,11 @@
 ; -- components -------------------------------------------------------------------------------------------------------------
 
 (defnc <demo-canvas> [props]
-
-  (let [{:keys [name children]} props
-        ; TODO: this should work
-        ; <demo> (children-only children)
-        <demo> children]
-    (assert <demo>)
+  (let [{:keys [name demo]} props]
+    (assert demo)
     ($ :div {:id        "demo-canvas"
              :className (str "demo-" (string/lower-case name))}
-      ($ <demo> {:name name}))))
+      ($ demo {:name name}))))
 
 (defnc <demo-selection-panel> []
   (let [match (use-route-match "/demo/(.*)")
@@ -103,7 +99,8 @@
                                   (let [{:keys [match]} (bean route-props)
                                         selected-name (get-match-param match)
                                         component (lookup-component selected-name default-demo-name)]
-                                    ($ <demo-canvas> {:name selected-name} component)))})
+                                    ($ <demo-canvas> {:name selected-name
+                                                      :demo component})))})
           ($ <redirect> {:to (str "/demo/" default-demo-name)})))
       ($ <demo-selection-panel>)
       ($ :a {:href home-url :style {:color (if (:bright? selected-demo) "#2c2d31" "white")}} home-label))))
