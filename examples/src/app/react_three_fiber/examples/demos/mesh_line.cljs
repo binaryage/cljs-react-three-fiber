@@ -1,5 +1,5 @@
 (ns react-three-fiber.examples.demos.mesh-line
-  (:require [react-three-fiber.examples.lib.ui :refer [$ $$ defnc use-ref use-memo <canvas>]]
+  (:require [react-three-fiber.examples.lib.ui :refer [$ defnc use-ref use-memo <canvas>]]
             [react-three-fiber.core :refer [use-three use-frame]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation!
                                                             update-position!
@@ -69,7 +69,7 @@
                         :curve curve})))
         lines (use-memo [total colors] (lines-fn))]
     (for [line-props lines]
-      ($$ <fat-line> line-props))))
+      ($ <fat-line> line-props))))
 
 (defnc <rig> [props]
   (let [; FIXME:

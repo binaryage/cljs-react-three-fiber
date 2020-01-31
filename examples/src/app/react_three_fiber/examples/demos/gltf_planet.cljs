@@ -1,7 +1,7 @@
 (ns react-three-fiber.examples.demos.gltf-planet
   (:require [cljs-bean.core :refer [bean]]
             [react-three-fiber.core :refer [use-frame use-three use-loader]]
-            [react-three-fiber.examples.lib.ui :refer [<canvas> $ $$ use-ref use-memo defnc]]
+            [react-three-fiber.examples.lib.ui :refer [<canvas> $ use-ref use-memo defnc]]
             [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.lib.helpers :refer [get-gltf-geometry
                                                             get-gltf-material
@@ -36,9 +36,9 @@
 (defnc <gltf-mesh> [props]
   (let [{:keys [gltf layer]} props
         mesh-props (dissoc props :gltf :layer)]
-    ($$ :mesh mesh-props
-      ($$ :bufferGeometry (merge (bean (get-gltf-geometry gltf layer)) {:attach "geometry"}))
-      ($$ :meshStandardMaterial (merge (bean (get-gltf-material gltf layer)) {:attach    "material"
+    ($ :mesh mesh-props
+      ($ :bufferGeometry (merge (bean (get-gltf-geometry gltf layer)) {:attach "geometry"}))
+      ($ :meshStandardMaterial (merge (bean (get-gltf-material gltf layer)) {:attach    "material"
                                                                               :roughness 1})))))
 
 (defnc <planet> []
@@ -84,7 +84,7 @@
   (let [{:keys [gl camera]} (use-three)
         controls-ref (use-ref nil)]
     (use-frame #(.update @controls-ref))
-    ($$ :orbitControls (merge {:ref  controls-ref
+    ($ :orbitControls (merge {:ref  controls-ref
                                :args #js [camera (.-domElement gl)]} props))))
 
 (defnc <demo> []

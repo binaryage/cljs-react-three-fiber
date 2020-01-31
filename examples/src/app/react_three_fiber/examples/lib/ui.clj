@@ -11,22 +11,27 @@
 
 ; TODO: wait for https://github.com/Lokeh/helix/issues/9
 (defmacro $ [type & args]
-  (let [native? true
-        type (if (keyword? type)
+  (let [type (if (keyword? type)
                (name type)
-               type)]
-    (cond
-      (map? (first args)) `^js/React.Element (helix.core/create-element
-                                               ~type
-                                               ~(if native?
-                                                  `(impl.props/native-props ~(first args))
-                                                  `(impl.props/props ~(first args)))
-                                               ~@(rest args))
-
-      :else `^js/React.Element (helix.core/create-element ~type nil ~@args))))
-
-(defmacro $$ [& args]
-  `(helix.core/$$ ^:native ~@args))
+               type)
+        maybe-props (first args)]
+    (if (map? maybe-props)
+      `^js/React.Element (helix.core/create-element
+                           ~type
+                           (impl.props/native-props ~maybe-props)
+                           ~@(rest args))
+      ; TODO: move this into a helper fn
+      `(let [m# ~maybe-props]
+         (if (map? m#)
+           ^js/React.Element (helix.core/create-element
+                               ~type
+                               (impl.props/native-props m#)
+                               ~@(rest args))
+           ^js/React.Element (helix.core/create-element
+                               ~type
+                              nil
+                               m#
+                               ~@(rest args)))))))
 
 (defmacro <> [& args]
   `(helix.core/<> ~@args))
@@ -38,6 +43,10 @@
   `(helix.hooks/use-effect ~@args))
 
 (comment
+  (pprint (macroexpand '($$ (animated :mesh) (merge spring {:key           index
+                                                            :castShadow    true
+                                                            :receiveShadow true}))))
+
   (pprint (macroexpand '($ :meshBasicMaterial {:attach "material"})))
   (pprint (macroexpand '($ :instancedMesh {:ref model-ref :args [nil nil (count diamonds)]}
                           ($$ :bufferGeometry geometry-props)

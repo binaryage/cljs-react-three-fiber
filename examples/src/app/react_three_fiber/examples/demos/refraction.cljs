@@ -1,5 +1,5 @@
 (ns react-three-fiber.examples.demos.refraction
-  (:require [react-three-fiber.examples.lib.ui :refer [use-ref use-memo $ $$ defnc <canvas>]]
+  (:require [react-three-fiber.examples.lib.ui :refer [use-ref use-memo $ defnc <canvas>]]
             [react-three-fiber.core :refer [use-three use-frame use-loader]]
             [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.lib.three :refer [create-texture-loader
@@ -140,7 +140,7 @@
                            diamonds)]
     (use-frame update-fn 1)
     ($ :instancedMesh {:ref model-ref :args #js [nil nil (count diamonds)]}
-      ($$ :bufferGeometry (merge {:dispose false
+      ($ :bufferGeometry (merge {:dispose false
                                   :attach  "geometry"}
                                  (bean gltf-geometry)))
       ($ :meshBasicMaterial {:attach "material"}))))

@@ -1,6 +1,6 @@
 (ns react-three-fiber.examples.demos.svg-loader
   (:require [cljs-bean.core :refer [bean ->js]]
-            [react-three-fiber.examples.lib.ui :refer [<> $ $$ defnc use-state use-memo use-effect <canvas>]]
+            [react-three-fiber.examples.lib.ui :refer [<> $ defnc use-state use-memo use-effect <canvas>]]
             [react-three-fiber.core :refer [use-loader]]
             [react-three-fiber.examples.lib.misc :refer [svg-loader]]
             [react-three-fiber.examples.lib.react :refer [<suspense>]]

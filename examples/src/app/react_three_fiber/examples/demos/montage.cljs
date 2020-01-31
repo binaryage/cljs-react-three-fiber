@@ -1,6 +1,6 @@
 (ns react-three-fiber.examples.demos.montage
   (:require [cljs-bean.core :refer [->js bean]]
-            [react-three-fiber.examples.lib.ui :refer [defnc $ $$ use-effect <canvas>]]
+            [react-three-fiber.examples.lib.ui :refer [defnc $ use-effect <canvas>]]
             [react-three-fiber.core :refer [use-three use-frame]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation! give-random-number]]
             [react-three-fiber.examples.lib.react-spring-three :refer [use-springs animated]]
@@ -55,9 +55,9 @@
     ($ :group
       (for [[index d] (map-indexed vector data)]
         (let [spring (bean (aget springs index))]
-          ($$ (animated :mesh) (merge spring {:key           index
-                                              :castShadow    true
-                                              :receiveShadow true})
+          ($ (animated :mesh) (merge spring {:key            index
+                                             :cast-shadow    true
+                                             :receive-shadow true})
             ($ :boxBufferGeometry {:attach "geometry"
                                    :args   (:args d)})
             ($ (animated :meshStandardMaterial) {:attach    "material"
@@ -83,9 +83,9 @@
     ($ :meshStandardMaterial {:attach "material" :color "#A2ACB6" :roughness 1})))
 
 (defnc <demo> []
-  ($ <canvas> {:shadowMap true
-               :style     {:background "#A2CCB6"}
-               :camera    #js {:fov 100 :position #js [0 0 100]}}
+  ($ <canvas> {:shadow-map true
+               :style      {:background "#A2CCB6"}
+               :camera     #js {:fov 100 :position #js [0 0 100]}}
     ($ <lights>)
     ($ <desktop>)
     ($ <content>)))
