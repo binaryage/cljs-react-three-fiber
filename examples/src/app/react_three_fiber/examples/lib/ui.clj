@@ -9,29 +9,20 @@
 (defmacro defnc [& args]
   `(helix.core/defnc ~@args))
 
+(defn gen-create-element [type & args]
+  `(^js/React.Element (helix.core/create-element ~type ~@args)))
+
 ; TODO: wait for https://github.com/Lokeh/helix/issues/9
 (defmacro $ [type & args]
   (let [type (if (keyword? type)
                (name type)
                type)
-        maybe-props (first args)]
-    (if (map? maybe-props)
-      `^js/React.Element (helix.core/create-element
-                           ~type
-                           (impl.props/native-props ~maybe-props)
-                           ~@(rest args))
-      ; TODO: move this into a helper fn
-      `(let [m# ~maybe-props]
-         (if (map? m#)
-           ^js/React.Element (helix.core/create-element
-                               ~type
-                               (impl.props/native-props m#)
-                               ~@(rest args))
-           ^js/React.Element (helix.core/create-element
-                               ~type
-                              nil
-                               m#
-                               ~@(rest args)))))))
+        rest-args (rest args)
+        props (first args)]
+    (cond
+      (empty? args) (gen-create-element type)
+      (map? props) (apply gen-create-element type `(impl.props/native-props ~props) rest-args)
+      :else (apply gen-create-element type nil args))))
 
 (defmacro <> [& args]
   `(helix.core/<> ~@args))
@@ -43,11 +34,23 @@
   `(helix.hooks/use-effect ~@args))
 
 (comment
-  (pprint (macroexpand '($$ (animated :mesh) (merge spring {:key           index
-                                                            :castShadow    true
-                                                            :receiveShadow true}))))
+
+
+  (defmethod cljs.analyzer/error-message :ui-custom-warning
+    [_type info]
+    (:msg info))
+
+  (defn print-compile-time-warning! [env msg]
+    (binding [cljs.analyzer/*cljs-warnings* (assoc cljs.analyzer/*cljs-warnings* :ui-custom-warning true)]
+      (cljs.analyzer/warning :ui-custom-warning env {:msg msg})))
+
+
+  (pprint (macroexpand '($ (animated :mesh) (merge spring {:key           index
+                                                           :castShadow    true
+                                                           :receiveShadow true}))))
 
   (pprint (macroexpand '($ :meshBasicMaterial {:attach "material"})))
   (pprint (macroexpand '($ :instancedMesh {:ref model-ref :args [nil nil (count diamonds)]}
                           ($$ :bufferGeometry geometry-props)
                           ($ :meshBasicMaterial {:attach "material"})))))
+

@@ -55,9 +55,10 @@
     ($ :group
       (for [[index d] (map-indexed vector data)]
         (let [spring (bean (aget springs index))]
-          ($ (animated :mesh) (merge spring {:key            index
-                                             :cast-shadow    true
-                                             :receive-shadow true})
+          ($ (animated :mesh) {:key            index
+                               :cast-shadow    true
+                               :receive-shadow true
+                               &               spring}
             ($ :boxBufferGeometry {:attach "geometry"
                                    :args   (:args d)})
             ($ (animated :meshStandardMaterial) {:attach    "material"

@@ -140,9 +140,9 @@
                            diamonds)]
     (use-frame update-fn 1)
     ($ :instancedMesh {:ref model-ref :args #js [nil nil (count diamonds)]}
-      ($ :bufferGeometry (merge {:dispose false
-                                  :attach  "geometry"}
-                                 (bean gltf-geometry)))
+      ($ :bufferGeometry {:dispose false
+                          :attach  "geometry"
+                          &        (bean gltf-geometry)})
       ($ :meshBasicMaterial {:attach "material"}))))
 
 (defnc <background> []
