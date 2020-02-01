@@ -14,7 +14,7 @@
                                  (resolve# (~'js-obj "default" component#))))))))))
 
 (defmacro lazy-demo [name]
-  (let [module-name (str name "-demo")
+  (let [module-name (str "demo-" name)
         component-symbol (symbol (str "react-three-fiber.examples.demos." name "/<demo>"))]
     `(react-lazy (promise-lazy-export ~module-name (quote ~component-symbol)))))
 

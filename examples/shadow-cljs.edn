@@ -14,20 +14,20 @@
              :module-loader true
              :modules       {:main             {:entries [react-three-fiber.examples.index]
                                                 :init-fn react-three-fiber.examples.index/main!}
-                             :box-demo         {:entries    [react-three-fiber.examples.demos.box]
+                             :demo-box         {:entries    [react-three-fiber.examples.demos.box]
                                                 :depends-on #{:main}}
-                             :refraction-demo  {:entries    [react-three-fiber.examples.demos.refraction]
+                             :demo-refraction  {:entries    [react-three-fiber.examples.demos.refraction]
                                                 :depends-on #{:main}}
-                             :font-demo        {:entries    [react-three-fiber.examples.demos.font]
+                             :demo-font        {:entries    [react-three-fiber.examples.demos.font]
                                                 :depends-on #{:main}}
-                             :mesh-line-demo   {:entries    [react-three-fiber.examples.demos.mesh-line]
+                             :demo-mesh-line   {:entries    [react-three-fiber.examples.demos.mesh-line]
                                                 :depends-on #{:main}}
-                             :montage-demo     {:entries    [react-three-fiber.examples.demos.montage]
+                             :demo-montage     {:entries    [react-three-fiber.examples.demos.montage]
                                                 :depends-on #{:main}}
-                             :svg-loader-demo  {:entries    [react-three-fiber.examples.demos.svg-loader]
+                             :demo-svg-loader  {:entries    [react-three-fiber.examples.demos.svg-loader]
                                                 :depends-on #{:main}}
-                             :physics-demo     {:entries    [react-three-fiber.examples.demos.physics]
+                             :demo-physics     {:entries    [react-three-fiber.examples.demos.physics]
                                                 :depends-on #{:main}}
-                             :gltf-planet-demo {:entries    [react-three-fiber.examples.demos.gltf-planet]
+                             :demo-gltf-planet {:entries    [react-three-fiber.examples.demos.gltf-planet]
                                                 :depends-on #{:main}}
                              }}}}
