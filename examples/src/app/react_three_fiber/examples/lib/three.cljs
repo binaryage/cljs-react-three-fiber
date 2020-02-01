@@ -114,3 +114,12 @@
 
 (defn get-z [o]
   (.-z o))
+
+(defn vector3-add! [v d]
+  (.add v d))
+
+(defn vector3-clone [v]
+  (.clone v))
+
+(defn camera-look-at! [camera x y z]
+  (.lookAt camera x y z))

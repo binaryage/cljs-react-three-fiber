@@ -3,8 +3,14 @@
             [react-three-fiber.core :refer [use-three use-frame]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation!
                                                             update-position!
-                                                            give-random-number]]
+                                                            give-random-number
+                                                            get-client-x get-client-y
+                                                            get-inner-width get-inner-height
+                                                            get-points]]
             [react-three-fiber.examples.lib.three :refer [create-vector3
+                                                          vector3-add!
+                                                          vector3-clone
+                                                          camera-look-at!
                                                           create-catmull-rom-curve3
                                                           <mesh>]]
             [react-three-fiber.examples.lib.mesh-line :refer [<mesh-line> <mesh-line-material>]]
@@ -20,8 +26,8 @@
 ; -- updates ----------------------------------------------------------------------------------------------------------------
 
 (defn update-mouse! [mouse-ref e]
-  (let [x (- (.-clientX e) (/ (.-innerWidth js/window) 2))
-        y (- (.-clientY e) (/ (.-innerHeight js/window) 2))]
+  (let [x (- (get-client-x e) (/ (get-inner-width js/window) 2))
+        y (- (get-client-y e) (/ (get-inner-height js/window) 2))]
     (reset! mouse-ref [x y])))
 
 ; -- components -------------------------------------------------------------------------------------------------------------
@@ -30,7 +36,7 @@
   (let [{:keys [curve width color speed]} props
         material-ref (use-ref nil)]
     (use-frame (fn []
-                 (j/update-in! @material-ref [.-uniforms .-dashOffset .-value] #(- % speed))))
+                 (j/update-in! @material-ref [:uniforms :dashOffset :value] #(- % speed))))
     ($ <mesh>
       ($ <mesh-line> {:attach "geometry" :vertices curve})
       ($ <mesh-line-material> {:attach      "material"
@@ -57,12 +63,12 @@
                                                                          (- 4 (* r2 8))
                                                                          (- 2 (* r3 4)))]
                                         (-> pos
-                                            (.add displacement)
-                                            (.clone))))
+                                            (vector3-add! displacement)
+                                            (vector3-clone))))
                            points (map point-fn (range line-points-num))
                            curve (-> (->js points)
                                      (create-catmull-rom-curve3)
-                                     (.getPoints line-subdivisions))]
+                                     (get-points line-subdivisions))]
                        {:key   index
                         :color (nth colors (Math/floor (* r4 num-colors)))
                         :width (Math/max 0.1 (* 0.65 r5))
@@ -83,7 +89,7 @@
                                                   new-x (+ x (* 0.05 (- (/ mx 50) x)))
                                                   new-y (+ y (* 0.05 (- (/ my 50) y)))]
                                               [new-x new-y z])))
-                 (.lookAt camera 0 0 0)))
+                 (camera-look-at! camera 0 0 0)))
     nil))
 
 (defnc <demo> []

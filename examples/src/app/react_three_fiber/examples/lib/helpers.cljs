@@ -168,3 +168,17 @@
 (defn create-float32-array [a]
   (js/Float32Array. a))
 
+(defn get-client-x [e]
+  (.-clientX e))
+
+(defn get-client-y [e]
+  (.-clientY e))
+
+(defn get-inner-width [w]
+  (.-innerWidth w))
+
+(defn get-inner-height [w]
+  (.-innerHeight w))
+
+(defn get-points [o subs]
+  (.getPoints o subs))
