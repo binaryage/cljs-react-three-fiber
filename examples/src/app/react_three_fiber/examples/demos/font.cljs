@@ -5,6 +5,13 @@
             [react-three-fiber.examples.lib.three :refer [font-loader
                                                           create-animation-mixer
                                                           create-vector3
+                                                          update-mixer
+                                                          play-animation-action!
+                                                          get-clip-animation-action
+                                                          compute-bounding-box!
+                                                          export-bounding-box-size!
+                                                          get-geometry
+                                                          get-x get-y get-z
                                                           <group>
                                                           <mesh>
                                                           <text-geometry>
@@ -28,8 +35,7 @@
                                                             get-gltf-morph-target-dictionary
                                                             get-gltf-morph-target-influences]]
             [react-three-fiber.examples.lib.misc :refer [gltf-loader]]
-            [cljs-bean.core :refer [bean]]
-            [applied-science.js-interop :as j]))
+            [cljs-bean.core :refer [bean]]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
 
@@ -63,19 +69,19 @@
                                    :bevelOffset    0
                                    :bevelSegments  8})
         update-fn (fn [self]
-                    (let [geom (.-geometry self)
+                    (let [geom (get-geometry self)
                           size (create-vector3)]
-                      (.computeBoundingBox geom)
-                      (j/call-in geom [.-boundingBox .-getSize] size)
+                      (compute-bounding-box! geom)
+                      (export-bounding-box-size! geom size)
                       (let [px (case h-align
-                                 "center" (- (/ (.-x size) 2))
+                                 "center" (- (/ (get-x size) 2))
                                  "right" 0
-                                 "left" (- (.-x size)))
+                                 "left" (- (get-x size)))
                             py (case v-align
-                                 "center" (- (/ (.-y size) 2))
+                                 "center" (- (/ (get-y size) 2))
                                  "top" 0
-                                 "bottom" (- (.-y size)))
-                            pz (.-z (get-position self))]
+                                 "bottom" (- (get-y size)))
+                            pz (get-z (get-position self))]
                         (set-position! self px py pz))))
         mesh (use-update update-fn [children])]
     ($ <group> {:scale #js [(* 0.1 size) (* 0.1 size) 0.1]
@@ -107,8 +113,8 @@
         mixer (use-state #(create-animation-mixer))]
     (use-effect :auto-deps
                 (let [first-animation (get-gltf-animation gltf)
-                      action (.clipAction @mixer first-animation @group-ref)]
-                  (.play action)))
+                      action (get-clip-animation-action @mixer first-animation @group-ref)]
+                  (play-animation-action! action)))
     (use-frame (fn [_state delta]
                  (let [group @group-ref]
                    (update-rotation! group (fn [x y z]
@@ -116,7 +122,7 @@
                                                    rc (cos (/ (* delta factor) 2))
                                                    new-y (+ y (* rs rc 1.5))]
                                                [x new-y z])))
-                   (.update @mixer (* delta speed)))))
+                   (update-mixer @mixer (* delta speed)))))
     ($ <group> {:ref group-ref}
       ($ <scene> {:name     "Scene"
                   :position position

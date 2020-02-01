@@ -73,6 +73,9 @@
   ([] (animation-mixer-class.))
   ([root] (animation-mixer-class. root)))
 
+(defn update-mixer [mixer delta-time]
+  (.update mixer delta-time))
+
 (def catmull-rom-curve3-class CatmullRomCurve3)
 
 (defn create-catmull-rom-curve3
@@ -86,3 +89,28 @@
 (def shader-material-class ShaderMaterial)
 
 (def back-side BackSide)
+
+(defn play-animation-action! [action]
+  (.play action))
+
+(defn get-clip-animation-action
+  ([mixer clip] (.clipAction mixer clip))
+  ([mixer clip root] (.clipAction mixer clip root)))
+
+(defn compute-bounding-box! [geom]
+  (.computeBoundingBox geom))
+
+(defn get-geometry [o]
+  (.-geometry o))
+
+(defn export-bounding-box-size! [geom out-size]
+  (j/call-in geom [.-boundingBox .-getSize] out-size))
+
+(defn get-x [o]
+  (.-x o))
+
+(defn get-y [o]
+  (.-y o))
+
+(defn get-z [o]
+  (.-z o))
