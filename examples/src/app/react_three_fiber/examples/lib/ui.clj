@@ -7,7 +7,7 @@
   `(helix.core/defnc ~@args))
 
 (defn gen-create-element [type & args]
-  `^js/React.Element (helix.core/create-element ~type ~@args))
+  `^js/React.Element (js/reactCreateElement ~type ~@args))
 
 ; TODO: wait for https://github.com/Lokeh/helix/issues/9
 (defmacro $ [type & args]

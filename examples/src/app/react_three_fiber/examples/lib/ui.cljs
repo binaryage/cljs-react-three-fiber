@@ -9,6 +9,7 @@
 
 (def <canvas> Canvas)
 (def <dom> Dom)
+(set! (.-reactCreateElement js/window) react/createElement)
 
 (defn render! [react-el dom-el]
   (rdom/render react-el dom-el))
