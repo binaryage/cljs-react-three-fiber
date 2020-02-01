@@ -10,8 +10,7 @@
                                           ; https://github.com/react-spring/react-three-fiber/issues/282
                                           :anon-fn-naming-policy :unmapped}
                              :devtools   {; TODO: remove after https://github.com/thheller/shadow-cljs/issues/637
-                                          :loader-mode :script
-                                          :preloads    [react-three-fiber.examples.preload]}}
+                                          :loader-mode :script}}
              :module-loader true
              :modules       {:main             {:entries [react-three-fiber.examples.index]
                                                 :init-fn react-three-fiber.examples.index/main!}
