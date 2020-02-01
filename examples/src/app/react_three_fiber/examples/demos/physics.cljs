@@ -25,6 +25,7 @@
                                                            create-plane
                                                            create-box
                                                            create-vec3
+                                                           step-world!
                                                            add-body-to-world!
                                                            remove-body-from-world!]]))
 
@@ -38,12 +39,6 @@
 (def context (create-context))
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
-
-(defn assign-keys [components]
-  (let [assign-key (fn [index [c props]]
-                     (if (some? c)
-                       [c (assoc props :key index)]))]
-    (map-indexed assign-key components)))
 
 (defn init-canvas! [props]
   (let [{:keys [gl]} (bean props)]
@@ -65,7 +60,7 @@
 ; custom hook to maintain a world physics body
 (defn use-cannon
   ([f props] (use-cannon f props :once))
-  ([f props deps]
+  ([f props _deps]
    (let [mesh-ref (use-ref nil)
          world (use-context context)
          current-body (use-state #(create-body (->js props)))
@@ -90,7 +85,7 @@
 ; -- update loop ------------------------------------------------------------------------------------------------------------
 
 (defn simulate-world! [world]
-  (.step world (/ 1 60)))
+  (step-world! world (/ 1 60)))
 
 ; -- components -------------------------------------------------------------------------------------------------------------
 

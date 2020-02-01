@@ -25,3 +25,5 @@
 (defn remove-body-from-world! [world body]
   (.removeBody world body))
 
+(defn step-world! [world delta-time]
+  (.step world delta-time))
