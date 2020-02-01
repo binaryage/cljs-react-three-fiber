@@ -36,11 +36,11 @@
 (def texture-url "/resources/images/backdrop.jpg")
 (def diamond-url "/resources/gltf/diamond.glb")
 
-(def refraction-vertex-shader (inline "./../js/shaders/refraction.vert"))
-(def refraction-fragment-shader (inline "./../js/shaders/refraction.frag"))
+(def refraction-vertex-shader (inline "./../shaders/refraction.vert"))
+(def refraction-fragment-shader (inline "./../shaders/refraction.frag"))
 
-(def backface-vertex-shader (inline "./../js/shaders/backface.vert"))
-(def backface-fragment-shader (inline "./../js/shaders/backface.frag"))
+(def backface-vertex-shader (inline "./../shaders/backface.vert"))
+(def backface-fragment-shader (inline "./../shaders/backface.frag"))
 
 (def aspect-height 3800)
 (def aspect-width 5000)
