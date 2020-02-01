@@ -1,6 +1,9 @@
 (ns react-three-fiber.examples.lib.three
+  (:require-macros [react-three-fiber.examples.lib.three])
   (:require [three :refer [TextureLoader FontLoader LinearFilter WebGLRenderTarget Object3D Vector3
-                           AnimationMixer CatmullRomCurve3 PCFSoftShadowMap]]
+                           AnimationMixer CatmullRomCurve3 PCFSoftShadowMap
+                           ShaderMaterial BackSide]]
+            [helix.impl.props2]
             [applied-science.js-interop :as j]))
 
 (def linear-filter LinearFilter)
@@ -47,3 +50,7 @@
   (j/call-in three [.-Math .-degToRad] n))
 
 (def pcf-soft-shadow-map PCFSoftShadowMap)
+
+(def shader-material-class ShaderMaterial)
+
+(def back-side BackSide)

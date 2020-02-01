@@ -1,12 +1,15 @@
 (ns react-three-fiber.examples.demos.refraction
-  (:require [react-three-fiber.examples.lib.ui :refer [use-ref use-memo $ defnc <canvas>]]
+  (:require [shadow.resource :refer [inline]]
+            [react-three-fiber.examples.lib.ui :refer [use-ref use-memo $ defnc <canvas>]]
             [react-three-fiber.core :refer [use-three use-frame use-loader]]
             [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.lib.three :refer [create-texture-loader
+                                                          create-shader-material
                                                           texture-loader
                                                           linear-filter
                                                           create-webgl-render-target
-                                                          create-object-3d]]
+                                                          create-object-3d
+                                                          back-side]]
             [react-three-fiber.examples.lib.helpers :refer [sin-pi cos-pi
                                                             give-random-number
                                                             set-camera-layer!
@@ -24,9 +27,7 @@
                                                             get-elapsed-time
                                                             get-matrix
                                                             set-instance-matrix-needs-update!]]
-            [react-three-fiber.examples.lib.misc :refer [gltf-loader
-                                                         create-backface-material
-                                                         create-refraction-material]]
+            [react-three-fiber.examples.lib.misc :refer [gltf-loader]]
             [react-three-fiber.examples.lib.interop :refer [doto!]]
             [cljs-bean.core :refer [bean]]))
 
@@ -34,6 +35,12 @@
 
 (def texture-url "/resources/images/backdrop.jpg")
 (def diamond-url "/resources/gltf/diamond.glb")
+
+(def refraction-vertex-shader (inline "./../js/shaders/refraction.vert"))
+(def refraction-fragment-shader (inline "./../js/shaders/refraction.frag"))
+
+(def backface-vertex-shader (inline "./../js/shaders/backface.vert"))
+(def backface-fragment-shader (inline "./../js/shaders/backface.frag"))
 
 (def aspect-height 3800)
 (def aspect-width 5000)
@@ -51,6 +58,19 @@
          :rotation  #js [(sin-pi r6)
                          (sin-pi r7)
                          (cos-pi r8)]}))
+
+(defn create-refraction-material [opts]
+  (let [{:keys [env-map backface-map resolution]} opts]
+    (create-shader-material {:uniforms        #js {:envMap      #js {:value env-map}
+                                                   :backfaceMap #js {:value backface-map}
+                                                   :resolution  #js {:value resolution}}
+                             :vertex-shader   refraction-vertex-shader
+                             :fragment-shader refraction-fragment-shader})))
+
+(defn create-backface-material []
+  (create-shader-material {:vertex-shader   backface-vertex-shader
+                           :fragment-shader backface-fragment-shader
+                           :side            back-side}))
 
 ; -- update loop ------------------------------------------------------------------------------------------------------------
 
@@ -119,9 +139,9 @@
                                   height (.-height size)
                                   env-fbo (create-webgl-render-target width height)
                                   backface-fbo (create-webgl-render-target width height)
-                                  refraction-material-opts {:envMap      (get-texture env-fbo)
-                                                            :backfaceMap (get-texture backface-fbo)
-                                                            :resolution  #js [width height]}]
+                                  refraction-material-opts {:env-map      (get-texture env-fbo)
+                                                            :backface-map (get-texture backface-fbo)
+                                                            :resolution   #js [width height]}]
                               {:env-fbo             env-fbo
                                :backface-fbo        backface-fbo
                                :backface-material   (create-backface-material)
