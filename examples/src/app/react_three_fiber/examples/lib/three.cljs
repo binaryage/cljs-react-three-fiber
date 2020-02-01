@@ -6,6 +6,38 @@
             [helix.impl.props2]
             [applied-science.js-interop :as j]))
 
+; -- components -------------------------------------------------------------------------------------------------------------
+
+(def <group> "group")
+(def <scene> "scene")
+
+(def <mesh> "mesh")
+(def <instanced-mesh> "instancedMesh")
+
+(def <object3d> "object3D")
+(def <points> "points")
+(def <fog> "fog")
+
+(def <box-buffer-geometry> "boxBufferGeometry")
+(def <buffer-geometry> "bufferGeometry")
+(def <text-geometry> "textGeometry")
+(def <plane-buffer-geometry> "planeBufferGeometry")
+(def <shape-buffer-geometry> "shapeBufferGeometry")
+
+(def <buffer-attribute> "bufferAttribute")
+
+(def <mesh-basic-material> "meshBasicMaterial")
+(def <mesh-standard-material> "meshStandardMaterial")
+(def <mesh-normal-material> "meshNormalMaterial")
+(def <mesh-phong-material> "meshPhongMaterial")
+(def <points-material> "pointsMaterial")
+
+(def <ambient-light> "ambientLight")
+(def <point-light> "pointLight")
+(def <spot-light> "spotLight")
+
+; -- wrappers ---------------------------------------------------------------------------------------------------------------
+
 (def linear-filter LinearFilter)
 
 (def texture-loader TextureLoader)

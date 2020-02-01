@@ -5,8 +5,9 @@
                                                             update-position!
                                                             give-random-number]]
             [react-three-fiber.examples.lib.three :refer [create-vector3
-                                                          create-catmull-rom-curve3]]
-            [react-three-fiber.examples.lib.mesh-line]
+                                                          create-catmull-rom-curve3
+                                                          <mesh>]]
+            [react-three-fiber.examples.lib.mesh-line :refer [<mesh-line> <mesh-line-material>]]
             [cljs-bean.core :refer [bean ->js]]
             [applied-science.js-interop :as j]))
 
@@ -30,16 +31,16 @@
         material-ref (use-ref nil)]
     (use-frame (fn []
                  (j/update-in! @material-ref [.-uniforms .-dashOffset .-value] #(- % speed))))
-    ($ :mesh
-      ($ :meshLine {:attach "geometry" :vertices curve})
-      ($ :meshLineMaterial {:attach      "material"
-                            :ref         material-ref
-                            :transparent true
-                            :depth-test  false
-                            :line-width  width
-                            :color       color
-                            :dash-array  0.1
-                            :dash-ratio  0.9}))))
+    ($ <mesh>
+      ($ <mesh-line> {:attach "geometry" :vertices curve})
+      ($ <mesh-line-material> {:attach      "material"
+                               :ref         material-ref
+                               :transparent true
+                               :depth-test  false
+                               :line-width  width
+                               :color       color
+                               :dash-array  0.1
+                               :dash-ratio  0.9}))))
 
 (defnc <lines> [props]
   (let [{:keys [total colors]} props

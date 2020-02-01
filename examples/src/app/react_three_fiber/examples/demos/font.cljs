@@ -4,7 +4,17 @@
             [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.lib.three :refer [font-loader
                                                           create-animation-mixer
-                                                          create-vector3]]
+                                                          create-vector3
+                                                          <group>
+                                                          <mesh>
+                                                          <text-geometry>
+                                                          <mesh-normal-material>
+                                                          <scene>
+                                                          <buffer-geometry>
+                                                          <box-buffer-geometry>
+                                                          <mesh-standard-material>
+                                                          <ambient-light>
+                                                          <point-light>]]
             [react-three-fiber.examples.lib.helpers :refer [give-random-number
                                                             set-position!
                                                             get-elapsed-time
@@ -68,12 +78,12 @@
                             pz (.-z (get-position self))]
                         (set-position! self px py pz))))
         mesh (use-update update-fn [children])]
-    ($ :group {:scale #js [(* 0.1 size) (* 0.1 size) 0.1]
-               :&     props}
-      ($ :mesh {:ref mesh}
-        ($ :textGeometry {:attach "geometry"
-                          :args   #js [children font-config]})
-        ($ :meshNormalMaterial {:attach "material"})))))
+    ($ <group> {:scale #js [(* 0.1 size) (* 0.1 size) 0.1]
+                :&     props}
+      ($ <mesh> {:ref mesh}
+        ($ <text-geometry> {:attach "geometry"
+                            :args   #js [children font-config]})
+        ($ <mesh-normal-material> {:attach "material"})))))
 
 (defnc <jumbo> []
   (let [text-ref (use-ref)]
@@ -83,7 +93,7 @@
                        t (get-elapsed-time clock)
                        rot (* 0.3 (sin t))]
                    (update-rotation! text (fn [_x _y _z] [rot rot rot])))))
-    ($ :group {:ref text-ref}
+    ($ <group> {:ref text-ref}
       ($ <text> {:h-align "left" :position #js [0 4.2 0] :children "REACT"})
       ($ <text> {:h-align "left" :position #js [0 0 0] :children "THREE"})
       ($ <text> {:h-align "left" :position #js [0 -4.2 0] :children "FIBER"})
@@ -107,23 +117,23 @@
                                                    new-y (+ y (* rs rc 1.5))]
                                                [x new-y z])))
                    (.update @mixer (* delta speed)))))
-    ($ :group {:ref group-ref}
-      ($ :scene {:name     "Scene"
-                 :position position
-                 :rotation rotation}
-        ($ :mesh {:name                    "Object_0"
-                  :morph-target-dictionary (get-gltf-morph-target-dictionary gltf 1)
-                  :morph-target-influences (get-gltf-morph-target-influences gltf 1)
-                  :rotation                #js [1.5707964611537577, 0, 0]}
-          ($ :boxBufferGeometry {:attach "geometry" :args #js [1, 1, 1]})
-          ($ :bufferGeometry {:attach "geometry"
-                              :&      (bean (get-gltf-geometry gltf 1))})
-          ($ :meshStandardMaterial {:attach "material"
-                                    :name   "Material_0_COLOR_0"
-                                    :&      (bean (get-gltf-material gltf 1))}))))))
+    ($ <group> {:ref group-ref}
+      ($ <scene> {:name     "Scene"
+                  :position position
+                  :rotation rotation}
+        ($ <mesh> {:name                    "Object_0"
+                   :morph-target-dictionary (get-gltf-morph-target-dictionary gltf 1)
+                   :morph-target-influences (get-gltf-morph-target-influences gltf 1)
+                   :rotation                #js [1.5707964611537577, 0, 0]}
+          ($ <box-buffer-geometry> {:attach "geometry" :args #js [1, 1, 1]})
+          ($ <buffer-geometry> {:attach "geometry"
+                                :&      (bean (get-gltf-geometry gltf 1))})
+          ($ <mesh-standard-material> {:attach "material"
+                                       :name   "Material_0_COLOR_0"
+                                       :&      (bean (get-gltf-material gltf 1))}))))))
 
 (defnc <birds> []
-  ($ :group
+  ($ <group>
     (for [i (range 100)]
       (let [[r1 r2 r3 r4 r5 r6] (repeatedly give-random-number)
             x (* (+ 15 (* 30 r1)) (if (> r2 0.5) -1 1))
@@ -148,8 +158,8 @@
 (defnc <demo> []
   ($ <canvas> {:camera #js {:position #js [0 0 35]}
                :style  {:background "radial-gradient(at 50% 60%, #873740 0%, #272730 40%, #171720 80%, #070710 100%)"}}
-    ($ :ambientLight {:intensity 2})
-    ($ :pointLight {:position #js [40 40 40]})
+    ($ <ambient-light> {:intensity 2})
+    ($ <point-light> {:position #js [40 40 40]})
     ($ <suspense> {:fallback "loading font demo"}
       ($ <jumbo>)
       ($ <birds>))))

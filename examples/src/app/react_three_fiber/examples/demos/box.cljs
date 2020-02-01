@@ -1,6 +1,7 @@
 (ns react-three-fiber.examples.demos.box
   (:require [react-three-fiber.examples.lib.ui :refer [<canvas> use-ref defnc $]]
             [react-three-fiber.core :refer [use-frame]]
+            [react-three-fiber.examples.lib.three :refer [<mesh> <box-buffer-geometry> <mesh-normal-material>]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation!]]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
@@ -24,13 +25,13 @@
 (defnc <box> []
   (let [mesh-ref (use-ref)]
     (use-frame #(update! @mesh-ref))
-    ($ :mesh {:ref             mesh-ref
-              :on-click        #(js/console.log "click")
-              :on-pointer-over #(js/console.log "hover")
-              :on-pointer-out  #(js/console.log "unhover")}
-      ($ :boxBufferGeometry {:attach "geometry"
-                             :args   #js [1, 1, 1]})
-      ($ :meshNormalMaterial {:attach "material"}))))
+    ($ <mesh> {:ref             mesh-ref
+               :on-click        #(js/console.log "click")
+               :on-pointer-over #(js/console.log "hover")
+               :on-pointer-out  #(js/console.log "unhover")}
+      ($ <box-buffer-geometry> {:attach "geometry"
+                                :args   #js [1, 1, 1]})
+      ($ <mesh-normal-material> {:attach "material"}))))
 
 (defnc <demo> []
   ($ <canvas> {:camera camera-config}

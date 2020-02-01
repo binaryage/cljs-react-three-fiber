@@ -4,7 +4,15 @@
             [react-three-fiber.core :refer [use-three use-frame]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation! give-random-number]]
             [react-three-fiber.examples.lib.react-spring-three :refer [use-springs animated]]
-            [react-three-fiber.examples.lib.three :refer [deg-to-rad]]))
+            [react-three-fiber.examples.lib.three :refer [deg-to-rad
+                                                          <box-buffer-geometry>
+                                                          <group>
+                                                          <mesh>
+                                                          <mesh-standard-material>
+                                                          <plane-buffer-geometry>
+                                                          <spot-light>
+                                                          <point-light>
+                                                          <ambient-light>]]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
 
@@ -52,36 +60,36 @@
     (use-effect :once
                 (js/setInterval update-fn 3000))
 
-    ($ :group
+    ($ <group>
       (for [[index d] (map-indexed vector data)]
         (let [spring (bean (aget springs index))]
-          ($ (animated :mesh) {:key            index
-                               :cast-shadow    true
-                               :receive-shadow true
-                               :&              spring}
-            ($ :boxBufferGeometry {:attach "geometry"
-                                   :args   (:args d)})
-            ($ (animated :meshStandardMaterial) {:attach    "material"
-                                                 :color     (:color spring)
-                                                 :roughness 0.75})))))))
+          ($ (animated <mesh>) {:key            index
+                                :cast-shadow    true
+                                :receive-shadow true
+                                :&              spring}
+            ($ <box-buffer-geometry> {:attach "geometry"
+                                      :args   (:args d)})
+            ($ (animated <mesh-standard-material>) {:attach    "material"
+                                                    :color     (:color spring)
+                                                    :roughness 0.75})))))))
 
 (defnc <lights> []
-  ($ :group
-    ($ :pointLight {:intensity 0.3})
+  ($ <group>
+    ($ <point-light> {:intensity 0.3})
     ; TODO: it looks like our ambient light is applied twice
-    ($ :ambientLight {:intensity 1})
-    ($ :spotLight {:cast-shadow            true
-                   :intensity              0.2
-                   :angle                  (/ js/Math.PI 7)
-                   :position               #js [150 150 250]
-                   :penumbra               1
-                   :'shadow-mapSize-width  2048
-                   :'shadow-mapSize-height 2048})))
+    ($ <ambient-light> {:intensity 1})
+    ($ <spot-light> {:cast-shadow            true
+                     :intensity              0.2
+                     :angle                  (/ js/Math.PI 7)
+                     :position               #js [150 150 250]
+                     :penumbra               1
+                     :'shadow-mapSize-width  2048
+                     :'shadow-mapSize-height 2048})))
 
 (defnc <desktop> []
-  ($ :mesh {:receive-shadow true}
-    ($ :planeBufferGeometry {:attach "geometry" :args #js [1000 1000]})
-    ($ :meshStandardMaterial {:attach "material" :color "#A2ACB6" :roughness 1})))
+  ($ <mesh> {:receive-shadow true}
+    ($ <plane-buffer-geometry> {:attach "geometry" :args #js [1000 1000]})
+    ($ <mesh-standard-material> {:attach "material" :color "#A2ACB6" :roughness 1})))
 
 (defnc <demo> []
   ($ <canvas> {:shadow-map true

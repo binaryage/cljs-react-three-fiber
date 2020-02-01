@@ -5,6 +5,13 @@
             [react-three-fiber.examples.lib.misc :refer [svg-loader]]
             [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.lib.react-spring-three :refer [animated use-spring use-transition]]
+            [react-three-fiber.examples.lib.three :refer [<ambient-light>
+                                                          <spot-light>
+                                                          <shape-buffer-geometry>
+                                                          <plane-buffer-geometry>
+                                                          <mesh-phong-material>
+                                                          <mesh>
+                                                          <group>]]
             [react-three-fiber.examples.lib.helpers :refer [camera-look-at!
                                                             interpolate
                                                             get-shape-uuid
@@ -95,36 +102,36 @@
     (use-effect :once (js/setInterval flip-page! page-flip-delay))
     (<>
       ; lights
-      ($ :ambientLight {:intensity 0.5})
-      ($ :spotLight {:intensity 0.5
-                     :position  #js [300 300 4000]})
+      ($ <ambient-light> {:intensity 0.5})
+      ($ <spot-light> {:intensity 0.5
+                       :position  #js [300 300 4000]})
       ; background plane
-      ($ :mesh {:scale    #js [10000 10000 1]
-                :rotation #js [0 -0.2 0]}
-        ($ :planeBufferGeometry {:attach "geometry"
-                                 :args   #js [1 1]})
-        ($ (animated :meshPhongMaterial) {:attach     "material"
-                                          :color      (get-spring-color background-color-spring)
-                                          :depth-test false}))
+      ($ <mesh> {:scale    #js [10000 10000 1]
+                 :rotation #js [0 -0.2 0]}
+        ($ <plane-buffer-geometry> {:attach "geometry"
+                                    :args   #js [1 1]})
+        ($ (animated <mesh-phong-material>) {:attach     "material"
+                                             :color      (get-spring-color background-color-spring)
+                                             :depth-test false}))
       ; page shapes
-      ($ (animated :group) {:position #js [1220 700 @current-page]
-                            :rotation #js [0 0 Math/PI]}
+      ($ (animated <group>) {:position #js [1220 700 @current-page]
+                             :rotation #js [0 0 Math/PI]}
         (for [transition transitions]
           (let [{:keys [item key props]} (bean transition)
                 {:keys [shape color fillOpacity index]} (bean item)
                 {:keys [opacity position rotation]} (bean props)
                 position (interpolate position (fn [x y z] #js [x y (+ z index)]))
                 opacity (interpolate opacity (fn [o] (* o fillOpacity)))]
-            ($ (animated :mesh) {:key      key
-                                 :rotation rotation
-                                 :position position}
-              ($ (animated :meshPhongMaterial) {:attach      "material"
-                                                :color       color
-                                                :opacity     opacity
-                                                :depth-write false
-                                                :transparent true})
-              ($ :shapeBufferGeometry {:attach "geometry"
-                                       :args   #js [shape]}))))))))
+            ($ (animated <mesh>) {:key      key
+                                  :rotation rotation
+                                  :position position}
+              ($ (animated <mesh-phong-material>) {:attach      "material"
+                                                   :color       color
+                                                   :opacity     opacity
+                                                   :depth-write false
+                                                   :transparent true})
+              ($ <shape-buffer-geometry> {:attach "geometry"
+                                          :args   #js [shape]}))))))))
 
 (defnc <demo> []
   ($ <canvas> {:invalidate-frameloop true

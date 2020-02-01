@@ -9,7 +9,12 @@
                                                           linear-filter
                                                           create-webgl-render-target
                                                           create-object-3d
-                                                          back-side]]
+                                                          back-side
+                                                          <mesh>
+                                                          <instanced-mesh>
+                                                          <buffer-geometry>
+                                                          <mesh-basic-material>
+                                                          <plane-buffer-geometry>]]
             [react-three-fiber.examples.lib.helpers :refer [sin-pi cos-pi
                                                             give-random-number
                                                             set-camera-layer!
@@ -159,11 +164,11 @@
                            resources
                            diamonds)]
     (use-frame update-fn 1)
-    ($ :instancedMesh {:ref model-ref :args #js [nil nil (count diamonds)]}
-      ($ :bufferGeometry {:dispose false
-                          :attach  "geometry"
-                          :&       (bean gltf-geometry)})
-      ($ :meshBasicMaterial {:attach "material"}))))
+    ($ <instanced-mesh> {:ref model-ref :args #js [nil nil (count diamonds)]}
+      ($ <buffer-geometry> {:dispose false
+                            :attach  "geometry"
+                            :&       (bean gltf-geometry)})
+      ($ <mesh-basic-material> {:attach "material"}))))
 
 (defnc <background> []
   (let [{:keys [viewport aspect]} (use-three)
@@ -177,12 +182,12 @@
     (use-memo :auto-deps
               (set-min-filter! texture linear-filter))
 
-    ($ :mesh {:layers 1
-              :scale  #js [adapted-width adapted-height 1]}
-      ($ :planeBufferGeometry {:attach "geometry"})
-      ($ :meshBasicMaterial {:attach    "material"
-                             :map       texture
-                             :depthTest false}))))
+    ($ <mesh> {:layers 1
+               :scale  #js [adapted-width adapted-height 1]}
+      ($ <plane-buffer-geometry> {:attach "geometry"})
+      ($ <mesh-basic-material> {:attach    "material"
+                                :map       texture
+                                :depthTest false}))))
 
 (defnc <demo> []
   ($ <canvas> {:camera #js {:fov 50 :position #js [0 0 30]}}

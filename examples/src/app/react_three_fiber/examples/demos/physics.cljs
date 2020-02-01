@@ -4,7 +4,14 @@
             [react-three-fiber.core :refer [use-frame]]
             [react-three-fiber.examples.lib.interop :refer [doto!]]
             [react-three-fiber.examples.lib.react :refer [create-context use-context]]
-            [react-three-fiber.examples.lib.three :refer [pcf-soft-shadow-map]]
+            [react-three-fiber.examples.lib.three :refer [pcf-soft-shadow-map
+                                                          <mesh>
+                                                          <ambient-light>
+                                                          <spot-light>
+                                                          <plane-buffer-geometry>
+                                                          <mesh-phong-material>
+                                                          <mesh-standard-material>
+                                                          <box-buffer-geometry>]]
             [react-three-fiber.examples.lib.helpers :refer [set-position!
                                                             add-shape!
                                                             get-context-provider
@@ -97,7 +104,7 @@
                 (world-setup-fn))
     (use-frame #(simulate-world! @world))
     ($ provider {:value @world}
-     children)))
+      children)))
 
 (defnc <plane> [props]
   (let [{:keys [position]} props
@@ -105,12 +112,12 @@
                          (add-shape! body (create-plane))
                          (set-position! body position))
         mesh-ref (use-cannon mesh-update-fn {:mass 0})]
-    ($ :mesh {:ref            mesh-ref
-              :receive-shadow true}
-      ($ :planeBufferGeometry {:attach "geometry"
-                               :args   #js [1000 1000]})
-      ($ :meshPhongMaterial {:attach "material"
-                             :color  "#272727"}))))
+    ($ <mesh> {:ref            mesh-ref
+               :receive-shadow true}
+      ($ <plane-buffer-geometry> {:attach "geometry"
+                                  :args   #js [1000 1000]})
+      ($ <mesh-phong-material> {:attach "material"
+                                :color  "#272727"}))))
 
 (defnc <box> [props]
   (let [{:keys [position]} props
@@ -119,15 +126,15 @@
                          (add-shape! body (create-box (create-vec3 1 1 1)))
                          (set-position! body position))
         mesh-ref (use-cannon mesh-update-fn {:mass 100000})]
-    ($ :mesh {:ref             mesh-ref
-              :cast-shadow     true
-              :receive-shadow  true
-              :on-pointer-over #(reset! currently-hovered? true)
-              :on-pointer-out  #(reset! currently-hovered? false)}
-      ($ :boxBufferGeometry {:attach "geometry"
-                             :args   #js [2, 2, 2]})
-      ($ :meshStandardMaterial {:attach "material"
-                                :color  (if @currently-hovered? "lightpink" "white")}))))
+    ($ <mesh> {:ref             mesh-ref
+               :cast-shadow     true
+               :receive-shadow  true
+               :on-pointer-over #(reset! currently-hovered? true)
+               :on-pointer-out  #(reset! currently-hovered? false)}
+      ($ <box-buffer-geometry> {:attach "geometry"
+                                :args   #js [2, 2, 2]})
+      ($ <mesh-standard-material> {:attach "material"
+                                   :color  (if @currently-hovered? "lightpink" "white")}))))
 
 (defnc <demo> []
   (let [currently-showing-upper-plane? (use-state true)]
@@ -136,12 +143,12 @@
     (use-effect :once (schedule-removing-upper-plane! currently-showing-upper-plane?))
     ($ <canvas> {:camera     camera-config
                  :on-created init-canvas!}
-      ($ :ambientLight {:intensity 0.25})                                                                                     ; TODO: (investigate) our ambient lights have double intensity for some reason
-      ($ :spotLight {:intensity   0.6
-                     :position    #js [30 30 50]
-                     :angle       0.2
-                     :penumbra    1
-                     :cast-shadow true})
+      ($ <ambient-light> {:intensity 0.25})                                                                                   ; TODO: (investigate) our ambient lights have double intensity for some reason
+      ($ <spot-light> {:intensity   0.6
+                       :position    #js [30 30 50]
+                       :angle       0.2
+                       :penumbra    1
+                       :cast-shadow true})
       ($ <world-provider> {}
         ($ <plane> {:position #js [0 0 -10]})
         ($ <box> {:position #js [1 0 1]})
