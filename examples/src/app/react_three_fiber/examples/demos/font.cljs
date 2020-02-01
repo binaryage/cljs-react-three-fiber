@@ -91,7 +91,7 @@
       ($ <text> {:h-align "left" :position #js [16.5 -4.2 0] :children "X"}))))
 
 (defnc <bird> [props]
-  (let [{:keys [speed factor url]} props
+  (let [{:keys [speed factor url position rotation]} props
         gltf (use-loader gltf-loader url)
         group-ref (use-ref)
         mixer (use-state #(create-animation-mixer))]
@@ -108,17 +108,19 @@
                                                [x new-y z])))
                    (.update @mixer (* delta speed)))))
     ($ :group {:ref group-ref}
-      ($ :scene {:name "Scene" :& props})
-      ($ :mesh {:name                    "Object_0"
-                :morph-target-dictionary (get-gltf-morph-target-dictionary gltf 1)
-                :morph-target-influences (get-gltf-morph-target-influences gltf 1)
-                :rotation                #js [1.5707964611537577, 0, 0]}
-        ($ :boxBufferGeometry {:attach "geometry" :args #js [1, 1, 1]})
-        ($ :bufferGeometry {:attach "geometry"
-                            :&      (bean (get-gltf-geometry gltf 1))})
-        ($ :meshStandardMaterial {:attach "material"
-                                  :name   "Material_0_COLOR_0"
-                                  :&      (bean (get-gltf-material gltf 1))})))))
+      ($ :scene {:name     "Scene"
+                 :position position
+                 :rotation rotation}
+        ($ :mesh {:name                    "Object_0"
+                  :morph-target-dictionary (get-gltf-morph-target-dictionary gltf 1)
+                  :morph-target-influences (get-gltf-morph-target-influences gltf 1)
+                  :rotation                #js [1.5707964611537577, 0, 0]}
+          ($ :boxBufferGeometry {:attach "geometry" :args #js [1, 1, 1]})
+          ($ :bufferGeometry {:attach "geometry"
+                              :&      (bean (get-gltf-geometry gltf 1))})
+          ($ :meshStandardMaterial {:attach "material"
+                                    :name   "Material_0_COLOR_0"
+                                    :&      (bean (get-gltf-material gltf 1))}))))))
 
 (defnc <birds> []
   ($ :group

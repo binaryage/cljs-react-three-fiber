@@ -69,7 +69,7 @@
                         :curve curve})))
         lines (use-memo [total colors] (lines-fn))]
     (for [line-props lines]
-      ($ <fat-line> line-props))))
+      ($ <fat-line> {:& line-props}))))
 
 (defnc <rig> [props]
   (let [; FIXME:

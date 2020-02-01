@@ -10,7 +10,7 @@
   `(helix.core/defnc ~@args))
 
 (defn gen-create-element [type & args]
-  `(^js/React.Element (helix.core/create-element ~type ~@args)))
+  `^js/React.Element (helix.core/create-element ~type ~@args))
 
 ; TODO: wait for https://github.com/Lokeh/helix/issues/9
 (defmacro $ [type & args]
@@ -50,6 +50,7 @@
                                                            :receiveShadow true}))))
 
   (pprint (macroexpand '($ :meshBasicMaterial {:attach "material"})))
+  (pprint (macroexpand '($ <c> ($ <child> {:prop 1}))))
   (pprint (macroexpand '($ :instancedMesh {:ref model-ref :args [nil nil (count diamonds)]}
                           ($$ :bufferGeometry geometry-props)
                           ($ :meshBasicMaterial {:attach "material"})))))
