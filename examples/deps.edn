@@ -25,8 +25,7 @@
   thheller/shadow-cljs        {:mvn/version "RELEASE"}}
 
  :paths
- ["src/app"
-  "src/dev"]
+ ["src/app"]
 
  :aliases
  {
