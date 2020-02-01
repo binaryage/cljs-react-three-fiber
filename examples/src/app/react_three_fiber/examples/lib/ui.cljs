@@ -16,27 +16,6 @@
 (defn unmount! [dom-el]
   (rdom/unmountComponentAtNode dom-el))
 
-(defn children-map
-  ([children f]
-   (.map react/Children children f))
-  ([children f context]
-   (.map react/Children children f context)))
-
-(defn children-for-each
-  ([children f]
-   (.forEach react/Children children f))
-  ([children f context]
-   (.forEach react/Children children f context)))
-
-(defn children-count [children]
-  (.count react/Children children))
-
-(defn children-to-array [children]
-  (.toArray react/Children children))
-
-(defn children-only [children]
-  (.only react/Children children))
-
 (def create-context createContext)
 (def use-context useContext)
 
