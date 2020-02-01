@@ -3,9 +3,6 @@
             [clojure.pprint :refer [pprint]]
             [helix.impl.props :as impl.props]))
 
-(defmacro defc-native! [name c]
-  `(def ~name ~c))
-
 (defmacro defnc [& args]
   `(helix.core/defnc ~@args))
 

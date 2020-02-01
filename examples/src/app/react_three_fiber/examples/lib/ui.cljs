@@ -1,5 +1,5 @@
 (ns react-three-fiber.examples.lib.ui
-  (:require-macros [react-three-fiber.examples.lib.ui :refer [defc-native!]])
+  (:require-macros [react-three-fiber.examples.lib.ui])
   (:require [helix.core]
             [helix.hooks]
             [helix.dom]
@@ -7,8 +7,8 @@
             [react-dom :as rdom]
             [react :refer [useRef createContext useContext]]))
 
-(defc-native! <canvas> Canvas)
-(defc-native! <dom> Dom)
+(def <canvas> Canvas)
+(def <dom> Dom)
 
 (defn render! [react-el dom-el]
   (rdom/render react-el dom-el))
