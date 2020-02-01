@@ -7,9 +7,10 @@
             [react-dom :as rdom]
             [react :refer [useRef createContext useContext]]))
 
+(defn get-react [] react)
+
 (def <canvas> Canvas)
 (def <dom> Dom)
-(set! (.-reactCreateElement js/window) react/createElement)
 
 (defn render! [react-el dom-el]
   (rdom/render react-el dom-el))
