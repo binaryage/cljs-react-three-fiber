@@ -19,7 +19,9 @@
 (def create-context createContext)
 (def use-context useContext)
 
-(def use-ref helix.hooks/use-ref)
+(defn use-ref
+  ([] (helix.hooks/use-ref nil))
+  ([x] (helix.hooks/use-ref x)))
 
 ; from uix
 (deftype StateHook [value set-value]

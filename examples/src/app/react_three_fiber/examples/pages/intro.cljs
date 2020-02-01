@@ -1,7 +1,7 @@
 (ns react-three-fiber.examples.pages.intro
   (:require [cljs-bean.core :refer [bean ->js]]
             [clojure.string :as string]
-            [react-three-fiber.examples.lib.ui :refer [defnc $ children-only]]
+            [react-three-fiber.examples.lib.ui :refer [defnc $]]
             [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.demos :as demos]
             [react-three-fiber.examples.styles :refer [<page-styles>]]

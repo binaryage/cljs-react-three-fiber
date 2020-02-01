@@ -46,9 +46,17 @@
                                                            :castShadow    true
                                                            :receiveShadow true}))))
 
+  (pprint (macroexpand '($ <mesh> {:ref             mesh-ref
+                                   :on-click        #(js/console.log "click")
+                                   :on-pointer-over #(js/console.log "hover")
+                                   :on-pointer-out  #(js/console.log "unhover")}
+                          ($ <box-buffer-geometry> {:attach "geometry"
+                                                    :args   #js [1, 1, 1]})
+                          ($ <mesh-normal-material> {:attach "material"}))))
+
   (pprint (macroexpand '($ :meshBasicMaterial {:attach "material"})))
   (pprint (macroexpand '($ <c> ($ <child> {:prop 1}))))
   (pprint (macroexpand '($ :instancedMesh {:ref model-ref :args [nil nil (count diamonds)]}
-                          ($$ :bufferGeometry geometry-props)
+                          ($ :bufferGeometry geometry-props)
                           ($ :meshBasicMaterial {:attach "material"})))))
 
