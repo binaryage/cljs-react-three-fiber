@@ -6,6 +6,8 @@ public/.compiled
 /src/gen
 /vendor
 
+/.reports
+
 pom.xml
 pom.xml.asc
 *.iml
