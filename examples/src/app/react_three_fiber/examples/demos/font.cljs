@@ -69,7 +69,7 @@
                         (set-position! self px py pz))))
         mesh (use-update update-fn [children])]
     ($ :group {:scale #js [(* 0.1 size) (* 0.1 size) 0.1]
-               &      props}
+               :&     props}
       ($ :mesh {:ref mesh}
         ($ :textGeometry {:attach "geometry"
                           :args   #js [children font-config]})
@@ -108,17 +108,17 @@
                                                [x new-y z])))
                    (.update @mixer (* delta speed)))))
     ($ :group {:ref group-ref}
-      ($ :scene {:name "Scene" & props})
+      ($ :scene {:name "Scene" :& props})
       ($ :mesh {:name                    "Object_0"
                 :morph-target-dictionary (get-gltf-morph-target-dictionary gltf 1)
                 :morph-target-influences (get-gltf-morph-target-influences gltf 1)
                 :rotation                #js [1.5707964611537577, 0, 0]}
         ($ :boxBufferGeometry {:attach "geometry" :args #js [1, 1, 1]})
         ($ :bufferGeometry {:attach "geometry"
-                            &       (bean (get-gltf-geometry gltf 1))})
+                            :&      (bean (get-gltf-geometry gltf 1))})
         ($ :meshStandardMaterial {:attach "material"
                                   :name   "Material_0_COLOR_0"
-                                  &       (bean (get-gltf-material gltf 1))})))))
+                                  :&      (bean (get-gltf-material gltf 1))})))))
 
 (defnc <birds> []
   ($ :group

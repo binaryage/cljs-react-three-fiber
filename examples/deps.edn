@@ -11,7 +11,7 @@
                                :sha     "e6b5f0b84b736481269a62beb4ce70f99a30f9a0"}
 
   lilactown/helix             {:git/url "https://github.com/darwin/helix.git"
-                               :sha     "596648ce7ab068eba8f935c9acd71b18d5049945"}
+                               :sha     "be5c3dc00790f60de5e22bdbc1ea9250b8b1981b"}
 
   ;lilactown/helix {:local/root "vendor/helix"}
 

@@ -36,12 +36,12 @@
 (defnc <gltf-mesh> [props]
   (let [{:keys [gltf layer]} props
         mesh-props (dissoc props :gltf :layer)]
-    ($ :mesh {& mesh-props}
+    ($ :mesh {:& mesh-props}
       ($ :bufferGeometry {:attach "geometry"
-                          &       (bean (get-gltf-geometry gltf layer))})
+                          :&      (bean (get-gltf-geometry gltf layer))})
       ($ :meshStandardMaterial {:attach    "material"
                                 :roughness 1
-                                &          (bean (get-gltf-material gltf layer))}))))
+                                :&         (bean (get-gltf-material gltf layer))}))))
 
 (defnc <planet> []
   (let [group-ref (use-ref nil)
@@ -87,8 +87,8 @@
         controls-ref (use-ref nil)]
     (use-frame #(.update @controls-ref))
     ($ :orbitControls {:ref  controls-ref
-                               :args #js [camera (.-domElement gl)]
-                       & props})))
+                       :args #js [camera (.-domElement gl)]
+                       :&    props})))
 
 (defnc <demo> []
   ($ <canvas> {:style      {:background "radial-gradient(at 50% 70%, #200f20 40%, #090b1f 80%, #050523 100%)"}

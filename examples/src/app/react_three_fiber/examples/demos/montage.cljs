@@ -58,7 +58,7 @@
           ($ (animated :mesh) {:key            index
                                :cast-shadow    true
                                :receive-shadow true
-                               &               spring}
+                               :&              spring}
             ($ :boxBufferGeometry {:attach "geometry"
                                    :args   (:args d)})
             ($ (animated :meshStandardMaterial) {:attach    "material"

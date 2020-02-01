@@ -142,7 +142,7 @@
     ($ :instancedMesh {:ref model-ref :args #js [nil nil (count diamonds)]}
       ($ :bufferGeometry {:dispose false
                           :attach  "geometry"
-                          &        (bean gltf-geometry)})
+                          :&       (bean gltf-geometry)})
       ($ :meshBasicMaterial {:attach "material"}))))
 
 (defnc <background> []
