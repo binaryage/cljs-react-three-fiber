@@ -9,7 +9,11 @@
                                                             create-float32-array]]
             [react-three-fiber.examples.lib.misc :refer [gltf-loader
                                                          create-draco-loader
-                                                         extend-react-with-orbit-controls!]]
+                                                         apply-draco-extension
+                                                         extend-react-with-orbit-controls!
+                                                         <orbit-controls>
+                                                         update-controls
+                                                         get-dom-element]]
             [react-three-fiber.examples.lib.three :refer [<group>
                                                           <object3d>
                                                           <points>
@@ -36,13 +40,6 @@
   (let [[r1 r2] (repeatedly give-random-number)]
     (* (+ 50 (* r1 1000)) (if (< r2 0.5) -1 1))))
 
-(defn draco-extension [loader]
-  (let [draco-loader (create-draco-loader)]
-    (j/assoc! draco-loader .-decoderPath "/draco-gltf/")
-    (.setDRACOLoader loader draco-loader)))
-
-; -- update loop ------------------------------------------------------------------------------------------------------------
-
 ; -- components -------------------------------------------------------------------------------------------------------------
 
 (defnc <gltf-mesh> [props]
@@ -57,7 +54,7 @@
 
 (defnc <planet> []
   (let [group-ref (use-ref nil)
-        gltf (use-loader gltf-loader planet-url draco-extension)]
+        gltf (use-loader gltf-loader planet-url (partial apply-draco-extension "/draco-gltf/"))]
     ($ <group> {:ref group-ref}
       ($ <object3d> {:rotation #js [-1.5708 0 0]}
         ($ <object3d> {:position #js [-0.0033 0.0237 -6.3311]
@@ -97,10 +94,10 @@
 (defnc <controls> [props]
   (let [{:keys [gl camera]} (use-three)
         controls-ref (use-ref nil)]
-    (use-frame #(.update @controls-ref))
-    ($ :orbitControls {:ref  controls-ref
-                       :args #js [camera (.-domElement gl)]
-                       :&    props})))
+    (use-frame #(update-controls @controls-ref))
+    ($ <orbit-controls> {:ref  controls-ref
+                         :args #js [camera (get-dom-element gl)]
+                         :&    props})))
 
 (defnc <demo> []
   ($ <canvas> {:style      {:background "radial-gradient(at 50% 70%, #200f20 40%, #090b1f 80%, #050523 100%)"}

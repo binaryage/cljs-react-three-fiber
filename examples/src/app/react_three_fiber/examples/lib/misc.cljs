@@ -1,6 +1,6 @@
 (ns react-three-fiber.examples.lib.misc
-  (:require [cljs-bean.core :refer [bean ->js]]
-            [react-three-fiber.core :refer [extend-react]]
+  (:require [react-three-fiber.core :refer [extend-react]]
+            [applied-science.js-interop :as j]
             ["three/examples/jsm/loaders/GLTFLoader" :refer [GLTFLoader]]
             ["three/examples/jsm/loaders/SVGLoader" :refer [SVGLoader]]
             ["three/examples/jsm/loaders/DRACOLoader" :refer [DRACOLoader]]
@@ -15,5 +15,18 @@
 
 (def orbit-controls OrbitControls)
 
+(def <orbit-controls> "orbitControls")
+
 (defn extend-react-with-orbit-controls! []
   (extend-react #js {:OrbitControls OrbitControls}))
+
+(defn apply-draco-extension [path loader]
+  (let [draco-loader (create-draco-loader)]
+    (j/assoc! draco-loader .-decoderPath path)
+    (.setDRACOLoader loader draco-loader)))
+
+(defn get-dom-element [gl]
+  (.-domElement gl))
+
+(defn update-controls [controls]
+  (.update controls))
