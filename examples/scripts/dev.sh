@@ -3,4 +3,4 @@
 set -e -o pipefail
 
 set -x
-exec clj -A:shadow-cljs "${@}" watch app
+exec clj "${@}" watch app
