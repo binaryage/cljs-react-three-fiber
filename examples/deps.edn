@@ -11,7 +11,7 @@
                                :sha     "e6b5f0b84b736481269a62beb4ce70f99a30f9a0"}
 
   lilactown/helix             {:git/url "https://github.com/darwin/helix.git"
-                               :sha     "2020508d53a06b2bd3d51038c08149963d8a9d34"}
+                               :sha     "e43f4b7d7354eb97b3d354c5f192623d287f2793"}
 
   ;lilactown/helix {:local/root "vendor/helix"}
 
@@ -34,6 +34,6 @@
                   :extra-paths ["vendor/shadow-cljs/src/main"
                                 "vendor/shadow-cljs/src/repl"]}
 
-  :shadow-cljs   {:main-opts  ["-m" "shadow.cljs.devtools.cli"]}}
+  :shadow-cljs   {:main-opts ["-m" "shadow.cljs.devtools.cli"]}}
  }
 
