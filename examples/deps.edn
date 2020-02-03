@@ -34,7 +34,6 @@
                   :extra-paths ["vendor/shadow-cljs/src/main"
                                 "vendor/shadow-cljs/src/repl"]}
 
-  :shadow-cljs   {:extra-deps {thheller/shadow-cljs {:mvn/version "RELEASE"}}
-                  :main-opts  ["-m" "shadow.cljs.devtools.cli"]}}
+  :shadow-cljs   {:main-opts  ["-m" "shadow.cljs.devtools.cli"]}}
  }
 
