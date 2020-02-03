@@ -1,6 +1,7 @@
 (ns react-three-fiber.examples.lib.helpers
   (:require [cljs-bean.core :refer [bean]]
-            [applied-science.js-interop :as j]))
+            [applied-science.js-interop :as j]
+            [clojure.string :as string]))
 
 (defn sin [x]
   (Math/sin x))
@@ -182,3 +183,6 @@
 
 (defn get-points [o subs]
   (.getPoints o subs))
+
+(defn remove-trailing-slashes [s]
+  (string/replace s #"/+$" ""))

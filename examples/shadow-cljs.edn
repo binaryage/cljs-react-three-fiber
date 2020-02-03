@@ -12,8 +12,9 @@
                              :devtools   {; TODO: remove after https://github.com/thheller/shadow-cljs/issues/637
                                           :loader-mode :script}}
              :module-loader true
+             :module-loader-init false
              :modules       {:main             {:entries [react-three-fiber.examples.index]
-                                                :init-fn react-three-fiber.examples.index/main!}
+                                                :init-fn react-three-fiber.examples.index/init!}
                              :demo-box         {:entries    [react-three-fiber.examples.demos.box]
                                                 :depends-on #{:main}}
                              :demo-refraction  {:entries    [react-three-fiber.examples.demos.refraction]
