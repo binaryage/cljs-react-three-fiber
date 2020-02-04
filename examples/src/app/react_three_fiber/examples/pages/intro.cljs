@@ -22,7 +22,7 @@
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
-(defn lookup-component [name & [default]]
+(defn lookup-demo-component [name & [default]]
   (get-in all-demos [name :component] default))
 
 (defn all-allowed-paths [names]
@@ -98,9 +98,9 @@
                       :children (fn [route-props]
                                   (let [{:keys [match]} (bean route-props)
                                         selected-name (get-match-param match)
-                                        component (lookup-component selected-name default-demo-name)]
+                                        demo-component (lookup-demo-component selected-name default-demo-name)]
                                     ($ <demo-canvas> {:name selected-name
-                                                      :demo component})))})
+                                                      :demo demo-component})))})
           ($ <redirect> {:to (str "/demo/" default-demo-name)})))
       ($ <demo-selection-panel>)
       ($ :a {:href home-url :style {:color (if (:bright? selected-demo) "#2c2d31" "white")}} home-label))))
