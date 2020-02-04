@@ -54,11 +54,11 @@
 
   IPrintWithWriter
   (-pr-writer [o writer opts]
-    (-write writer "#object [uix.hooks.alpha.StateHook ")
+    (-write writer "#object [StateHook ")
     (pr-writer {:val value} writer opts)
     (-write writer "]")))
 
-(defn state [value]
+(defn use-state [value]
   (let [[value set-value] (react/useState value)
         sh (react/useMemo #(StateHook. value set-value) #js [])]
     (react/useMemo (fn []
@@ -66,5 +66,3 @@
                      (set! (.-set-value sh) set-value)
                      sh)
                    #js [value set-value])))
-
-(def use-state state)
