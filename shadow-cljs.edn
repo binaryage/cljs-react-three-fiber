@@ -11,25 +11,25 @@
                                                :anon-fn-naming-policy :unmapped}
                                   :devtools   {; TODO: remove after https://github.com/thheller/shadow-cljs/issues/637
                                                :loader-mode :script
-                                               :preloads    [react-three-fiber.examples.dev.preload]}}
+                                               :preloads    [rtf-examples.dev.preload]}}
              :module-loader      true
              :module-loader-init false
-             :modules            {:main             {:entries [react-three-fiber.examples.index]
-                                                     :init-fn react-three-fiber.examples.index/init!}
-                                  :demo-box         {:entries    [react-three-fiber.examples.demos.box]
+             :modules            {:main             {:entries [rtf-examples.index]
+                                                     :init-fn rtf-examples.index/init!}
+                                  :demo-box         {:entries    [rtf-examples.demos.box]
                                                      :depends-on #{:main}}
-                                  :demo-refraction  {:entries    [react-three-fiber.examples.demos.refraction]
+                                  :demo-refraction  {:entries    [rtf-examples.demos.refraction]
                                                      :depends-on #{:main}}
-                                  :demo-font        {:entries    [react-three-fiber.examples.demos.font]
+                                  :demo-font        {:entries    [rtf-examples.demos.font]
                                                      :depends-on #{:main}}
-                                  :demo-mesh-line   {:entries    [react-three-fiber.examples.demos.mesh-line]
+                                  :demo-mesh-line   {:entries    [rtf-examples.demos.mesh-line]
                                                      :depends-on #{:main}}
-                                  :demo-montage     {:entries    [react-three-fiber.examples.demos.montage]
+                                  :demo-montage     {:entries    [rtf-examples.demos.montage]
                                                      :depends-on #{:main}}
-                                  :demo-svg-loader  {:entries    [react-three-fiber.examples.demos.svg-loader]
+                                  :demo-svg-loader  {:entries    [rtf-examples.demos.svg-loader]
                                                      :depends-on #{:main}}
-                                  :demo-physics     {:entries    [react-three-fiber.examples.demos.physics]
+                                  :demo-physics     {:entries    [rtf-examples.demos.physics]
                                                      :depends-on #{:main}}
-                                  :demo-gltf-planet {:entries    [react-three-fiber.examples.demos.gltf-planet]
+                                  :demo-gltf-planet {:entries    [rtf-examples.demos.gltf-planet]
                                                      :depends-on #{:main}}
                                   }}}}
