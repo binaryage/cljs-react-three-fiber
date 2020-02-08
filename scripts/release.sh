@@ -5,4 +5,5 @@ set -e -o pipefail
 rm -rf public/.compiled
 
 set -x
-exec clj -A:shadow-cljs "${@}" release app
+# shellcheck disable=SC2086
+exec clj -A:shadow-cljs $SHADOW_EXTRA_ARGS "${@}" release app

@@ -3,4 +3,5 @@
 set -e -o pipefail
 
 set -x
-exec clj -A:shadow-cljs "${@}" watch app
+# shellcheck disable=SC2086
+exec clj -A:shadow-cljs $SHADOW_EXTRA_ARGS "${@}" watch app

@@ -11,6 +11,7 @@ REPORT_PATH="$PROJECT_ROOT_DIR/.reports/$REPORT_NAME.html"
 mkdir -p "$PROJECT_ROOT_DIR/.reports"
 
 set -x
-clj -A:shadow-cljs run shadow.cljs.build-report app "$REPORT_PATH"
+# shellcheck disable=SC2086
+clj -A:shadow-cljs $SHADOW_EXTRA_ARGS run shadow.cljs.build-report app "$REPORT_PATH"
 
 exec open "$REPORT_PATH"
