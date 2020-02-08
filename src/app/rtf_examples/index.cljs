@@ -3,8 +3,8 @@
             [rtf-examples.lib.ui :as ui :refer [defnc $]]
             [rtf-examples.lib.react-router-dom :refer [<router>]]
             [rtf-examples.lib.dom :refer [get-element-by-id
-                                                        get-window-location-origin
-                                                        get-window-location-pathname]]
+                                          get-window-location-origin
+                                          get-window-location-pathname]]
             [rtf-examples.pages.intro :refer [<intro>]]
             [rtf-examples.lib.rtf :refer [use-frame <canvas>]]
             [rtf-examples.styles :refer [<global-styles>]]

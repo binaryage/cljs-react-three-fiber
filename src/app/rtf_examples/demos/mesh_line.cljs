@@ -2,17 +2,17 @@
   (:require [rtf-examples.lib.ui :refer [$ defnc use-ref use-memo <canvas>]]
             [rtf-examples.lib.rtf :refer [use-three use-frame]]
             [rtf-examples.lib.helpers :refer [update-rotation!
-                                                            update-position!
-                                                            give-random-number
-                                                            get-client-x get-client-y
-                                                            get-inner-width get-inner-height
-                                                            get-points]]
+                                              update-position!
+                                              give-random-number
+                                              get-client-x get-client-y
+                                              get-inner-width get-inner-height
+                                              get-points]]
             [rtf-examples.lib.three :refer [create-vector3
-                                                          vector3-add!
-                                                          vector3-clone
-                                                          camera-look-at!
-                                                          create-catmull-rom-curve3
-                                                          <mesh>]]
+                                            vector3-add!
+                                            vector3-clone
+                                            camera-look-at!
+                                            create-catmull-rom-curve3
+                                            <mesh>]]
             [rtf-examples.lib.mesh-line :refer [<mesh-line> <mesh-line-material>]]
             [cljs-bean.core :refer [bean ->js]]
             [applied-science.js-interop :as j]))

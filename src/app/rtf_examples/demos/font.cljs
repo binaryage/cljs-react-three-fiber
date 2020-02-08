@@ -3,37 +3,37 @@
             [rtf-examples.lib.ui :refer [<canvas> use-ref use-memo $ defnc use-state use-effect]]
             [rtf-examples.lib.react :refer [<suspense>]]
             [rtf-examples.lib.three :refer [font-loader
-                                                          create-animation-mixer
-                                                          create-vector3
-                                                          update-mixer
-                                                          play-animation-action!
-                                                          get-clip-animation-action
-                                                          compute-bounding-box!
-                                                          export-bounding-box-size!
-                                                          get-geometry
-                                                          get-x get-y get-z
-                                                          <group>
-                                                          <mesh>
-                                                          <text-geometry>
-                                                          <mesh-normal-material>
-                                                          <scene>
-                                                          <buffer-geometry>
-                                                          <box-buffer-geometry>
-                                                          <mesh-standard-material>
-                                                          <ambient-light>
-                                                          <point-light>]]
+                                            create-animation-mixer
+                                            create-vector3
+                                            update-mixer
+                                            play-animation-action!
+                                            get-clip-animation-action
+                                            compute-bounding-box!
+                                            export-bounding-box-size!
+                                            get-geometry
+                                            get-x get-y get-z
+                                            <group>
+                                            <mesh>
+                                            <text-geometry>
+                                            <mesh-normal-material>
+                                            <scene>
+                                            <buffer-geometry>
+                                            <box-buffer-geometry>
+                                            <mesh-standard-material>
+                                            <ambient-light>
+                                            <point-light>]]
             [rtf-examples.lib.helpers :refer [give-random-number
-                                                            set-position!
-                                                            get-elapsed-time
-                                                            sin
-                                                            cos
-                                                            get-position
-                                                            update-rotation!
-                                                            get-gltf-geometry
-                                                            get-gltf-animation
-                                                            get-gltf-material
-                                                            get-gltf-morph-target-dictionary
-                                                            get-gltf-morph-target-influences]]
+                                              set-position!
+                                              get-elapsed-time
+                                              sin
+                                              cos
+                                              get-position
+                                              update-rotation!
+                                              get-gltf-geometry
+                                              get-gltf-animation
+                                              get-gltf-material
+                                              get-gltf-morph-target-dictionary
+                                              get-gltf-morph-target-influences]]
             [rtf-examples.lib.misc :refer [gltf-loader]]
             [cljs-bean.core :refer [bean]]))
 

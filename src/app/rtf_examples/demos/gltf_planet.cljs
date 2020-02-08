@@ -4,28 +4,28 @@
             [rtf-examples.lib.ui :refer [<canvas> $ use-ref use-memo defnc]]
             [rtf-examples.lib.react :refer [<suspense>]]
             [rtf-examples.lib.helpers :refer [get-gltf-geometry
-                                                            get-gltf-material
-                                                            give-random-number
-                                                            create-float32-array]]
+                                              get-gltf-material
+                                              give-random-number
+                                              create-float32-array]]
             [rtf-examples.lib.misc :refer [gltf-loader
-                                                         create-draco-loader
-                                                         apply-draco-extension
-                                                         extend-react-with-orbit-controls!
-                                                         <orbit-controls>
-                                                         update-controls
-                                                         get-dom-element]]
+                                           create-draco-loader
+                                           apply-draco-extension
+                                           extend-react-with-orbit-controls!
+                                           <orbit-controls>
+                                           update-controls
+                                           get-dom-element]]
             [rtf-examples.lib.three :refer [<group>
-                                                          <object3d>
-                                                          <points>
-                                                          <mesh>
-                                                          <mesh-standard-material>
-                                                          <buffer-geometry>
-                                                          <buffer-attribute>
-                                                          <points-material>
-                                                          <ambient-light>
-                                                          <point-light>
-                                                          <spot-light>
-                                                          <fog>]]
+                                            <object3d>
+                                            <points>
+                                            <mesh>
+                                            <mesh-standard-material>
+                                            <buffer-geometry>
+                                            <buffer-attribute>
+                                            <points-material>
+                                            <ambient-light>
+                                            <point-light>
+                                            <spot-light>
+                                            <fog>]]
             [applied-science.js-interop :as j]))
 
 (extend-react-with-orbit-controls!)

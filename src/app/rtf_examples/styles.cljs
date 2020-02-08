@@ -1,9 +1,9 @@
 (ns rtf-examples.styles
   (:require [clojure.string :as string]
             [rtf-examples.lib.styled-components :refer [inline-css
-                                                                      <styled-div>
-                                                                      <global-style>
-                                                                      <inherit-styles>]]))
+                                                        <styled-div>
+                                                        <global-style>
+                                                        <inherit-styles>]]))
 
 (def <shared-page-styles>
   (-> (inline-css "./styles/page.scss")

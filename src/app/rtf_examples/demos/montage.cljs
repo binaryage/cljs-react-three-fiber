@@ -5,14 +5,14 @@
             [rtf-examples.lib.helpers :refer [update-rotation! give-random-number]]
             [rtf-examples.lib.react-spring-three :refer [use-springs animated]]
             [rtf-examples.lib.three :refer [deg-to-rad
-                                                          <box-buffer-geometry>
-                                                          <group>
-                                                          <mesh>
-                                                          <mesh-standard-material>
-                                                          <plane-buffer-geometry>
-                                                          <spot-light>
-                                                          <point-light>
-                                                          <ambient-light>]]))
+                                            <box-buffer-geometry>
+                                            <group>
+                                            <mesh>
+                                            <mesh-standard-material>
+                                            <plane-buffer-geometry>
+                                            <spot-light>
+                                            <point-light>
+                                            <ambient-light>]]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
 

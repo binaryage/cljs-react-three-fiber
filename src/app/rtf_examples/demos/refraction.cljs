@@ -4,34 +4,34 @@
             [rtf-examples.lib.rtf :refer [use-three use-frame use-loader]]
             [rtf-examples.lib.react :refer [<suspense>]]
             [rtf-examples.lib.three :refer [create-texture-loader
-                                                          create-shader-material
-                                                          texture-loader
-                                                          linear-filter
-                                                          create-webgl-render-target
-                                                          create-object-3d
-                                                          back-side
-                                                          <mesh>
-                                                          <instanced-mesh>
-                                                          <buffer-geometry>
-                                                          <mesh-basic-material>
-                                                          <plane-buffer-geometry>]]
+                                            create-shader-material
+                                            texture-loader
+                                            linear-filter
+                                            create-webgl-render-target
+                                            create-object-3d
+                                            back-side
+                                            <mesh>
+                                            <instanced-mesh>
+                                            <buffer-geometry>
+                                            <mesh-basic-material>
+                                            <plane-buffer-geometry>]]
             [rtf-examples.lib.helpers :refer [sin-pi cos-pi
-                                                            give-random-number
-                                                            set-camera-layer!
-                                                            set-position!
-                                                            set-rotation!
-                                                            set-scale!
-                                                            delta-rotation
-                                                            update-vec!
-                                                            get-gltf-geometry
-                                                            set-material!
-                                                            get-texture
-                                                            set-min-filter!
-                                                            update-matrix!
-                                                            set-matrix-at!
-                                                            get-elapsed-time
-                                                            get-matrix
-                                                            set-instance-matrix-needs-update!]]
+                                              give-random-number
+                                              set-camera-layer!
+                                              set-position!
+                                              set-rotation!
+                                              set-scale!
+                                              delta-rotation
+                                              update-vec!
+                                              get-gltf-geometry
+                                              set-material!
+                                              get-texture
+                                              set-min-filter!
+                                              update-matrix!
+                                              set-matrix-at!
+                                              get-elapsed-time
+                                              get-matrix
+                                              set-instance-matrix-needs-update!]]
             [rtf-examples.lib.misc :refer [gltf-loader]]
             [rtf-examples.lib.interop :refer [doto!]]
             [cljs-bean.core :refer [bean]]))
