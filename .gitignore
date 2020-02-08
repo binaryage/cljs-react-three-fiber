@@ -1,9 +1,12 @@
 node_modules/
+public/.compiled
 
 /target
 /checkouts
 /src/gen
 /vendor
+
+/.reports
 
 pom.xml
 pom.xml.asc
@@ -15,6 +18,7 @@ pom.xml.asc
 .lein-*
 .nrepl-*
 .DS_Store
+.report.html
 
 .hgignore
 .hg/

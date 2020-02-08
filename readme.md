@@ -1,6 +1,4 @@
-# cljs-react-three-fiber
-
-This is an experimental ClojureScript wrapper library for [react-three-fiber](https://github.com/react-spring/react-three-fiber).
+This example app is a rewrite of [react-three-fiber/examples](https://github.com/react-spring/react-three-fiber)
 
 ### WORK-IN-PROGRESS
 
@@ -12,13 +10,36 @@ This project is a good excuse for me spend time learning some modern JS stuff an
 * [three.js](https://github.com/mrdoob/three.js)
 * [react-three-fiber](https://github.com/react-spring/react-three-fiber)  
 
-#### Quick start
-
-See the examples project:
+#### Initial setup
 
 ```bash
 git clone https://github.com/binaryage/cljs-react-three-fiber.git
-cd cljs-react-three-fiber/examples
+cd cljs-react-three-fiber
 ``` 
 
-And follow in the [examples/readme](examples).
+#### Development workflow
+
+```bash
+npm install
+shadow-cljs watch app
+``` 
+
+Then:
+1. wait for compilation to finish
+2. visit dev server at [http://localhost:8080](http://localhost:8080)
+
+#### Release workflow
+
+```bash
+npm install
+shadow-cljs release app
+python -m http.server 8000 --directory public
+``` 
+
+Then visit server at [http://localhost:8000](http://localhost:8000)
+
+#### Shadow CLJS report
+
+```bash
+./scripts/report.sh
+```
