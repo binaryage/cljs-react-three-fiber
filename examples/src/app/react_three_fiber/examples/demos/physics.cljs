@@ -1,7 +1,7 @@
 (ns react-three-fiber.examples.demos.physics
   (:require [cljs-bean.core :refer [bean ->js]]
             [react-three-fiber.examples.lib.ui :refer [$ defnc use-ref use-state use-effect <canvas>]]
-            [react-three-fiber.core :refer [use-frame]]
+            [react-three-fiber.examples.lib.rtf :refer [use-frame]]
             [react-three-fiber.examples.lib.interop :refer [doto!]]
             [react-three-fiber.examples.lib.react :refer [create-context use-context]]
             [react-three-fiber.examples.lib.three :refer [pcf-soft-shadow-map

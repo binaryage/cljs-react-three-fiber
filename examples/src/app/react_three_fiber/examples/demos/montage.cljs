@@ -1,7 +1,7 @@
 (ns react-three-fiber.examples.demos.montage
   (:require [cljs-bean.core :refer [->js bean]]
             [react-three-fiber.examples.lib.ui :refer [defnc $ use-effect <canvas>]]
-            [react-three-fiber.core :refer [use-three use-frame]]
+            [react-three-fiber.examples.lib.rtf :refer [use-three use-frame]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation! give-random-number]]
             [react-three-fiber.examples.lib.react-spring-three :refer [use-springs animated]]
             [react-three-fiber.examples.lib.three :refer [deg-to-rad

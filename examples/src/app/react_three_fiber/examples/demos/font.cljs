@@ -1,5 +1,5 @@
 (ns react-three-fiber.examples.demos.font
-  (:require [react-three-fiber.core :refer [use-frame use-loader use-update]]
+  (:require [react-three-fiber.examples.lib.rtf :refer [use-frame use-loader use-update]]
             [react-three-fiber.examples.lib.ui :refer [<canvas> use-ref use-memo $ defnc use-state use-effect]]
             [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.lib.three :refer [font-loader

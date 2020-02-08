@@ -1,6 +1,6 @@
 (ns react-three-fiber.examples.demos.gltf-planet
   (:require [cljs-bean.core :refer [bean]]
-            [react-three-fiber.core :refer [use-frame use-three use-loader]]
+            [react-three-fiber.examples.lib.rtf :refer [use-frame use-three use-loader]]
             [react-three-fiber.examples.lib.ui :refer [<canvas> $ use-ref use-memo defnc]]
             [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.lib.helpers :refer [get-gltf-geometry

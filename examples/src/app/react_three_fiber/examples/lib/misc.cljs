@@ -1,5 +1,5 @@
 (ns react-three-fiber.examples.lib.misc
-  (:require [react-three-fiber.core :refer [extend-react]]
+  (:require [react-three-fiber.examples.lib.rtf :refer [extend-react]]
             [applied-science.js-interop :as j]
             ["three/examples/jsm/loaders/GLTFLoader" :refer [GLTFLoader]]
             ["three/examples/jsm/loaders/SVGLoader" :refer [SVGLoader]]

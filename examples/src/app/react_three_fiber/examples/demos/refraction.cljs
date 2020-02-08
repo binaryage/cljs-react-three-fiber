@@ -1,7 +1,7 @@
 (ns react-three-fiber.examples.demos.refraction
   (:require [shadow.resource :refer [inline]]
             [react-three-fiber.examples.lib.ui :refer [use-ref use-memo $ defnc <canvas>]]
-            [react-three-fiber.core :refer [use-three use-frame use-loader]]
+            [react-three-fiber.examples.lib.rtf :refer [use-three use-frame use-loader]]
             [react-three-fiber.examples.lib.react :refer [<suspense>]]
             [react-three-fiber.examples.lib.three :refer [create-texture-loader
                                                           create-shader-material

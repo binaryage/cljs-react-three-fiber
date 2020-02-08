@@ -1,6 +1,6 @@
 (ns react-three-fiber.examples.demos.mesh-line
   (:require [react-three-fiber.examples.lib.ui :refer [$ defnc use-ref use-memo <canvas>]]
-            [react-three-fiber.core :refer [use-three use-frame]]
+            [react-three-fiber.examples.lib.rtf :refer [use-three use-frame]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation!
                                                             update-position!
                                                             give-random-number

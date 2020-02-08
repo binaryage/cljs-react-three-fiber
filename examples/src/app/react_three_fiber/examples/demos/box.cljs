@@ -1,6 +1,6 @@
 (ns react-three-fiber.examples.demos.box
   (:require [react-three-fiber.examples.lib.ui :refer [<canvas> use-ref defnc $]]
-            [react-three-fiber.core :refer [use-frame]]
+            [react-three-fiber.examples.lib.rtf :refer [use-frame]]
             [react-three-fiber.examples.lib.three :refer [<mesh> <box-buffer-geometry> <mesh-normal-material>]]
             [react-three-fiber.examples.lib.helpers :refer [update-rotation!]]))
 

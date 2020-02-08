@@ -6,7 +6,7 @@
                                                         get-window-location-origin
                                                         get-window-location-pathname]]
             [react-three-fiber.examples.pages.intro :refer [<intro>]]
-            [react-three-fiber.core :refer [use-frame <canvas>]]
+            [react-three-fiber.examples.lib.rtf :refer [use-frame <canvas>]]
             [react-three-fiber.examples.styles :refer [<global-styles>]]
             [react-three-fiber.examples.lib.helpers :refer [remove-trailing-slashes]]))
 

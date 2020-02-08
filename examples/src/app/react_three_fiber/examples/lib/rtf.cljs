@@ -1,4 +1,4 @@
-(ns react-three-fiber.core
+(ns react-three-fiber.examples.lib.rtf
   "A lightweight convenience wrapper for react-three-fiber library.
 
    https://github.com/react-spring/react-three-fiber"
