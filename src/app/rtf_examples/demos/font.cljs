@@ -29,11 +29,11 @@
                                               cos
                                               get-position
                                               update-rotation!
-                                              get-gltf-geometry
+                                              get-gltf-named-geometry
                                               get-gltf-animation
-                                              get-gltf-material
-                                              get-gltf-morph-target-dictionary
-                                              get-gltf-morph-target-influences]]
+                                              get-gltf-named-material
+                                              get-gltf-named-morph-target-dictionary
+                                              get-gltf-named-morph-target-influences]]
             [rtf-examples.lib.misc :refer [gltf-loader]]
             [cljs-bean.core :refer [bean]]))
 
@@ -128,15 +128,11 @@
                   :position position
                   :rotation rotation}
         ($ <mesh> {:name                    "Object_0"
-                   :morph-target-dictionary (get-gltf-morph-target-dictionary gltf 1)
-                   :morph-target-influences (get-gltf-morph-target-influences gltf 1)
-                   :rotation                #js [1.5707964611537577, 0, 0]}
-          ($ <box-buffer-geometry> {:attach "geometry" :args #js [1, 1, 1]})
-          ($ <buffer-geometry> {:attach "geometry"
-                                :&      (bean (get-gltf-geometry gltf 1))})
-          ($ <mesh-standard-material> {:attach "material"
-                                       :name   "Material_0_COLOR_0"
-                                       :&      (bean (get-gltf-material gltf 1))}))))))
+                   :material (get-gltf-named-material gltf :Material_0_COLOR_0)
+                   :geometry (get-gltf-named-geometry gltf :Object_0)
+                   :morph-target-dictionary (get-gltf-named-morph-target-dictionary gltf :Object_0)
+                   :morph-target-influences (get-gltf-named-morph-target-influences gltf :Object_0)
+                   :rotation                #js [1.5707964611537577, 0, 0]})))))
 
 (defnc <birds> []
   ($ <group>

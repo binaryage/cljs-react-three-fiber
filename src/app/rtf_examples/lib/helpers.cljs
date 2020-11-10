@@ -112,7 +112,6 @@
 (defn get-match-param [match & [index]]
   (j/get-in match [.-params (or index 0)]))
 
-
 (defn get-gltf-geometry [gltf & [index]]
   (j/get-in gltf [.-__$ (or index 0) .-geometry]))
 
@@ -122,11 +121,20 @@
 (defn get-gltf-material [gltf & [index]]
   (j/get-in gltf [.-__$ (or index 0) .-material]))
 
+(defn get-gltf-named-material [gltf name]
+  (j/get-in gltf [.-materials name]))
+
 (defn get-gltf-morph-target-dictionary [gltf & [index]]
   (j/get-in gltf [.-__$ (or index 0) .-morphTargetDictionary]))
 
+(defn get-gltf-named-morph-target-dictionary [gltf name]
+  (j/get-in gltf [.-nodes name .-morphTargetDictionary]))
+
 (defn get-gltf-morph-target-influences [gltf & [index]]
   (j/get-in gltf [.-__$ (or index 0) .-morphTargetInfluences]))
+
+(defn get-gltf-named-morph-target-influences [gltf name]
+  (j/get-in gltf [.-nodes name .-morphTargetInfluences]))
 
 (defn get-gltf-animation [gltf & [index]]
   (j/get-in gltf [.-animations (or index 0)]))
