@@ -29,3 +29,9 @@
   ([f deps] (useUpdate f (->js deps))))
 
 (def extend-react extend)
+
+(defn preload-use-loader
+  ([loader url]
+   (.preload useLoader loader url))
+  ([loader url extensions]
+   (.preload useLoader loader url extensions)))

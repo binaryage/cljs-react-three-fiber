@@ -1,10 +1,12 @@
 (ns rtf-examples.demos.gltf-planet
   (:require [cljs-bean.core :refer [bean]]
-            [rtf-examples.lib.rtf :refer [use-frame use-three use-loader]]
+            [rtf-examples.lib.rtf :refer [use-frame use-three use-loader preload-use-loader]]
             [rtf-examples.lib.ui :refer [<canvas> $ use-ref use-memo defnc]]
             [rtf-examples.lib.react :refer [<suspense>]]
             [rtf-examples.lib.helpers :refer [get-gltf-geometry
                                               get-gltf-material
+                                              get-gltf-named-material
+                                              get-gltf-named-geometry
                                               give-random-number
                                               create-float32-array]]
             [rtf-examples.lib.misc :refer [gltf-loader
@@ -26,13 +28,18 @@
                                             <point-light>
                                             <spot-light>
                                             <fog>]]
-            [applied-science.js-interop :as j]))
-
-(extend-react-with-orbit-controls!)
+            [applied-science.js-interop :as j]
+            [drei :refer [draco]]))
 
 ; -- constants --------------------------------------------------------------------------------------------------------------
 
 (def planet-url "/resources/gltf/planet.gltf")
+(def half-pi (/ Math/PI 2))
+
+; -- init -------------------------------------------------------------------------------------------------------------------
+
+(extend-react-with-orbit-controls!)
+(preload-use-loader gltf-loader planet-url (draco))
 
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
@@ -54,18 +61,17 @@
 
 (defnc <planet> []
   (let [group-ref (use-ref nil)
-        gltf (use-loader gltf-loader planet-url (partial apply-draco-extension "/draco-gltf/"))]
+        gltf (use-loader gltf-loader planet-url (draco))]
+    (js/console.log "GLTF" gltf)
     ($ <group> {:ref group-ref}
-      ($ <object3d> {:rotation #js [-1.5708 0 0]}
-        ($ <object3d> {:position #js [-0.0033 0.0237 -6.3311]
-                       :rotation #js [0.2380 -0.5454 0.5623]
+      ($ <group> {:rotation #js [(- half-pi) 0 0]}
+        ($ <group> {:position #js [0 0.02 -6.33]
+                       :rotation #js [0.24 -0.55 0.56]
                        :scale    #js [7 7 7]}
-          ($ <gltf-mesh> {:gltf  gltf
-                          :layer 5})
-          ($ <gltf-mesh> {:gltf           gltf
-                          :layer          6
-                          :receive-shadow true
-                          :cast-shadow    true}))))))
+          ($ <mesh> {:material (get-gltf-named-material gltf :scene)
+                     :geometry (get-gltf-named-geometry gltf "planet.001_1")})
+          ($ <mesh> {:material (get-gltf-named-material gltf :scene)
+                     :geometry (get-gltf-named-geometry gltf "planet.001_2")}))))))
 
 (defnc <stars> [props]
   (let [{:keys [star-count]
