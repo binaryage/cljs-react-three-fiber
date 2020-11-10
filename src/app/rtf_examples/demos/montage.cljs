@@ -90,9 +90,10 @@
     ($ <mesh-standard-material> {:color "#A2ACB6" :roughness 1})))
 
 (defnc <demo> []
-  ($ <canvas> {:shadow-map true
-               :style      {:background "#A2CCB6"}
-               :camera     #js {:fov 100 :position #js [0 0 100]}}
+  ($ <canvas> {:color-management false
+               :shadow-map       true
+               :style            {:background "#A2CCB6"}
+               :camera           #js {:fov 100 :position #js [0 0 100]}}
     ($ <lights>)
     ($ <desktop>)
     ($ <content>)))

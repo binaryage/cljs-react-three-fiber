@@ -106,9 +106,10 @@
                          :&    props})))
 
 (defnc <demo> []
-  ($ <canvas> {:style      {:background "radial-gradient(at 50% 70%, #200f20 40%, #090b1f 80%, #050523 100%)"}
-               :camera     #js {:position #js [0 0 15]}
-               :shadow-map true}
+  ($ <canvas> {:color-management false
+               :style            {:background "radial-gradient(at 50% 70%, #200f20 40%, #090b1f 80%, #050523 100%)"}
+               :camera           #js {:position #js [0 0 15]}
+               :shadow-map       true}
     ($ <ambient-light> {:intensity 0.2})
     ($ <point-light> {:intensity 20
                       :position  #js [-10 -25 -10]
