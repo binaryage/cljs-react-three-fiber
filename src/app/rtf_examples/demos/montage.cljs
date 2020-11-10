@@ -67,10 +67,8 @@
                                 :cast-shadow    true
                                 :receive-shadow true
                                 :&              spring}
-            ($ <box-buffer-geometry> {:attach "geometry"
-                                      :args   (:args d)})
-            ($ (animated <mesh-standard-material>) {:attach    "material"
-                                                    :color     (:color spring)
+            ($ <box-buffer-geometry> {:args   (:args d)})
+            ($ (animated <mesh-standard-material>) {:color     (:color spring)
                                                     :roughness 0.75})))))))
 
 (defnc <lights> []
@@ -88,8 +86,8 @@
 
 (defnc <desktop> []
   ($ <mesh> {:receive-shadow true}
-    ($ <plane-buffer-geometry> {:attach "geometry" :args #js [1000 1000]})
-    ($ <mesh-standard-material> {:attach "material" :color "#A2ACB6" :roughness 1})))
+    ($ <plane-buffer-geometry> {:args #js [1000 1000]})
+    ($ <mesh-standard-material> {:color "#A2ACB6" :roughness 1})))
 
 (defnc <demo> []
   ($ <canvas> {:shadow-map true

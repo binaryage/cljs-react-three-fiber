@@ -23,7 +23,7 @@
                                               set-scale!
                                               delta-rotation
                                               update-vec!
-                                              get-gltf-geometry
+                                              get-gltf-named-geometry
                                               set-material!
                                               get-texture
                                               set-min-filter!
@@ -138,7 +138,7 @@
   (let [{:keys [size viewport gl scene camera clock]} (use-three)
         model-ref (use-ref)
         gltf (use-loader gltf-loader diamond-url)
-        gltf-geometry (get-gltf-geometry gltf 1)
+        gltf-geometry (get-gltf-named-geometry gltf :Cylinder)
         resources (use-memo :auto-deps
                             (let [width (.-width size)
                                   height (.-height size)
@@ -164,10 +164,7 @@
                            resources
                            diamonds)]
     (use-frame update-fn 1)
-    ($ <instanced-mesh> {:ref model-ref :args #js [nil nil (count diamonds)]}
-      ($ <buffer-geometry> {:dispose false
-                            :attach  "geometry"
-                            :&       (bean gltf-geometry)})
+    ($ <instanced-mesh> {:ref model-ref :args #js [gltf-geometry nil (count diamonds)] :dispose false}
       ($ <mesh-basic-material> {:attach "material"}))))
 
 (defnc <background> []

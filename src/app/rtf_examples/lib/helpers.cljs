@@ -116,6 +116,9 @@
 (defn get-gltf-geometry [gltf & [index]]
   (j/get-in gltf [.-__$ (or index 0) .-geometry]))
 
+(defn get-gltf-named-geometry [gltf name]
+  (j/get-in gltf [.-nodes name .-geometry]))
+
 (defn get-gltf-material [gltf & [index]]
   (j/get-in gltf [.-__$ (or index 0) .-material]))
 
