@@ -10,6 +10,7 @@
                                             create-webgl-render-target
                                             create-object-3d
                                             back-side
+                                            create-vector3
                                             <mesh>
                                             <instanced-mesh>
                                             <buffer-geometry>
@@ -53,7 +54,7 @@
 ; -- helpers ----------------------------------------------------------------------------------------------------------------
 
 (defn gen-random-diamond [viewport i]
-  (let [w (.-width viewport)
+  (let [w (.-width (viewport))
         [r1 r2 r3 r4 r5 r6 r7 r8] (repeatedly give-random-number)]
     #js {:position  #js [(if (< i 5) 0 (- (/ w 2) (* r1 w)))
                          (- 40 (* r2 40))
@@ -169,10 +170,11 @@
 
 (defnc <background> []
   (let [{:keys [viewport aspect]} (use-three)
+        {:keys [width height]} (bean (viewport))
         texture (use-loader texture-loader texture-url)
         aspect-ratio (/ aspect-width aspect-height)
-        viewport-width (/ (.-width viewport) aspect-width)
-        viewport-height (/ (.-height viewport) aspect-height)
+        viewport-width (/ width aspect-width)
+        viewport-height (/ height aspect-height)
         base (if (> aspect aspect-ratio) viewport-width viewport-height)
         adapted-height (* aspect-height base)
         adapted-width (* aspect-width base)]
