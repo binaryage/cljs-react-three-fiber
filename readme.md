@@ -20,7 +20,7 @@ cd cljs-react-three-fiber
 #### Development workflow
 
 ```bash
-npm install
+yarn install
 shadow-cljs watch app
 ``` 
 
@@ -31,7 +31,7 @@ Then:
 #### Release workflow
 
 ```bash
-npm install
+yarn install
 shadow-cljs release app
 python -m http.server 8000 --directory public
 ``` 
