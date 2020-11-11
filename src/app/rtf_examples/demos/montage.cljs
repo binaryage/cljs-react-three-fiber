@@ -67,15 +67,15 @@
                                 :cast-shadow    true
                                 :receive-shadow true
                                 :&              spring}
-            ($ <box-buffer-geometry> {:args   (:args d)})
+            ($ <box-buffer-geometry> {:args (:args d)})
             ($ (animated <mesh-standard-material>) {:color     (:color spring)
-                                                    :roughness 0.75})))))))
+                                                    :roughness 0.75
+                                                    :metalness 0.5})))))))
 
 (defnc <lights> []
   ($ <group>
     ($ <point-light> {:intensity 0.3})
-    ; TODO: it looks like our ambient light is applied twice
-    ($ <ambient-light> {:intensity 1})
+    ($ <ambient-light> {:intensity 2})
     ($ <spot-light> {:cast-shadow            true
                      :intensity              0.2
                      :angle                  (/ js/Math.PI 7)
