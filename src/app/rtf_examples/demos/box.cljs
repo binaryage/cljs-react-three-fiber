@@ -29,9 +29,8 @@
                :on-click        #(js/console.log "click")
                :on-pointer-over #(js/console.log "hover")
                :on-pointer-out  #(js/console.log "unhover")}
-      ($ <box-buffer-geometry> {:attach "geometry"
-                                :args   #js [1, 1, 1]})
-      ($ <mesh-normal-material> {:attach "material"}))))
+      ($ <box-buffer-geometry> {:args   #js [1, 1, 1]})
+      ($ <mesh-normal-material>))))
 
 (defnc <demo> []
   ($ <canvas> {:camera camera-config}

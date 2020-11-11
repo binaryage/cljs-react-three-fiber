@@ -3,24 +3,18 @@
             [rtf-examples.lib.rtf :refer [use-frame use-three use-loader preload-use-loader]]
             [rtf-examples.lib.ui :refer [<canvas> $ use-ref use-memo defnc]]
             [rtf-examples.lib.react :refer [<suspense>]]
-            [rtf-examples.lib.helpers :refer [get-gltf-geometry
-                                              get-gltf-material
-                                              get-gltf-named-material
+            [rtf-examples.lib.helpers :refer [get-gltf-named-material
                                               get-gltf-named-geometry
                                               give-random-number
                                               create-float32-array]]
             [rtf-examples.lib.misc :refer [gltf-loader
-                                           create-draco-loader
-                                           apply-draco-extension
                                            extend-react-with-orbit-controls!
                                            <orbit-controls>
                                            update-controls
                                            get-dom-element]]
             [rtf-examples.lib.three :refer [<group>
-                                            <object3d>
                                             <points>
                                             <mesh>
-                                            <mesh-standard-material>
                                             <buffer-geometry>
                                             <buffer-attribute>
                                             <points-material>
@@ -49,25 +43,14 @@
 
 ; -- components -------------------------------------------------------------------------------------------------------------
 
-(defnc <gltf-mesh> [props]
-  (let [{:keys [gltf layer]} props
-        mesh-props (dissoc props :gltf :layer)]
-    ($ <mesh> {:& mesh-props}
-      ($ <buffer-geometry> {:attach "geometry"
-                            :&      (bean (get-gltf-geometry gltf layer))})
-      ($ <mesh-standard-material> {:attach    "material"
-                                   :roughness 1
-                                   :&         (bean (get-gltf-material gltf layer))}))))
-
 (defnc <planet> []
   (let [group-ref (use-ref nil)
         gltf (use-loader gltf-loader planet-url (draco))]
-    (js/console.log "GLTF" gltf)
     ($ <group> {:ref group-ref}
       ($ <group> {:rotation #js [(- half-pi) 0 0]}
         ($ <group> {:position #js [0 0.02 -6.33]
-                       :rotation #js [0.24 -0.55 0.56]
-                       :scale    #js [7 7 7]}
+                    :rotation #js [0.24 -0.55 0.56]
+                    :scale    #js [7 7 7]}
           ($ <mesh> {:material (get-gltf-named-material gltf :scene)
                      :geometry (get-gltf-named-geometry gltf "planet.001_1")})
           ($ <mesh> {:material (get-gltf-named-material gltf :scene)
@@ -84,13 +67,12 @@
                                 (j/push! positions (get-random-star-position)))
                               (create-float32-array positions)))]
     ($ <points>
-      ($ <buffer-geometry> {:attach "geometry"}
+      ($ <buffer-geometry>
         ($ <buffer-attribute> {:attach-object #js ["attributes" "position"]
                                :count         star-count
                                :array         positions
                                :item-size     3}))
-      ($ <points-material> {:attach           "material"
-                            :size             2
+      ($ <points-material> {:size             2
                             :size-attenuation true
                             :color            "white"
                             :transparent      true

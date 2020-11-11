@@ -24,8 +24,8 @@
         mesh-ref (first (use-plane #(->js plane-params)))]
     ($ <mesh> {:ref            mesh-ref
                :receive-shadow true}
-      ($ <plane-buffer-geometry> {:attach "geometry" :args #js [1009 1000]})
-      ($ <shadow-material> {:attach "material" :color "#171717"}))))
+      ($ <plane-buffer-geometry> {:args #js [1009 1000]})
+      ($ <shadow-material> {:color "#171717"}))))
 
 (defnc <cube> [props]
   (let [box-params (merge {:mass     1
@@ -36,9 +36,8 @@
     ($ <mesh> {:receive-shadow true
                :cast-shadow    true
                :ref            mesh-ref}
-      ($ <box-buffer-geometry> {:attach "geometry"})
-      ($ <mesh-lambert-material> {:attach "material"
-                                  :color  "hotpink"}))))
+      ($ <box-buffer-geometry>)
+      ($ <mesh-lambert-material> {:color "hotpink"}))))
 
 (defnc <demo> []
   ($ <canvas> {:shadow-map true

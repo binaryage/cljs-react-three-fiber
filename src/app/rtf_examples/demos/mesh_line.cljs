@@ -39,8 +39,7 @@
                  (j/update-in! @material-ref [:uniforms :dashOffset :value] #(- % speed))))
     ($ <mesh>
       ($ <mesh-line> {:attach "geometry" :vertices curve})
-      ($ <mesh-line-material> {:attach      "material"
-                               :ref         material-ref
+      ($ <mesh-line-material> {:ref         material-ref
                                :transparent true
                                :depth-test  false
                                :line-width  width

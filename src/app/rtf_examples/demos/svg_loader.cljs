@@ -108,10 +108,8 @@
       ; background plane
       ($ <mesh> {:scale    #js [10000 10000 1]
                  :rotation #js [0 -0.2 0]}
-        ($ <plane-buffer-geometry> {:attach "geometry"
-                                    :args   #js [1 1]})
-        ($ (animated <mesh-phong-material>) {:attach     "material"
-                                             :color      (get-spring-color background-color-spring)
+        ($ <plane-buffer-geometry> {:args #js [1 1]})
+        ($ (animated <mesh-phong-material>) {:color      (get-spring-color background-color-spring)
                                              :depth-test false}))
       ; page shapes
       ($ (animated <group>) {:position #js [1220 700 @current-page]
@@ -125,13 +123,11 @@
             ($ (animated <mesh>) {:key      key
                                   :rotation rotation
                                   :position position}
-              ($ (animated <mesh-phong-material>) {:attach      "material"
-                                                   :color       color
+              ($ (animated <mesh-phong-material>) {:color       color
                                                    :opacity     opacity
                                                    :depth-write false
                                                    :transparent true})
-              ($ <shape-buffer-geometry> {:attach "geometry"
-                                          :args   #js [shape]}))))))))
+              ($ <shape-buffer-geometry> {:args #js [shape]}))))))))
 
 (defnc <demo> []
   ($ <canvas> {:invalidate-frameloop true

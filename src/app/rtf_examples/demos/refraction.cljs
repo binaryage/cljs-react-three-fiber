@@ -166,7 +166,7 @@
                            diamonds)]
     (use-frame update-fn 1)
     ($ <instanced-mesh> {:ref model-ref :args #js [gltf-geometry nil (count diamonds)] :dispose false}
-      ($ <mesh-basic-material> {:attach "material"}))))
+      ($ <mesh-basic-material>))))
 
 (defnc <background> []
   (let [{:keys [viewport aspect]} (use-three)
@@ -183,9 +183,8 @@
 
     ($ <mesh> {:layers 1
                :scale  #js [adapted-width adapted-height 1]}
-      ($ <plane-buffer-geometry> {:attach "geometry"})
-      ($ <mesh-basic-material> {:attach    "material"
-                                :map       texture
+      ($ <plane-buffer-geometry>)
+      ($ <mesh-basic-material> {:map       texture
                                 :depthTest false}))))
 
 (defnc <demo> []

@@ -1,8 +1,7 @@
 (ns rtf-examples.demos.montage
   (:require [cljs-bean.core :refer [->js bean]]
             [rtf-examples.lib.ui :refer [defnc $ use-effect <canvas>]]
-            [rtf-examples.lib.rtf :refer [use-three use-frame]]
-            [rtf-examples.lib.helpers :refer [update-rotation! give-random-number]]
+            [rtf-examples.lib.helpers :refer [give-random-number]]
             [rtf-examples.lib.react-spring-three :refer [use-springs animated]]
             [rtf-examples.lib.three :refer [deg-to-rad
                                             <box-buffer-geometry>

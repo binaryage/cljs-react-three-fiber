@@ -87,9 +87,8 @@
     ($ <group> {:scale #js [(* 0.1 size) (* 0.1 size) 0.1]
                 :&     props}
       ($ <mesh> {:ref mesh}
-        ($ <text-geometry> {:attach "geometry"
-                            :args   #js [children font-config]})
-        ($ <mesh-normal-material> {:attach "material"})))))
+        ($ <text-geometry> {:args #js [children font-config]})
+        ($ <mesh-normal-material>)))))
 
 (defnc <jumbo> []
   (let [text-ref (use-ref)]
@@ -128,8 +127,8 @@
                   :position position
                   :rotation rotation}
         ($ <mesh> {:name                    "Object_0"
-                   :material (get-gltf-named-material gltf :Material_0_COLOR_0)
-                   :geometry (get-gltf-named-geometry gltf :Object_0)
+                   :material                (get-gltf-named-material gltf :Material_0_COLOR_0)
+                   :geometry                (get-gltf-named-geometry gltf :Object_0)
                    :morph-target-dictionary (get-gltf-named-morph-target-dictionary gltf :Object_0)
                    :morph-target-influences (get-gltf-named-morph-target-influences gltf :Object_0)
                    :rotation                #js [1.5707964611537577, 0, 0]})))))
