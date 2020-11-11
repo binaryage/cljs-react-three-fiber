@@ -26,15 +26,20 @@
 
 (def <buffer-attribute> "bufferAttribute")
 
+(def <color> "color")
+
 (def <mesh-basic-material> "meshBasicMaterial")
 (def <mesh-standard-material> "meshStandardMaterial")
 (def <mesh-normal-material> "meshNormalMaterial")
 (def <mesh-phong-material> "meshPhongMaterial")
+(def <mesh-lambert-material> "meshLambertMaterial")
+(def <shadow-material> "shadowMaterial")
 (def <points-material> "pointsMaterial")
 
 (def <ambient-light> "ambientLight")
 (def <point-light> "pointLight")
 (def <spot-light> "spotLight")
+(def <hemisphere-light> "hemisphereLight")
 
 ; -- wrappers ---------------------------------------------------------------------------------------------------------------
 

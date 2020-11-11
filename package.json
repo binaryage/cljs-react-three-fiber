@@ -20,7 +20,7 @@
     "styled-components": "^5.2.0",
     "three": "^0.122.0",
     "threejs-meshline": "^2.0.12",
-    "use-cannon": "^0.5.3",
+    "use-cannon": "https://github.com/darwin/use-cannon.git",
     "zustand": "^3.1.3"
   }
 }

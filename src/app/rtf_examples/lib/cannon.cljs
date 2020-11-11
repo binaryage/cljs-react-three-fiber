@@ -1,5 +1,6 @@
 (ns rtf-examples.lib.cannon
-  (:require [cannon :refer [World NaiveBroadphase Body Plane Box Vec3]]))
+  (:require [cannon :refer [World NaiveBroadphase Body Plane Box Vec3]]
+            [use-cannon :refer [Physics usePlane useBox]]))
 
 (defn create-world []
   (World.))
@@ -27,3 +28,7 @@
 
 (defn step-world! [world delta-time]
   (.step world delta-time))
+
+(def use-plane usePlane)
+(def use-box useBox)
+(def <physics> Physics)
